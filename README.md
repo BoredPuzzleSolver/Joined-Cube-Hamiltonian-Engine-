@@ -1,5 +1,6 @@
 # Terry's Model: SU(2) Joined-Cubes Recoupling
 
+This Model implements Hamiltonian lattice Yang–Mills theory for the gauge group $SU(2)$ on 3D joined cubic cell complexes to calculate the non-perturbative mass gap.
 A Hamiltonian lattice gauge theory implementation for SU(2) on 3D joined cubic cell complexes.
 
 ## Features
