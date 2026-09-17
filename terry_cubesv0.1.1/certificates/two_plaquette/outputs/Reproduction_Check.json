@@ -1,0 +1,10 @@
+{
+  "all_scripts_passed": true,
+  "reference_results_matched": [
+    "Shared_SU2_Cutoff_Certificate_Checks.json",
+    "Shared_SU2_Cutoff_Study_Results.json",
+    "SU2_Direct_Haar_Validation.json"
+  ],
+  "comparison": "Exact strings, integers and booleans except roundoff diagnostic flags; floats at 1e-10 relative/absolute tolerance; elapsed times ignored",
+  "certificate_note": "Exact rational endpoints and inertia counts match exactly, independent of float comparison tolerance"
+}

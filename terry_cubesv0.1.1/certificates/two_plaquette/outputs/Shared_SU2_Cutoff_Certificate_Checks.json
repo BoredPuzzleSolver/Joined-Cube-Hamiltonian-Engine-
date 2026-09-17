@@ -1,0 +1,318 @@
+{
+  "title": "Exact spin-cutoff certificates for a fixed shared-edge SU(2) patch",
+  "scope": "The untruncated gauge-invariant Hilbert space of two square plaquettes sharing one link, with open boundary and no external charges. All link spins are allowed in the bounded operator comparison. The two cutoffs define finite comparison matrices.",
+  "hamiltonian": "H = kappa[3jL(jL+1)+3jR(jR+1)+jM(jM+1)] + nu(2-WA-WB), WA=Tr U_A/2, WB=Tr U_B/2.",
+  "assumptions": [
+    "kappa>0 and nu>=0, so the compressed omitted magnetic potential is positive.",
+    "The admissible triangle/parity spin-network basis is complete for this graph.",
+    "The exact recoupling matrix elements are those in su2_recoupling.py.",
+    "A fundamental Wilson loop changes affected spins only by plus or minus one half, so the complete next cutoff contains every P-to-Q coupling.",
+    "No infinite spatial volume, lattice-spacing limit or four-dimensional continuum Yang-Mills claim is made."
+  ],
+  "method": "Variational upper levels and finite auxiliary lower levels; exact rational congruence and integer Bareiss inertia establish all displayed rational endpoints. Floating point selects or compares values and is not used as an error certificate.",
+  "benchmarks": [
+    {
+      "kappa_exact": "1",
+      "nu_exact": "1",
+      "retained_spin_cutoff": 2.0,
+      "boundary_spin_cutoff": 2.5,
+      "retained_dimension": 42,
+      "auxiliary_dimension": 69,
+      "first_omitted_electric_threshold_exact": "26",
+      "remaining_electric_threshold_exact": "69/2",
+      "certificate": {
+        "method": "Exact rational congruence plus integer Bareiss inertia.",
+        "energy_intervals": [
+          {
+            "index": 0,
+            "lower_exact": "183601099/100000000",
+            "upper_exact": "91800551/50000000",
+            "lower_decimal": 1.83601099,
+            "upper_decimal": 1.83601102,
+            "lower_auxiliary_inertia": {
+              "negative": 0,
+              "zero": 0,
+              "positive": 69
+            },
+            "upper_projection_inertia": {
+              "negative": 1,
+              "zero": 0,
+              "positive": 41
+            },
+            "lower_pass": true,
+            "upper_pass": true,
+            "certified": true
+          },
+          {
+            "index": 1,
+            "lower_exact": "492797/100000",
+            "upper_exact": "246398503/50000000",
+            "lower_decimal": 4.92797,
+            "upper_decimal": 4.92797006,
+            "lower_auxiliary_inertia": {
+              "negative": 1,
+              "zero": 0,
+              "positive": 68
+            },
+            "upper_projection_inertia": {
+              "negative": 2,
+              "zero": 0,
+              "positive": 40
+            },
+            "lower_pass": true,
+            "upper_pass": true,
+            "certified": true
+          }
+        ],
+        "all_certified": true,
+        "scope": "Certificate assumes the supplied exact congruence is the stated Hamiltonian and that the complete first omitted layer contains all P-to-Q magnetic couplings.",
+        "gap_interval_exact": [
+          "154597949/50000000",
+          "309195907/100000000"
+        ],
+        "gap_interval_decimal": [
+          3.09195898,
+          3.09195907
+        ]
+      },
+      "floating_point_comparison": {
+        "retained_dimension": 42,
+        "extended_dimension": 69,
+        "first_omitted_electric_threshold_exact": "26",
+        "remaining_electric_threshold_exact": "69/2",
+        "hermiticity_error": 0.0,
+        "energy_intervals_evaluated_numerically": [
+          {
+            "index": 0,
+            "lower_estimate": 1.8360110023508571,
+            "upper_estimate": 1.8360110025337173,
+            "width_estimate": 1.828601714493061e-10,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          },
+          {
+            "index": 1,
+            "lower_estimate": 4.927970019955698,
+            "upper_estimate": 4.92797004954677,
+            "width_estimate": 2.9591072703283317e-08,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          }
+        ],
+        "numerical_ordering_consistent": true,
+        "roundoff_limited": false,
+        "roundoff_diagnostic_scale": 6.025786960985912e-11,
+        "roundoff_diagnostic_is_error_bound": false,
+        "machine_certified": false,
+        "reason": "Eigenvalue evaluations and matrix inputs use floating point.",
+        "gap_interval_evaluated_numerically": [
+          3.0919590174219804,
+          3.091959047195913
+        ]
+      },
+      "elapsed_seconds": 0.0873839000123553
+    },
+    {
+      "kappa_exact": "1",
+      "nu_exact": "4",
+      "retained_spin_cutoff": 2.0,
+      "boundary_spin_cutoff": 2.5,
+      "retained_dimension": 42,
+      "auxiliary_dimension": 69,
+      "first_omitted_electric_threshold_exact": "26",
+      "remaining_electric_threshold_exact": "69/2",
+      "certificate": {
+        "method": "Exact rational congruence plus integer Bareiss inertia.",
+        "energy_intervals": [
+          {
+            "index": 0,
+            "lower_exact": "144921839/25000000",
+            "upper_exact": "115938501/20000000",
+            "lower_decimal": 5.79687356,
+            "upper_decimal": 5.79692505,
+            "lower_auxiliary_inertia": {
+              "negative": 0,
+              "zero": 0,
+              "positive": 69
+            },
+            "upper_projection_inertia": {
+              "negative": 1,
+              "zero": 0,
+              "positive": 41
+            },
+            "lower_pass": true,
+            "upper_pass": true,
+            "certified": true
+          },
+          {
+            "index": 1,
+            "lower_exact": "500303223/50000000",
+            "upper_exact": "500341633/50000000",
+            "lower_decimal": 10.00606446,
+            "upper_decimal": 10.00683266,
+            "lower_auxiliary_inertia": {
+              "negative": 1,
+              "zero": 0,
+              "positive": 68
+            },
+            "upper_projection_inertia": {
+              "negative": 2,
+              "zero": 0,
+              "positive": 40
+            },
+            "lower_pass": true,
+            "upper_pass": true,
+            "certified": true
+          }
+        ],
+        "all_certified": true,
+        "scope": "Certificate assumes the supplied exact congruence is the stated Hamiltonian and that the complete first omitted layer contains all P-to-Q magnetic couplings.",
+        "gap_interval_exact": [
+          "420913941/100000000",
+          "42099591/10000000"
+        ],
+        "gap_interval_decimal": [
+          4.20913941,
+          4.2099591
+        ]
+      },
+      "floating_point_comparison": {
+        "retained_dimension": 42,
+        "extended_dimension": 69,
+        "first_omitted_electric_threshold_exact": "26",
+        "remaining_electric_threshold_exact": "69/2",
+        "hermiticity_error": 0.0,
+        "energy_intervals_evaluated_numerically": [
+          {
+            "index": 0,
+            "lower_estimate": 5.79687357802025,
+            "upper_estimate": 5.796925034789091,
+            "width_estimate": 5.145676884055206e-05,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          },
+          {
+            "index": 1,
+            "lower_estimate": 10.006064475312089,
+            "upper_estimate": 10.006832645171901,
+            "width_estimate": 0.0007681698598123177,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          }
+        ],
+        "numerical_ordering_consistent": true,
+        "roundoff_limited": false,
+        "roundoff_diagnostic_scale": 6.894513326569781e-11,
+        "roundoff_diagnostic_is_error_bound": false,
+        "machine_certified": false,
+        "reason": "Eigenvalue evaluations and matrix inputs use floating point.",
+        "gap_interval_evaluated_numerically": [
+          4.209139440522998,
+          4.209959067151651
+        ]
+      },
+      "elapsed_seconds": 0.09480080002686009
+    },
+    {
+      "kappa_exact": "1",
+      "nu_exact": "4",
+      "retained_spin_cutoff": 3.0,
+      "boundary_spin_cutoff": 3.5,
+      "retained_dimension": 106,
+      "auxiliary_dimension": 154,
+      "first_omitted_electric_threshold_exact": "45",
+      "remaining_electric_threshold_exact": "56",
+      "certificate": {
+        "method": "Exact rational congruence plus integer Bareiss inertia.",
+        "energy_intervals": [
+          {
+            "index": 0,
+            "lower_exact": "72461097/12500000",
+            "upper_exact": "579688779/100000000",
+            "lower_decimal": 5.79688776,
+            "upper_decimal": 5.79688779,
+            "lower_auxiliary_inertia": {
+              "negative": 0,
+              "zero": 0,
+              "positive": 154
+            },
+            "upper_projection_inertia": {
+              "negative": 1,
+              "zero": 0,
+              "positive": 105
+            },
+            "lower_pass": true,
+            "upper_pass": true,
+            "certified": true
+          },
+          {
+            "index": 1,
+            "lower_exact": "1000631521/100000000",
+            "upper_exact": "1000631533/100000000",
+            "lower_decimal": 10.00631521,
+            "upper_decimal": 10.00631533,
+            "lower_auxiliary_inertia": {
+              "negative": 1,
+              "zero": 0,
+              "positive": 153
+            },
+            "upper_projection_inertia": {
+              "negative": 2,
+              "zero": 0,
+              "positive": 104
+            },
+            "lower_pass": true,
+            "upper_pass": true,
+            "certified": true
+          }
+        ],
+        "all_certified": true,
+        "scope": "Certificate assumes the supplied exact congruence is the stated Hamiltonian and that the complete first omitted layer contains all P-to-Q magnetic couplings.",
+        "gap_interval_exact": [
+          "210471371/50000000",
+          "420942757/100000000"
+        ],
+        "gap_interval_decimal": [
+          4.20942742,
+          4.20942757
+        ]
+      },
+      "floating_point_comparison": {
+        "retained_dimension": 106,
+        "extended_dimension": 154,
+        "first_omitted_electric_threshold_exact": "45",
+        "remaining_electric_threshold_exact": "56",
+        "hermiticity_error": 0.0,
+        "energy_intervals_evaluated_numerically": [
+          {
+            "index": 0,
+            "lower_estimate": 5.7968877751839205,
+            "upper_estimate": 5.79688777917541,
+            "width_estimate": 3.991489805343917e-09,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          },
+          {
+            "index": 1,
+            "lower_estimate": 10.00631522068909,
+            "upper_estimate": 10.00631531436637,
+            "width_estimate": 9.367727926701264e-08,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          }
+        ],
+        "numerical_ordering_consistent": true,
+        "roundoff_limited": false,
+        "roundoff_diagnostic_scale": 2.590376808403742e-10,
+        "roundoff_diagnostic_is_error_bound": false,
+        "machine_certified": false,
+        "reason": "Eigenvalue evaluations and matrix inputs use floating point.",
+        "gap_interval_evaluated_numerically": [
+          4.2094274415136805,
+          4.20942753918245
+        ]
+      },
+      "elapsed_seconds": 3.4705452999914996
+    }
+  ]
+}

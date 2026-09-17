@@ -1,0 +1,120 @@
+{
+  "title": "Independent technical audit of interval inertia and actual cap8 cube certificates",
+  "arithmetic_exact_rational_samples": 7680,
+  "signed_1x1_and_coupled_2x2_pivot_cases": [
+    {
+      "dimension": 2,
+      "positive": 1,
+      "negative": 1,
+      "two_by_two_pivots": 1
+    },
+    {
+      "dimension": 3,
+      "positive": 1,
+      "negative": 2,
+      "two_by_two_pivots": 1
+    },
+    {
+      "dimension": 3,
+      "positive": 2,
+      "negative": 1,
+      "two_by_two_pivots": 1
+    },
+    {
+      "dimension": 2,
+      "positive": 1,
+      "negative": 1,
+      "two_by_two_pivots": 0
+    }
+  ],
+  "adaptive_precision_64_128_256_checks_passed": true,
+  "three_exact_singular_inputs_rejected": true,
+  "actual_cap8_four_probe_comparisons": [
+    {
+      "level": 0,
+      "kind": "lower",
+      "probe_exact": "1375515500003/250000000000",
+      "schur_dimension": 86,
+      "schur_exact_inertia": {
+        "negative": 0,
+        "zero": 0,
+        "positive": 86
+      },
+      "full_auxiliary_inertia": {
+        "negative": 0,
+        "zero": 0,
+        "positive": 508
+      },
+      "interval_counts_match_Bareiss": true,
+      "counts_match_saved_certificate": true,
+      "Bareiss_seconds": 21.894681699999637,
+      "interval_seconds": 0.1367556000004697,
+      "bits": 128
+    },
+    {
+      "level": 0,
+      "kind": "upper",
+      "probe_exact": "688670874999/125000000000",
+      "schur_dimension": 86,
+      "schur_exact_inertia": {
+        "negative": 1,
+        "zero": 0,
+        "positive": 85
+      },
+      "full_auxiliary_inertia": {
+        "negative": 1,
+        "zero": 0,
+        "positive": 85
+      },
+      "interval_counts_match_Bareiss": true,
+      "counts_match_saved_certificate": true,
+      "Bareiss_seconds": 0.339173700000174,
+      "interval_seconds": 0.05035169999973732,
+      "bits": 128
+    },
+    {
+      "level": 1,
+      "kind": "lower",
+      "probe_exact": "1936406000003/250000000000",
+      "schur_dimension": 86,
+      "schur_exact_inertia": {
+        "negative": 1,
+        "zero": 0,
+        "positive": 85
+      },
+      "full_auxiliary_inertia": {
+        "negative": 1,
+        "zero": 0,
+        "positive": 507
+      },
+      "interval_counts_match_Bareiss": true,
+      "counts_match_saved_certificate": true,
+      "Bareiss_seconds": 20.630404600000475,
+      "interval_seconds": 0.13221410000005562,
+      "bits": 128
+    },
+    {
+      "level": 1,
+      "kind": "upper",
+      "probe_exact": "1071281874999/125000000000",
+      "schur_dimension": 86,
+      "schur_exact_inertia": {
+        "negative": 2,
+        "zero": 0,
+        "positive": 84
+      },
+      "full_auxiliary_inertia": {
+        "negative": 2,
+        "zero": 0,
+        "positive": 84
+      },
+      "interval_counts_match_Bareiss": true,
+      "counts_match_saved_certificate": true,
+      "Bareiss_seconds": 0.31679819999953907,
+      "interval_seconds": 0.0500757000008889,
+      "bits": 128
+    }
+  ],
+  "all_checks_passed": true,
+  "scope": "Technical certification of the supplied rational matrices. The physical operator comparison, radical error bounds, and complete-basis arguments are separate audited steps."
+}

@@ -1,0 +1,466 @@
+## su2_cube_model.py
+Exit code: 0
+{
+  "primary_recoupling_source": "https://www.nature.com/articles/s42005-024-01697-4",
+  "source_equation": 22,
+  "normalization": "W=Tr_fund/2",
+  "vertices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "edges": [
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      2
+    ],
+    [
+      0,
+      4
+    ],
+    [
+      1,
+      3
+    ],
+    [
+      1,
+      5
+    ],
+    [
+      2,
+      3
+    ],
+    [
+      2,
+      6
+    ],
+    [
+      3,
+      7
+    ],
+    [
+      4,
+      5
+    ],
+    [
+      4,
+      6
+    ],
+    [
+      5,
+      7
+    ],
+    [
+      6,
+      7
+    ]
+  ],
+  "faces": [
+    [
+      0,
+      1,
+      3,
+      2
+    ],
+    [
+      4,
+      5,
+      7,
+      6
+    ],
+    [
+      0,
+      1,
+      5,
+      4
+    ],
+    [
+      2,
+      3,
+      7,
+      6
+    ],
+    [
+      0,
+      2,
+      6,
+      4
+    ],
+    [
+      1,
+      3,
+      7,
+      5
+    ]
+  ],
+  "ladder_comparison": [
+    {
+      "jmax": 0.5,
+      "dimension": 4,
+      "phase": "(-1)^(jL+jR-jM)",
+      "WA_error": 0.0,
+      "WB_error": 0.0
+    },
+    {
+      "jmax": 1.0,
+      "dimension": 11,
+      "phase": "(-1)^(jL+jR-jM)",
+      "WA_error": 0.0,
+      "WB_error": 0.0
+    },
+    {
+      "jmax": 1.5,
+      "dimension": 23,
+      "phase": "(-1)^(jL+jR-jM)",
+      "WA_error": 5.551115123125783e-17,
+      "WB_error": 5.551115123125783e-17
+    }
+  ],
+  "cube_cutoffs": [
+    {
+      "jmax": 0.5,
+      "dimension": 32,
+      "directed_entries_per_face": [
+        32,
+        32,
+        32,
+        32,
+        32,
+        32
+      ],
+      "negative_directed_entries": 144,
+      "exact_Hermiticity_entries_checked": 192,
+      "vacuum_to_face_amplitude_exact": "1/2",
+      "generation_seconds": 0.005981199999951059
+    },
+    {
+      "jmax": 1.0,
+      "dimension": 1013,
+      "directed_entries_per_face": [
+        2388,
+        2388,
+        2388,
+        2388,
+        2388,
+        2388
+      ],
+      "negative_directed_entries": 10368,
+      "exact_Hermiticity_entries_checked": 14328,
+      "vacuum_to_face_amplitude_exact": "1/2",
+      "generation_seconds": 0.28422580000005837
+    },
+    {
+      "jmax": 1.5,
+      "dimension": 14879,
+      "directed_entries_per_face": [
+        59596,
+        59596,
+        59596,
+        59596,
+        59596,
+        59596
+      ],
+      "negative_directed_entries": 265344,
+      "exact_Hermiticity_entries_checked": 357576,
+      "vacuum_to_face_amplitude_exact": "1/2",
+      "generation_seconds": 5.19810200000029
+    }
+  ],
+  "spin_two_basis_dimension": 148678,
+  "energy_cutoff_checks": [
+    {
+      "electric_energy_cap": 8,
+      "dimension": 86,
+      "largest_link_spin_present": 1.0,
+      "states_beyond_link_spin_two": 0,
+      "all_overlapping_states_match_full_spin_two_basis": true
+    },
+    {
+      "electric_energy_cap": 10,
+      "dimension": 212,
+      "largest_link_spin_present": 1.0,
+      "states_beyond_link_spin_two": 0,
+      "all_overlapping_states_match_full_spin_two_basis": true
+    },
+    {
+      "electric_energy_cap": 12,
+      "dimension": 398,
+      "largest_link_spin_present": 1.5,
+      "states_beyond_link_spin_two": 0,
+      "all_overlapping_states_match_full_spin_two_basis": true
+    },
+    {
+      "electric_energy_cap": 18,
+      "dimension": 2920,
+      "largest_link_spin_present": 2.0,
+      "states_beyond_link_spin_two": 0,
+      "all_overlapping_states_match_full_spin_two_basis": true
+    },
+    {
+      "electric_energy_cap": 24,
+      "dimension": 11409,
+      "largest_link_spin_present": 2.0,
+      "states_beyond_link_spin_two": 0,
+      "all_overlapping_states_match_full_spin_two_basis": true
+    },
+    {
+      "electric_energy_cap": 30,
+      "dimension": 34680,
+      "largest_link_spin_present": 2.5,
+      "states_beyond_link_spin_two": 1464,
+      "all_overlapping_states_match_full_spin_two_basis": true
+    }
+  ]
+}
+
+
+## su2_cube_independent_check.py
+Exit code: 0
+{
+  "spin_half_basis_dimension": 32,
+  "spin_one_basis_dimension": 1013,
+  "exact_basis_norms_all_one": true,
+  "all_six_matrices_exactly_symmetric": true,
+  "absolute_coefficient_spectator_rule": "2^(-1-number_of_occupied_spectator_edges/2)",
+  "negative_directed_matrix_entries": 0,
+  "nonzero_directed_matrix_entries": 192,
+  "distinct_nonzero_coefficients": [
+    "1/2",
+    "1/4",
+    "1/8"
+  ]
+}
+C:\Users\terra\Documents\Codex\2026-09-15\alright-astra-this-has-been-what\outputs\SU2_Cube_Reproduction\outputs\SU2_Cube_Independent_Validation.json
+
+
+## su2_sparse_spectrum.py
+Exit code: 0
+Sparse Lanczos analytic-spectrum check passed.
+
+
+## su2_cube_study.py
+Exit code: 0
+J=1.5 basis 14879; directed transitions 357576; construction 5.54s
+J=0.5, nu=0.25: E0=1.468946102806, E1=4.484479765485, gap=3.015533662680
+J=0.5, nu=1: E0=5.541783784347, E1=8.772374284672, gap=3.230590500325
+J=0.5, nu=4: E0=19.556488578282, E1=24.182624548840, gap=4.626135970558
+J=1, nu=0.25: E0=1.468778235153, E1=4.469769107345, gap=3.000990872192
+J=1, nu=1: E0=5.506884795563, E1=8.466665142679, gap=2.959780347116
+J=1, nu=4: E0=17.445858965038, E1=21.468420789979, gap=4.022561824941
+J=1.5, nu=0.25: E0=1.468778127708, E1=4.469725762692, gap=3.000947634984
+J=1.5, nu=1: E0=5.506498361958, E1=8.457590259447, gap=2.951091897489
+J=1.5, nu=4: E0=17.086245133935, E1=20.815280071136, gap=3.729034937200
+C:\Users\terra\Documents\Codex\2026-09-15\alright-astra-this-has-been-what\outputs\SU2_Cube_Reproduction\outputs\SU2_Cube_Study_Results.json
+
+
+## su2_cube_energy_study.py
+Exit code: 0
+Electric cap30: 34680states, 866616entries, construction 12.91s
+cap12 nu1: 398 states, gap=2.958505193238
+cap12 nu4: 398 states, gap=4.308033188276
+cap18 nu1: 2920 states, gap=2.951119237569
+cap18 nu4: 2920 states, gap=3.817699982992
+cap24 nu1: 11409 states, gap=2.951043688229
+cap24 nu4: 11409 states, gap=3.703289394236
+cap30 nu1: 34680 states, gap=2.951042834527
+cap30 nu4: 34680 states, gap=3.681572292861
+C:\Users\terra\Documents\Codex\2026-09-15\alright-astra-this-has-been-what\outputs\SU2_Cube_Reproduction\outputs\SU2_Cube_Energy_Study_Results.json
+
+
+## su2_cube_bounds.py
+Exit code: 0
+{"cutoff_twice": 0, "minimum_electric_energy_over_kappa_exact": "3", "minimum_electric_energy_over_kappa": 3.0, "minimum_energy_integer_units_kappa_over_4": 12, "minimizing_doubled_spin_state": [1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0], "searched_maximal_spins": [{"maximal_twice_spin": 1, "visited_nodes": 11, "strict_improvements": 0}], "all_larger_maximal_spins_excluded_from": 2, "endpoint_lower_bound_at_exclusion_integer_units": 20, "proof_method": "Exact integer constraint enumeration with admissibility and energy pruning; edge transitivity reduces the maximal edge to (0,1); the increasing marked-edge endpoint bound excludes every larger maximal spin.", "elapsed_seconds": 0.0002044000011665048}
+{"cutoff_twice": 1, "minimum_electric_energy_over_kappa_exact": "13/2", "minimum_electric_energy_over_kappa": 6.5, "minimum_energy_integer_units_kappa_over_4": 26, "minimizing_doubled_spin_state": [2, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0], "searched_maximal_spins": [{"maximal_twice_spin": 2, "visited_nodes": 23, "strict_improvements": 0}], "all_larger_maximal_spins_excluded_from": 3, "endpoint_lower_bound_at_exclusion_integer_units": 37, "proof_method": "Exact integer constraint enumeration with admissibility and energy pruning; edge transitivity reduces the maximal edge to (0,1); the increasing marked-edge endpoint bound excludes every larger maximal spin.", "elapsed_seconds": 0.0002970000005007023}
+{"cutoff_twice": 2, "minimum_electric_energy_over_kappa_exact": "12", "minimum_electric_energy_over_kappa": 12.0, "minimum_energy_integer_units_kappa_over_4": 48, "minimizing_doubled_spin_state": [3, 1, 2, 1, 2, 1, 0, 0, 2, 0, 0, 0], "searched_maximal_spins": [{"maximal_twice_spin": 3, "visited_nodes": 61, "strict_improvements": 0}], "all_larger_maximal_spins_excluded_from": 4, "endpoint_lower_bound_at_exclusion_integer_units": 56, "proof_method": "Exact integer constraint enumeration with admissibility and energy pruning; edge transitivity reduces the maximal edge to (0,1); the increasing marked-edge endpoint bound excludes every larger maximal spin.", "elapsed_seconds": 0.000643899998976849}
+{"cutoff_twice": 3, "minimum_electric_energy_over_kappa_exact": "18", "minimum_electric_energy_over_kappa": 18.0, "minimum_energy_integer_units_kappa_over_4": 72, "minimizing_doubled_spin_state": [4, 2, 2, 2, 2, 2, 0, 0, 2, 0, 0, 0], "searched_maximal_spins": [{"maximal_twice_spin": 4, "visited_nodes": 82, "strict_improvements": 0}], "all_larger_maximal_spins_excluded_from": 5, "endpoint_lower_bound_at_exclusion_integer_units": 81, "proof_method": "Exact integer constraint enumeration with admissibility and energy pruning; edge transitivity reduces the maximal edge to (0,1); the increasing marked-edge endpoint bound excludes every larger maximal spin.", "elapsed_seconds": 0.0008631000000605127}
+{"cutoff_twice": 4, "minimum_electric_energy_over_kappa_exact": "26", "minimum_electric_energy_over_kappa": 26.0, "minimum_energy_integer_units_kappa_over_4": 104, "minimizing_doubled_spin_state": [5, 2, 3, 2, 3, 2, 0, 0, 3, 0, 0, 0], "searched_maximal_spins": [{"maximal_twice_spin": 5, "visited_nodes": 196, "strict_improvements": 0}], "all_larger_maximal_spins_excluded_from": 6, "endpoint_lower_bound_at_exclusion_integer_units": 108, "proof_method": "Exact integer constraint enumeration with admissibility and energy pruning; edge transitivity reduces the maximal edge to (0,1); the increasing marked-edge endpoint bound excludes every larger maximal spin.", "elapsed_seconds": 0.0017929000005096896}
+{"cutoff_twice": 5, "minimum_electric_energy_over_kappa_exact": "34", "minimum_electric_energy_over_kappa": 34.0, "minimum_energy_integer_units_kappa_over_4": 136, "minimizing_doubled_spin_state": [6, 3, 3, 3, 3, 2, 1, 1, 2, 1, 1, 0], "searched_maximal_spins": [{"maximal_twice_spin": 6, "visited_nodes": 253, "strict_improvements": 1}], "all_larger_maximal_spins_excluded_from": 7, "endpoint_lower_bound_at_exclusion_integer_units": 141, "proof_method": "Exact integer constraint enumeration with admissibility and energy pruning; edge transitivity reduces the maximal edge to (0,1); the increasing marked-edge endpoint bound excludes every larger maximal spin.", "elapsed_seconds": 0.0022959999987506308}
+{"jmax": 0.5, "kappa": 1.0, "nu": 1.0, "retained_dimension": 32, "reachable_omitted_dimension": 180, "auxiliary_dimension": 212, "safe_remaining_electric_threshold": 6.5, "auxiliary_low_eigenvalues": [5.304000304923885, 6.2098033896418094], "projection_low_eigenvalues": [5.541783784346631, 8.772374284672088], "energy_intervals_evaluated_numerically": [[5.304000304923885, 5.541783784346631], [6.2098033896418094, 8.772374284672088]], "gap_interval_evaluated_numerically": [0.6680196052951786, 3.468373979748203], "lower_solver": {"method": "NumPy eigh", "residual_norms": [3.246536868088371e-15, 4.1896040725393655e-15], "converged": true}, "upper_solver": {"method": "NumPy eigh", "residual_norms": [1.8147894025268325e-15, 9.651138468564845e-15], "converged": true}, "machine_certified": false, "limitation": "The operator comparison is exact, but these eigenvalue endpoints are numerical estimates. Residuals and multiple seeds do not certify eigenvalue ordering or omitted floating-point errors.", "elapsed_seconds": 0.013816399999996065}
+{"jmax": 1.0, "kappa": 1.0, "nu": 1.0, "retained_dimension": 1013, "reachable_omitted_dimension": 4914, "auxiliary_dimension": 5927, "safe_remaining_electric_threshold": 12.0, "auxiliary_low_eigenvalues": [5.50617670606098, 8.445571279985634], "projection_low_eigenvalues": [5.506884795563322, 8.466665142679162], "energy_intervals_evaluated_numerically": [[5.50617670606098, 5.506884795563322], [8.445571279985634, 8.466665142679162]], "gap_interval_evaluated_numerically": [2.9386864844223117, 2.9604884366181814], "lower_solver": {"method": "fully reorthogonalized Lanczos with direct Ritz residuals", "iterations": 72, "residual_norms": [2.3302152354173082e-14, 2.5926960174272174e-12], "converged": true, "seed": 1097, "scope": "Numerical Ritz values; a residual check does not certify spectral ordering", "second_seed_max_energy_difference": 1.7763568394002505e-14, "second_seed_converged": true}, "upper_solver": {"method": "NumPy eigh", "residual_norms": [2.0899918425319488e-15, 8.591941779417573e-15], "converged": true}, "machine_certified": false, "limitation": "The operator comparison is exact, but these eigenvalue endpoints are numerical estimates. Residuals and multiple seeds do not certify eigenvalue ordering or omitted floating-point errors.", "elapsed_seconds": 0.6135448999993969}
+{"jmax": 1.5, "kappa": 1.0, "nu": 1.0, "retained_dimension": 14879, "reachable_omitted_dimension": 54498, "auxiliary_dimension": 69377, "safe_remaining_electric_threshold": 18.0, "auxiliary_low_eigenvalues": [5.5064964828354945, 8.457516469450225], "projection_low_eigenvalues": [5.506498361957912, 8.457590259446981], "energy_intervals_evaluated_numerically": [[5.5064964828354945, 5.506498361957912], [8.457516469450225, 8.457590259446981]], "gap_interval_evaluated_numerically": [2.9510181074923123, 2.9510937766114864], "lower_solver": {"method": "fully reorthogonalized Lanczos with direct Ritz residuals", "iterations": 96, "residual_norms": [7.882714415741975e-13, 2.68658678976694e-12], "converged": true, "seed": 1097, "scope": "Numerical Ritz values; a residual check does not certify spectral ordering", "second_seed_max_energy_difference": 3.552713678800501e-14, "second_seed_converged": true}, "upper_solver": {"method": "fully reorthogonalized Lanczos with direct Ritz residuals", "iterations": 84, "residual_norms": [4.839444542212176e-13, 8.381212254871034e-11], "converged": true, "seed": 1097, "scope": "Numerical Ritz values; a residual check does not certify spectral ordering", "second_seed_max_energy_difference": 3.019806626980426e-14, "second_seed_converged": true}, "machine_certified": false, "limitation": "The operator comparison is exact, but these eigenvalue endpoints are numerical estimates. Residuals and multiple seeds do not certify eigenvalue ordering or omitted floating-point errors.", "elapsed_seconds": 9.903390800000125}
+C:\Users\terra\Documents\Codex\2026-09-15\alright-astra-this-has-been-what\outputs\SU2_Cube_Reproduction\outputs\SU2_Cube_Bounds_Results.json
+
+
+## su2_cube_rational_certificate.py
+Exit code: 0
+{"gap_interval": [0.66801959, 3.46837399], "A_error": "0", "L_error": "1/125000000000", "all_certified": true}
+
+
+## su2_interval_inertia.py
+Exit code: 0
+{
+  "method": "Rigorous fixed-point interval inertia with Python integers",
+  "interval_endpoint_property_cases": 500,
+  "exact_congruence_and_Bareiss_comparisons": 70,
+  "random_matrix_dimensions": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+  ],
+  "zero_diagonal_block_checks": [
+    {
+      "dimension": 2,
+      "positive": 1,
+      "negative": 1
+    },
+    {
+      "dimension": 4,
+      "positive": 2,
+      "negative": 2
+    },
+    {
+      "dimension": 8,
+      "positive": 4,
+      "negative": 4
+    }
+  ],
+  "coupled_2x2_pivot_check": true,
+  "singular_matrix_rejection": true,
+  "actual_cube_P32_checks": [
+    {
+      "name": "L0",
+      "probe_exact": "663000037501/125000000000",
+      "positive": 32,
+      "negative": 0,
+      "interval_seconds": 0.00651319999997213,
+      "Bareiss_seconds": 0.12483319999955711,
+      "counts_agree": true
+    },
+    {
+      "name": "L1",
+      "probe_exact": "776225422501/125000000000",
+      "positive": 31,
+      "negative": 1,
+      "interval_seconds": 0.006467600000178209,
+      "Bareiss_seconds": 0.12009589999979653,
+      "counts_agree": true
+    },
+    {
+      "name": "A0",
+      "probe_exact": "554178379/100000000",
+      "positive": 31,
+      "negative": 1,
+      "interval_seconds": 0.006302400001004571,
+      "Bareiss_seconds": 0.0031048000000737375,
+      "counts_agree": true
+    },
+    {
+      "name": "A1",
+      "probe_exact": "877237429/100000000",
+      "positive": 29,
+      "negative": 3,
+      "interval_seconds": 0.0063824999997450504,
+      "Bareiss_seconds": 0.003077299999858951,
+      "counts_agree": true
+    }
+  ],
+  "all_passed": true,
+  "scope": "This verifies inertia of the supplied exact rational or interval-enclosed symmetric matrix. A field-theory certificate additionally needs its separate operator comparison, basis completeness and matrix-entry error bounds."
+}
+
+
+## su2_cube_energy_certificate.py
+Exit code: 0
+cap8: P86, L508, proposed gap[2.23625700,3.06819300]
+cap8 level0: both exact probes passed after 0.25s
+cap8 level1: both exact probes passed after 0.44s
+cap10: P212, L1117, proposed gap[2.88964900,2.97992100]
+cap10 level0: both exact probes passed after 3.73s
+cap10 level1: both exact probes passed after 7.29s
+cap12: P398, L2042, proposed gap[2.94173300,2.95869300]
+cap12 level0: both exact probes passed after 20.93s
+cap12 level1: both exact probes passed after 41.75s
+C:\Users\terra\Documents\Codex\2026-09-15\alright-astra-this-has-been-what\outputs\SU2_Cube_Reproduction\outputs\SU2_Cube_Energy_Certificates.json
+
+
+## su2_cube_certificate_audit_check.py
+Exit code: 0
+{
+  "retained_dimension": 32,
+  "direct_omitted_dimension": 180,
+  "exact_radical_intervals_match_independent_binary_search": true,
+  "complete_one_face_target_enumeration_matches": true,
+  "A_norm_error_exact": "0",
+  "L_norm_error_exact": "1/125000000000",
+  "minimum_direct_omitted_electric_energy": "13/2",
+  "four_exact_probe_inertias_match": [
+    {
+      "level": 0,
+      "lower_inertia": {
+        "negative": 0,
+        "zero": 0,
+        "positive": 212
+      },
+      "upper_inertia": {
+        "negative": 1,
+        "zero": 0,
+        "positive": 31
+      }
+    },
+    {
+      "level": 1,
+      "lower_inertia": {
+        "negative": 1,
+        "zero": 0,
+        "positive": 211
+      },
+      "upper_inertia": {
+        "negative": 3,
+        "zero": 0,
+        "positive": 29
+      }
+    }
+  ],
+  "gap_interval_exact": [
+    "66801959/100000000",
+    "346837399/100000000"
+  ],
+  "all_checks_passed": true,
+  "energy_basis_generalization_checks": [
+    {
+      "cap": 8,
+      "dimension": 86,
+      "full_sorted_basis_matches_independent_fixed_edge_enumeration": true
+    },
+    {
+      "cap": 10,
+      "dimension": 212,
+      "full_sorted_basis_matches_independent_fixed_edge_enumeration": true
+    },
+    {
+      "cap": 12,
+      "dimension": 398,
+      "full_sorted_basis_matches_independent_fixed_edge_enumeration": true
+    }
+  ]
+}
+
+
+## su2_interval_inertia_independent_audit.py
+Exit code: 0
+{"level": 0, "kind": "lower", "probe_exact": "1375515500003/250000000000", "schur_dimension": 86, "schur_exact_inertia": {"negative": 0, "zero": 0, "positive": 86}, "full_auxiliary_inertia": {"negative": 0, "zero": 0, "positive": 508}, "interval_counts_match_Bareiss": true, "counts_match_saved_certificate": true, "Bareiss_seconds": 21.894681699999637, "interval_seconds": 0.1367556000004697, "bits": 128}
+{"level": 0, "kind": "upper", "probe_exact": "688670874999/125000000000", "schur_dimension": 86, "schur_exact_inertia": {"negative": 1, "zero": 0, "positive": 85}, "full_auxiliary_inertia": {"negative": 1, "zero": 0, "positive": 85}, "interval_counts_match_Bareiss": true, "counts_match_saved_certificate": true, "Bareiss_seconds": 0.339173700000174, "interval_seconds": 0.05035169999973732, "bits": 128}
+{"level": 1, "kind": "lower", "probe_exact": "1936406000003/250000000000", "schur_dimension": 86, "schur_exact_inertia": {"negative": 1, "zero": 0, "positive": 85}, "full_auxiliary_inertia": {"negative": 1, "zero": 0, "positive": 507}, "interval_counts_match_Bareiss": true, "counts_match_saved_certificate": true, "Bareiss_seconds": 20.630404600000475, "interval_seconds": 0.13221410000005562, "bits": 128}
+{"level": 1, "kind": "upper", "probe_exact": "1071281874999/125000000000", "schur_dimension": 86, "schur_exact_inertia": {"negative": 2, "zero": 0, "positive": 84}, "full_auxiliary_inertia": {"negative": 2, "zero": 0, "positive": 84}, "interval_counts_match_Bareiss": true, "counts_match_saved_certificate": true, "Bareiss_seconds": 0.31679819999953907, "interval_seconds": 0.0500757000008889, "bits": 128}
+C:\Users\terra\Documents\Codex\2026-09-15\alright-astra-this-has-been-what\outputs\SU2_Cube_Reproduction\outputs\SU2_Interval_Inertia_Independent_Audit.json
+

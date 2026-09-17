@@ -1,0 +1,410 @@
+{
+  "title": "Omitted-state comparison for the fixed open SU(2) cube",
+  "edges": [
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      2
+    ],
+    [
+      0,
+      4
+    ],
+    [
+      1,
+      3
+    ],
+    [
+      1,
+      5
+    ],
+    [
+      2,
+      3
+    ],
+    [
+      2,
+      6
+    ],
+    [
+      3,
+      7
+    ],
+    [
+      4,
+      5
+    ],
+    [
+      4,
+      6
+    ],
+    [
+      5,
+      7
+    ],
+    [
+      6,
+      7
+    ]
+  ],
+  "hamiltonian": "H=kappa sum_links j(j+1)+nu(6-sum_faces Tr U_f/2).",
+  "scope": "Untruncated gauge-invariant Hilbert space of the single open cube.",
+  "exact_electric_thresholds": [
+    {
+      "cutoff_twice": 0,
+      "minimum_electric_energy_over_kappa_exact": "3",
+      "minimum_electric_energy_over_kappa": 3.0,
+      "minimum_energy_integer_units_kappa_over_4": 12,
+      "minimizing_doubled_spin_state": [
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "searched_maximal_spins": [
+        {
+          "maximal_twice_spin": 1,
+          "visited_nodes": 11,
+          "strict_improvements": 0
+        }
+      ],
+      "all_larger_maximal_spins_excluded_from": 2,
+      "endpoint_lower_bound_at_exclusion_integer_units": 20,
+      "proof_method": "Exact integer constraint enumeration with admissibility and energy pruning; edge transitivity reduces the maximal edge to (0,1); the increasing marked-edge endpoint bound excludes every larger maximal spin.",
+      "elapsed_seconds": 0.0002044000011665048
+    },
+    {
+      "cutoff_twice": 1,
+      "minimum_electric_energy_over_kappa_exact": "13/2",
+      "minimum_electric_energy_over_kappa": 6.5,
+      "minimum_energy_integer_units_kappa_over_4": 26,
+      "minimizing_doubled_spin_state": [
+        2,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "searched_maximal_spins": [
+        {
+          "maximal_twice_spin": 2,
+          "visited_nodes": 23,
+          "strict_improvements": 0
+        }
+      ],
+      "all_larger_maximal_spins_excluded_from": 3,
+      "endpoint_lower_bound_at_exclusion_integer_units": 37,
+      "proof_method": "Exact integer constraint enumeration with admissibility and energy pruning; edge transitivity reduces the maximal edge to (0,1); the increasing marked-edge endpoint bound excludes every larger maximal spin.",
+      "elapsed_seconds": 0.0002970000005007023
+    },
+    {
+      "cutoff_twice": 2,
+      "minimum_electric_energy_over_kappa_exact": "12",
+      "minimum_electric_energy_over_kappa": 12.0,
+      "minimum_energy_integer_units_kappa_over_4": 48,
+      "minimizing_doubled_spin_state": [
+        3,
+        1,
+        2,
+        1,
+        2,
+        1,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0
+      ],
+      "searched_maximal_spins": [
+        {
+          "maximal_twice_spin": 3,
+          "visited_nodes": 61,
+          "strict_improvements": 0
+        }
+      ],
+      "all_larger_maximal_spins_excluded_from": 4,
+      "endpoint_lower_bound_at_exclusion_integer_units": 56,
+      "proof_method": "Exact integer constraint enumeration with admissibility and energy pruning; edge transitivity reduces the maximal edge to (0,1); the increasing marked-edge endpoint bound excludes every larger maximal spin.",
+      "elapsed_seconds": 0.000643899998976849
+    },
+    {
+      "cutoff_twice": 3,
+      "minimum_electric_energy_over_kappa_exact": "18",
+      "minimum_electric_energy_over_kappa": 18.0,
+      "minimum_energy_integer_units_kappa_over_4": 72,
+      "minimizing_doubled_spin_state": [
+        4,
+        2,
+        2,
+        2,
+        2,
+        2,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0
+      ],
+      "searched_maximal_spins": [
+        {
+          "maximal_twice_spin": 4,
+          "visited_nodes": 82,
+          "strict_improvements": 0
+        }
+      ],
+      "all_larger_maximal_spins_excluded_from": 5,
+      "endpoint_lower_bound_at_exclusion_integer_units": 81,
+      "proof_method": "Exact integer constraint enumeration with admissibility and energy pruning; edge transitivity reduces the maximal edge to (0,1); the increasing marked-edge endpoint bound excludes every larger maximal spin.",
+      "elapsed_seconds": 0.0008631000000605127
+    },
+    {
+      "cutoff_twice": 4,
+      "minimum_electric_energy_over_kappa_exact": "26",
+      "minimum_electric_energy_over_kappa": 26.0,
+      "minimum_energy_integer_units_kappa_over_4": 104,
+      "minimizing_doubled_spin_state": [
+        5,
+        2,
+        3,
+        2,
+        3,
+        2,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0
+      ],
+      "searched_maximal_spins": [
+        {
+          "maximal_twice_spin": 5,
+          "visited_nodes": 196,
+          "strict_improvements": 0
+        }
+      ],
+      "all_larger_maximal_spins_excluded_from": 6,
+      "endpoint_lower_bound_at_exclusion_integer_units": 108,
+      "proof_method": "Exact integer constraint enumeration with admissibility and energy pruning; edge transitivity reduces the maximal edge to (0,1); the increasing marked-edge endpoint bound excludes every larger maximal spin.",
+      "elapsed_seconds": 0.0017929000005096896
+    },
+    {
+      "cutoff_twice": 5,
+      "minimum_electric_energy_over_kappa_exact": "34",
+      "minimum_electric_energy_over_kappa": 34.0,
+      "minimum_energy_integer_units_kappa_over_4": 136,
+      "minimizing_doubled_spin_state": [
+        6,
+        3,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        2,
+        1,
+        1,
+        0
+      ],
+      "searched_maximal_spins": [
+        {
+          "maximal_twice_spin": 6,
+          "visited_nodes": 253,
+          "strict_improvements": 1
+        }
+      ],
+      "all_larger_maximal_spins_excluded_from": 7,
+      "endpoint_lower_bound_at_exclusion_integer_units": 141,
+      "proof_method": "Exact integer constraint enumeration with admissibility and energy pruning; edge transitivity reduces the maximal edge to (0,1); the increasing marked-edge endpoint bound excludes every larger maximal spin.",
+      "elapsed_seconds": 0.0022959999987506308
+    }
+  ],
+  "numerical_auxiliary_bounds": [
+    {
+      "jmax": 0.5,
+      "kappa": 1.0,
+      "nu": 1.0,
+      "retained_dimension": 32,
+      "reachable_omitted_dimension": 180,
+      "auxiliary_dimension": 212,
+      "safe_remaining_electric_threshold": 6.5,
+      "auxiliary_low_eigenvalues": [
+        5.304000304923885,
+        6.2098033896418094
+      ],
+      "projection_low_eigenvalues": [
+        5.541783784346631,
+        8.772374284672088
+      ],
+      "energy_intervals_evaluated_numerically": [
+        [
+          5.304000304923885,
+          5.541783784346631
+        ],
+        [
+          6.2098033896418094,
+          8.772374284672088
+        ]
+      ],
+      "gap_interval_evaluated_numerically": [
+        0.6680196052951786,
+        3.468373979748203
+      ],
+      "lower_solver": {
+        "method": "NumPy eigh",
+        "residual_norms": [
+          3.246536868088371e-15,
+          4.1896040725393655e-15
+        ],
+        "converged": true
+      },
+      "upper_solver": {
+        "method": "NumPy eigh",
+        "residual_norms": [
+          1.8147894025268325e-15,
+          9.651138468564845e-15
+        ],
+        "converged": true
+      },
+      "machine_certified": false,
+      "limitation": "The operator comparison is exact, but these eigenvalue endpoints are numerical estimates. Residuals and multiple seeds do not certify eigenvalue ordering or omitted floating-point errors.",
+      "elapsed_seconds": 0.013816399999996065
+    },
+    {
+      "jmax": 1.0,
+      "kappa": 1.0,
+      "nu": 1.0,
+      "retained_dimension": 1013,
+      "reachable_omitted_dimension": 4914,
+      "auxiliary_dimension": 5927,
+      "safe_remaining_electric_threshold": 12.0,
+      "auxiliary_low_eigenvalues": [
+        5.50617670606098,
+        8.445571279985634
+      ],
+      "projection_low_eigenvalues": [
+        5.506884795563322,
+        8.466665142679162
+      ],
+      "energy_intervals_evaluated_numerically": [
+        [
+          5.50617670606098,
+          5.506884795563322
+        ],
+        [
+          8.445571279985634,
+          8.466665142679162
+        ]
+      ],
+      "gap_interval_evaluated_numerically": [
+        2.9386864844223117,
+        2.9604884366181814
+      ],
+      "lower_solver": {
+        "method": "fully reorthogonalized Lanczos with direct Ritz residuals",
+        "iterations": 72,
+        "residual_norms": [
+          2.3302152354173082e-14,
+          2.5926960174272174e-12
+        ],
+        "converged": true,
+        "seed": 1097,
+        "scope": "Numerical Ritz values; a residual check does not certify spectral ordering",
+        "second_seed_max_energy_difference": 1.7763568394002505e-14,
+        "second_seed_converged": true
+      },
+      "upper_solver": {
+        "method": "NumPy eigh",
+        "residual_norms": [
+          2.0899918425319488e-15,
+          8.591941779417573e-15
+        ],
+        "converged": true
+      },
+      "machine_certified": false,
+      "limitation": "The operator comparison is exact, but these eigenvalue endpoints are numerical estimates. Residuals and multiple seeds do not certify eigenvalue ordering or omitted floating-point errors.",
+      "elapsed_seconds": 0.6135448999993969
+    },
+    {
+      "jmax": 1.5,
+      "kappa": 1.0,
+      "nu": 1.0,
+      "retained_dimension": 14879,
+      "reachable_omitted_dimension": 54498,
+      "auxiliary_dimension": 69377,
+      "safe_remaining_electric_threshold": 18.0,
+      "auxiliary_low_eigenvalues": [
+        5.5064964828354945,
+        8.457516469450225
+      ],
+      "projection_low_eigenvalues": [
+        5.506498361957912,
+        8.457590259446981
+      ],
+      "energy_intervals_evaluated_numerically": [
+        [
+          5.5064964828354945,
+          5.506498361957912
+        ],
+        [
+          8.457516469450225,
+          8.457590259446981
+        ]
+      ],
+      "gap_interval_evaluated_numerically": [
+        2.9510181074923123,
+        2.9510937766114864
+      ],
+      "lower_solver": {
+        "method": "fully reorthogonalized Lanczos with direct Ritz residuals",
+        "iterations": 96,
+        "residual_norms": [
+          7.882714415741975e-13,
+          2.68658678976694e-12
+        ],
+        "converged": true,
+        "seed": 1097,
+        "scope": "Numerical Ritz values; a residual check does not certify spectral ordering",
+        "second_seed_max_energy_difference": 3.552713678800501e-14,
+        "second_seed_converged": true
+      },
+      "upper_solver": {
+        "method": "fully reorthogonalized Lanczos with direct Ritz residuals",
+        "iterations": 84,
+        "residual_norms": [
+          4.839444542212176e-13,
+          8.381212254871034e-11
+        ],
+        "converged": true,
+        "seed": 1097,
+        "scope": "Numerical Ritz values; a residual check does not certify spectral ordering",
+        "second_seed_max_energy_difference": 3.019806626980426e-14,
+        "second_seed_converged": true
+      },
+      "machine_certified": false,
+      "limitation": "The operator comparison is exact, but these eigenvalue endpoints are numerical estimates. Residuals and multiple seeds do not certify eigenvalue ordering or omitted floating-point errors.",
+      "elapsed_seconds": 9.903390800000125
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+## shared_su2_cutoff_study.py
+Exit code: 0
+nu/kappa=0: J=6 gap=3.000000000000
+nu/kappa=0.1: J=6 gap=3.000928491218
+nu/kappa=0.25: J=6 gap=3.005800414971
+nu/kappa=0.5: J=6 gap=3.023162507684
+nu/kappa=1: J=6 gap=3.091959020089
+nu/kappa=2: J=6 gap=3.354584519251
+nu/kappa=4: J=6 gap=4.209427461731
+nu/kappa=10: J=6 gap=6.965312948998
+nu/kappa=40: J=6 gap=14.819841042975
+C:\Users\terra\Documents\Codex\2026-09-15\alright-astra-this-has-been-what\outputs\Shared_SU2_Cutoff_Reproduction\outputs\Shared_SU2_Cutoff_Study_Results.json
+
+
+## verify_su2_cutoff_certificates.py
+Exit code: 0
+Exact inertia and omitted-electric-threshold checks passed.
+{
+  "output": "C:\\Users\\terra\\Documents\\Codex\\2026-09-15\\alright-astra-this-has-been-what\\outputs\\Shared_SU2_Cutoff_Reproduction\\outputs\\Shared_SU2_Cutoff_Certificate_Checks.json",
+  "benchmarks": [
+    {
+      "nu": "1",
+      "J": 2.0,
+      "gap_interval": [
+        3.09195898,
+        3.09195907
+      ],
+      "all_certified": true,
+      "elapsed_seconds": 0.0873839000123553
+    },
+    {
+      "nu": "4",
+      "J": 2.0,
+      "gap_interval": [
+        4.20913941,
+        4.2099591
+      ],
+      "all_certified": true,
+      "elapsed_seconds": 0.09480080002686009
+    },
+    {
+      "nu": "4",
+      "J": 3.0,
+      "gap_interval": [
+        4.20942742,
+        4.20942757
+      ],
+      "all_certified": true,
+      "elapsed_seconds": 3.4705452999914996
+    }
+  ]
+}
+
+
+## su2_direct_haar_validation.py
+Exit code: 0
+2 11 {'normalization_error': 2.886579864025407e-15, 'gram_max_error': 9.276589666782972e-16, 'imaginary_spin_function_max': 4.604523969438085e-15, 'matrix_imaginary_max': 4.1225543629852786e-16, 'casimir_projector_max_error': 8.881784197001252e-16, 'hermiticity_max_error': 5.551115123125783e-17, 'loop_exchange_matrix_error': 3.1707454356941644e-16, 'forbidden_transition_max': 3.997914187794446e-16, 'quadrature_8_vs_12_max_error': 4.996003610813204e-16}
+3 23 {'normalization_error': 2.886579864025407e-15, 'gram_max_error': 1.0234875005718153e-15, 'imaginary_spin_function_max': 5.023740018177061e-15, 'matrix_imaginary_max': 4.644287869880591e-16, 'casimir_projector_max_error': 1.7763568394002505e-15, 'hermiticity_max_error': 1.1102230246251565e-16, 'loop_exchange_matrix_error': 4.41057081748809e-16, 'forbidden_transition_max': 3.997914187794446e-16, 'quadrature_8_vs_12_max_error': 8.326672684688674e-16}
+C:\Users\terra\Documents\Codex\2026-09-15\alright-astra-this-has-been-what\outputs\Shared_SU2_Cutoff_Reproduction\outputs\SU2_Direct_Haar_Validation.json
+
+
+## su2_bounds_audit_check.py
+Exit code: 0
+{"J": 2.0, "nu_exact": "1", "kappa_exact": "1", "congruence_reconstruction_error": 1.4210854715202004e-14, "probe_checks": [{"level": 0, "kind": "lower", "probe": "183601099/100000000", "inertia": {"negative": 0, "zero": 0, "positive": 69}}, {"level": 0, "kind": "upper", "probe": "91800551/50000000", "inertia": {"negative": 1, "zero": 0, "positive": 41}}, {"level": 1, "kind": "lower", "probe": "492797/100000", "inertia": {"negative": 1, "zero": 0, "positive": 68}}, {"level": 1, "kind": "upper", "probe": "246398503/50000000", "inertia": {"negative": 2, "zero": 0, "positive": 40}}], "gap_interval_exact": ["154597949/50000000", "309195907/100000000"], "elapsed_seconds": 0.21833150001475587}
+{"J": 2.0, "nu_exact": "4", "kappa_exact": "1", "congruence_reconstruction_error": 1.4210854715202004e-14, "probe_checks": [{"level": 0, "kind": "lower", "probe": "144921839/25000000", "inertia": {"negative": 0, "zero": 0, "positive": 69}}, {"level": 0, "kind": "upper", "probe": "115938501/20000000", "inertia": {"negative": 1, "zero": 0, "positive": 41}}, {"level": 1, "kind": "lower", "probe": "500303223/50000000", "inertia": {"negative": 1, "zero": 0, "positive": 68}}, {"level": 1, "kind": "upper", "probe": "500341633/50000000", "inertia": {"negative": 2, "zero": 0, "positive": 40}}], "gap_interval_exact": ["420913941/100000000", "42099591/10000000"], "elapsed_seconds": 0.23646500002359971}
+{"J": 3.0, "nu_exact": "4", "kappa_exact": "1", "congruence_reconstruction_error": 2.842170943040401e-14, "probe_checks": [{"level": 0, "kind": "lower", "probe": "72461097/12500000", "inertia": {"negative": 0, "zero": 0, "positive": 154}}, {"level": 0, "kind": "upper", "probe": "579688779/100000000", "inertia": {"negative": 1, "zero": 0, "positive": 105}}, {"level": 1, "kind": "lower", "probe": "1000631521/100000000", "inertia": {"negative": 1, "zero": 0, "positive": 153}}, {"level": 1, "kind": "upper", "probe": "1000631533/100000000", "inertia": {"negative": 2, "zero": 0, "positive": 104}}], "gap_interval_exact": ["210471371/50000000", "420942757/100000000"], "elapsed_seconds": 7.888442299969029}
+All 12 exact probes across 3 benchmarks, matrix identifications, gap subtractions and boundary-layer completeness checks passed.
+

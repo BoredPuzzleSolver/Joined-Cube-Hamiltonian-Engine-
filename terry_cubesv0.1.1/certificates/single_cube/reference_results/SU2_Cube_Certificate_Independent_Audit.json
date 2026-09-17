@@ -1,0 +1,59 @@
+{
+  "retained_dimension": 32,
+  "direct_omitted_dimension": 180,
+  "exact_radical_intervals_match_independent_binary_search": true,
+  "complete_one_face_target_enumeration_matches": true,
+  "A_norm_error_exact": "0",
+  "L_norm_error_exact": "1/125000000000",
+  "minimum_direct_omitted_electric_energy": "13/2",
+  "four_exact_probe_inertias_match": [
+    {
+      "level": 0,
+      "lower_inertia": {
+        "negative": 0,
+        "zero": 0,
+        "positive": 212
+      },
+      "upper_inertia": {
+        "negative": 1,
+        "zero": 0,
+        "positive": 31
+      }
+    },
+    {
+      "level": 1,
+      "lower_inertia": {
+        "negative": 1,
+        "zero": 0,
+        "positive": 211
+      },
+      "upper_inertia": {
+        "negative": 3,
+        "zero": 0,
+        "positive": 29
+      }
+    }
+  ],
+  "gap_interval_exact": [
+    "66801959/100000000",
+    "346837399/100000000"
+  ],
+  "all_checks_passed": true,
+  "energy_basis_generalization_checks": [
+    {
+      "cap": 8,
+      "dimension": 86,
+      "full_sorted_basis_matches_independent_fixed_edge_enumeration": true
+    },
+    {
+      "cap": 10,
+      "dimension": 212,
+      "full_sorted_basis_matches_independent_fixed_edge_enumeration": true
+    },
+    {
+      "cap": 12,
+      "dimension": 398,
+      "full_sorted_basis_matches_independent_fixed_edge_enumeration": true
+    }
+  ]
+}

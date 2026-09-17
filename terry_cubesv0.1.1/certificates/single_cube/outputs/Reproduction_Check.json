@@ -1,0 +1,17 @@
+{
+  "all_scripts_passed": true,
+  "reference_results_matched": [
+    "SU2_Cube_Bounds_Results.json",
+    "SU2_Cube_Certificate_Independent_Audit.json",
+    "SU2_Cube_Energy_Certificates.json",
+    "SU2_Cube_Energy_Study_Results.json",
+    "SU2_Cube_Gap_Certificate.json",
+    "SU2_Cube_Independent_Validation.json",
+    "SU2_Cube_Recoupling_Validation.json",
+    "SU2_Cube_Study_Results.json",
+    "SU2_Interval_Inertia_Independent_Audit.json",
+    "SU2_Interval_Inertia_Validation.json"
+  ],
+  "comparison": "Exact fractions, integer sign counts, labels and booleans must match exactly; floats allow 1e-9 relative/absolute variation; timing fields ignored",
+  "scope": "Reproduction of finite-cube computations and certificates, not a continuum Yang-Mills proof"
+}

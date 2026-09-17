@@ -1,0 +1,80 @@
+{
+  "method": "Rigorous fixed-point interval inertia with Python integers",
+  "interval_endpoint_property_cases": 500,
+  "exact_congruence_and_Bareiss_comparisons": 70,
+  "random_matrix_dimensions": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+  ],
+  "zero_diagonal_block_checks": [
+    {
+      "dimension": 2,
+      "positive": 1,
+      "negative": 1
+    },
+    {
+      "dimension": 4,
+      "positive": 2,
+      "negative": 2
+    },
+    {
+      "dimension": 8,
+      "positive": 4,
+      "negative": 4
+    }
+  ],
+  "coupled_2x2_pivot_check": true,
+  "singular_matrix_rejection": true,
+  "actual_cube_P32_checks": [
+    {
+      "name": "L0",
+      "probe_exact": "663000037501/125000000000",
+      "positive": 32,
+      "negative": 0,
+      "interval_seconds": 0.00651319999997213,
+      "Bareiss_seconds": 0.12483319999955711,
+      "counts_agree": true
+    },
+    {
+      "name": "L1",
+      "probe_exact": "776225422501/125000000000",
+      "positive": 31,
+      "negative": 1,
+      "interval_seconds": 0.006467600000178209,
+      "Bareiss_seconds": 0.12009589999979653,
+      "counts_agree": true
+    },
+    {
+      "name": "A0",
+      "probe_exact": "554178379/100000000",
+      "positive": 31,
+      "negative": 1,
+      "interval_seconds": 0.006302400001004571,
+      "Bareiss_seconds": 0.0031048000000737375,
+      "counts_agree": true
+    },
+    {
+      "name": "A1",
+      "probe_exact": "877237429/100000000",
+      "positive": 29,
+      "negative": 3,
+      "interval_seconds": 0.0063824999997450504,
+      "Bareiss_seconds": 0.003077299999858951,
+      "counts_agree": true
+    }
+  ],
+  "all_passed": true,
+  "scope": "This verifies inertia of the supplied exact rational or interval-enclosed symmetric matrix. A field-theory certificate additionally needs its separate operator comparison, basis completeness and matrix-entry error bounds."
+}
