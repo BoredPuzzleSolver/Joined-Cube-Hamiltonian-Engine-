@@ -1,0 +1,11 @@
+{
+  "version": "0.1.1",
+  "source_files_preserved_in_archives": 170,
+  "source_distribution_build_passed": true,
+  "wheel_built_from_source_distribution": true,
+  "all_source_archive_files_byte_identical": true,
+  "source_zip_crc_passed": true,
+  "final_wheel_runtime_identical_to_tested_wheel": true,
+  "license_preserved_in_wheel": true,
+  "new_document_local_links_checked": true
+}

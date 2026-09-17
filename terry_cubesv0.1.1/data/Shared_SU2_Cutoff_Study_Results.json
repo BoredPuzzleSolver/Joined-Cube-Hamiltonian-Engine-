@@ -1,0 +1,1845 @@
+{
+  "model": "Open two-square SU(2) lattice: 7 links, 6 vertices, Gauss law at every vertex",
+  "hamiltonian": "H/kappa=sum_link j(j+1)+(nu/kappa)*(2-W_A-W_B); W=Tr_fund(U)/2",
+  "boundary": "Open; no external charges",
+  "units": "kappa=1; Euclidean time measured in inverse kappa; hbar=1",
+  "cutoff": "Every link spin <= jmax; exact orthogonal projection, no cyclic wrap",
+  "status": "Floating-point study; exact fixed-graph certificates are supplied separately",
+  "cutoff_sweep": [
+    {
+      "jmax": 0.5,
+      "dimension": 4,
+      "nu_over_kappa": 0,
+      "E0": 0.0,
+      "E1": 3.0,
+      "E2": 3.0,
+      "gap": 3.0,
+      "change_in_E0": null,
+      "change_in_E1": null
+    },
+    {
+      "jmax": 1.0,
+      "dimension": 11,
+      "nu_over_kappa": 0,
+      "E0": 0.0,
+      "E1": 3.0,
+      "E2": 3.0,
+      "gap": 3.0,
+      "change_in_E0": 0.0,
+      "change_in_E1": 0.0
+    },
+    {
+      "jmax": 1.5,
+      "dimension": 23,
+      "nu_over_kappa": 0,
+      "E0": 0.0,
+      "E1": 3.0,
+      "E2": 3.0,
+      "gap": 3.0,
+      "change_in_E0": 0.0,
+      "change_in_E1": 0.0
+    },
+    {
+      "jmax": 2.0,
+      "dimension": 42,
+      "nu_over_kappa": 0,
+      "E0": 0.0,
+      "E1": 3.0,
+      "E2": 3.0,
+      "gap": 3.0,
+      "change_in_E0": 0.0,
+      "change_in_E1": 0.0
+    },
+    {
+      "jmax": 3.0,
+      "dimension": 106,
+      "nu_over_kappa": 0,
+      "E0": 0.0,
+      "E1": 3.0,
+      "E2": 3.0,
+      "gap": 3.0,
+      "change_in_E0": 0.0,
+      "change_in_E1": 0.0
+    },
+    {
+      "jmax": 4.0,
+      "dimension": 215,
+      "nu_over_kappa": 0,
+      "E0": 0.0,
+      "E1": 3.0,
+      "E2": 3.0,
+      "gap": 3.0,
+      "change_in_E0": 0.0,
+      "change_in_E1": 0.0
+    },
+    {
+      "jmax": 5.0,
+      "dimension": 381,
+      "nu_over_kappa": 0,
+      "E0": 0.0,
+      "E1": 3.0,
+      "E2": 3.0,
+      "gap": 3.0,
+      "change_in_E0": 0.0,
+      "change_in_E1": 0.0
+    },
+    {
+      "jmax": 6.0,
+      "dimension": 616,
+      "nu_over_kappa": 0,
+      "E0": 0.0,
+      "E1": 3.0,
+      "E2": 3.0,
+      "gap": 3.0,
+      "change_in_E0": 0.0,
+      "change_in_E1": 0.0
+    },
+    {
+      "jmax": 0.5,
+      "dimension": 4,
+      "nu_over_kappa": 0.1,
+      "E0": 0.19833410421039907,
+      "E1": 3.2,
+      "E2": 3.2008324083067223,
+      "gap": 3.001665895789601,
+      "change_in_E0": null,
+      "change_in_E1": null
+    },
+    {
+      "jmax": 1.0,
+      "dimension": 11,
+      "nu_over_kappa": 0.1,
+      "E0": 0.1983336107526432,
+      "E1": 3.1992623978519625,
+      "E2": 3.199500036106045,
+      "gap": 3.0009287870993195,
+      "change_in_E0": -4.934577558790565e-07,
+      "change_in_E1": -0.0007376021480376416
+    },
+    {
+      "jmax": 1.5,
+      "dimension": 23,
+      "nu_over_kappa": 0.1,
+      "E0": 0.19833361071296374,
+      "E1": 3.199262101946347,
+      "E2": 3.1994999967615096,
+      "gap": 3.0009284912333833,
+      "change_in_E0": -3.967945416682994e-11,
+      "change_in_E1": -2.959056155660278e-07
+    },
+    {
+      "jmax": 2.0,
+      "dimension": 42,
+      "nu_over_kappa": 0.1,
+      "E0": 0.19833361071296246,
+      "E1": 3.199262101931454,
+      "E2": 3.199499996760423,
+      "gap": 3.0009284912184917,
+      "change_in_E0": -1.27675647831893e-15,
+      "change_in_E1": -1.48929757415317e-11
+    },
+    {
+      "jmax": 3.0,
+      "dimension": 106,
+      "nu_over_kappa": 0.1,
+      "E0": 0.19833361071296246,
+      "E1": 3.199262101931454,
+      "E2": 3.199499996760422,
+      "gap": 3.0009284912184917,
+      "change_in_E0": 0.0,
+      "change_in_E1": 0.0
+    },
+    {
+      "jmax": 4.0,
+      "dimension": 215,
+      "nu_over_kappa": 0.1,
+      "E0": 0.19833361071296246,
+      "E1": 3.199262101931454,
+      "E2": 3.199499996760395,
+      "gap": 3.0009284912184917,
+      "change_in_E0": 0.0,
+      "change_in_E1": 0.0
+    },
+    {
+      "jmax": 5.0,
+      "dimension": 381,
+      "nu_over_kappa": 0.1,
+      "E0": 0.19833361071296246,
+      "E1": 3.199262101931454,
+      "E2": 3.1994999967604074,
+      "gap": 3.0009284912184917,
+      "change_in_E0": 0.0,
+      "change_in_E1": 0.0
+    },
+    {
+      "jmax": 6.0,
+      "dimension": 616,
+      "nu_over_kappa": 0.1,
+      "E0": 0.19833361071296246,
+      "E1": 3.199262101931454,
+      "E2": 3.1994999967604274,
+      "gap": 3.0009284912184917,
+      "change_in_E0": 0.0,
+      "change_in_E1": 0.0
+    },
+    {
+      "jmax": 0.5,
+      "dimension": 4,
+      "nu_over_kappa": 0.25,
+      "E0": 0.4896132975480656,
+      "E1": 3.4999999999999987,
+      "E2": 3.5051723827761645,
+      "gap": 3.010386702451933,
+      "change_in_E0": null,
+      "change_in_E1": null
+    },
+    {
+      "jmax": 1.0,
+      "dimension": 11,
+      "nu_over_kappa": 0.25,
+      "E0": 0.48959415736389206,
+      "E1": 3.4954060360874766,
+      "E2": 3.4968764093558304,
+      "gap": 3.0058118787235846,
+      "change_in_E0": -1.9140184173538355e-05,
+      "change_in_E1": -0.004593963912522092
+    },
+    {
+      "jmax": 1.5,
+      "dimension": 23,
+      "nu_over_kappa": 0.25,
+      "E0": 0.48959414774392684,
+      "E1": 3.495394566323329,
+      "E2": 3.49687487395574,
+      "gap": 3.005800418579402,
+      "change_in_E0": -9.61996521331443e-09,
+      "change_in_E1": -1.1469764147786776e-05
+    },
+    {
+      "jmax": 2.0,
+      "dimension": 42,
+      "nu_over_kappa": 0.25,
+      "E0": 0.48959414774200627,
+      "E1": 3.495394562713636,
+      "E2": 3.496874873686996,
+      "gap": 3.0058004149716293,
+      "change_in_E0": -1.9205748102990583e-12,
+      "change_in_E1": -3.609692988959523e-09
+    },
+    {
+      "jmax": 3.0,
+      "dimension": 106,
+      "nu_over_kappa": 0.25,
+      "E0": 0.4895941477420061,
+      "E1": 3.495394562713168,
+      "E2": 3.496874873686963,
+      "gap": 3.005800414971162,
+      "change_in_E0": -1.6653345369377348e-16,
+      "change_in_E1": -4.676259379721159e-13
+    },
+    {
+      "jmax": 4.0,
+      "dimension": 215,
+      "nu_over_kappa": 0.25,
+      "E0": 0.4895941477420061,
+      "E1": 3.495394562713168,
+      "E2": 3.4968748736869864,
+      "gap": 3.005800414971162,
+      "change_in_E0": 0.0,
+      "change_in_E1": 0.0
+    },
+    {
+      "jmax": 5.0,
+      "dimension": 381,
+      "nu_over_kappa": 0.25,
+      "E0": 0.4895941477420061,
+      "E1": 3.495394562713168,
+      "E2": 3.4968748736869832,
+      "gap": 3.005800414971162,
+      "change_in_E0": 0.0,
+      "change_in_E1": 0.0
+    },
+    {
+      "jmax": 6.0,
+      "dimension": 616,
+      "nu_over_kappa": 0.25,
+      "E0": 0.4895941477420061,
+      "E1": 3.495394562713168,
+      "E2": 3.496874873686973,
+      "gap": 3.005800414971162,
+      "change_in_E0": 0.0,
+      "change_in_E1": 0.0
+    },
+    {
+      "jmax": 0.5,
+      "dimension": 4,
+      "nu_over_kappa": 0.5,
+      "E0": 0.958804527486086,
+      "E1": 4.0,
+      "E2": 4.020268356680166,
+      "gap": 3.041195472513914,
+      "change_in_E0": null,
+      "change_in_E1": null
+    },
+    {
+      "jmax": 1.0,
+      "dimension": 11,
+      "nu_over_kappa": 0.5,
+      "E0": 0.9585057926432051,
+      "E1": 3.9818465130979863,
+      "E2": 3.987522490692752,
+      "gap": 3.0233407204547813,
+      "change_in_E0": -0.0002987348428808989,
+      "change_in_E1": -0.018153486902013682
+    },
+    {
+      "jmax": 1.5,
+      "dimension": 23,
+      "nu_over_kappa": 0.5,
+      "E0": 0.9585051920158415,
+      "E1": 3.9816679245131184,
+      "E2": 3.9874980094917456,
+      "gap": 3.0231627324972767,
+      "change_in_E0": -6.006273636227633e-07,
+      "change_in_E1": -0.00017858858486796692
+    },
+    {
+      "jmax": 2.0,
+      "dimension": 42,
+      "nu_over_kappa": 0.5,
+      "E0": 0.9585051915371683,
+      "E1": 3.981667699337406,
+      "E2": 3.9874979923386804,
+      "gap": 3.0231625078002375,
+      "change_in_E0": -4.786732121786486e-10,
+      "change_in_E1": -2.2517571229840883e-07
+    },
+    {
+      "jmax": 3.0,
+      "dimension": 106,
+      "nu_over_kappa": 0.5,
+      "E0": 0.9585051915369837,
+      "E1": 3.9816676992207665,
+      "E2": 3.9874979923330494,
+      "gap": 3.0231625076837827,
+      "change_in_E0": -1.8463008899516353e-13,
+      "change_in_E1": -1.166395868779091e-10
+    },
+    {
+      "jmax": 4.0,
+      "dimension": 215,
+      "nu_over_kappa": 0.5,
+      "E0": 0.9585051915369837,
+      "E1": 3.9816676992207665,
+      "E2": 3.987497992333083,
+      "gap": 3.0231625076837827,
+      "change_in_E0": 0.0,
+      "change_in_E1": 0.0
+    },
+    {
+      "jmax": 5.0,
+      "dimension": 381,
+      "nu_over_kappa": 0.5,
+      "E0": 0.9585051915369837,
+      "E1": 3.9816676992207665,
+      "E2": 3.9874979923330494,
+      "gap": 3.0231625076837827,
+      "change_in_E0": 0.0,
+      "change_in_E1": 0.0
+    },
+    {
+      "jmax": 6.0,
+      "dimension": 616,
+      "nu_over_kappa": 0.5,
+      "E0": 0.9585051915369837,
+      "E1": 3.9816676992207665,
+      "E2": 3.9874979923330405,
+      "gap": 3.0231625076837827,
+      "change_in_E0": 0.0,
+      "change_in_E1": 0.0
+    },
+    {
+      "jmax": 0.5,
+      "dimension": 4,
+      "nu_over_kappa": 1,
+      "E0": 1.840397168978756,
+      "E1": 5.0,
+      "E2": 5.074894410696225,
+      "gap": 3.1596028310212443,
+      "change_in_E0": null,
+      "change_in_E1": null,
+      "analytic_bounds_evaluated_numerically": {
+        "retained_dimension": 4,
+        "extended_dimension": 11,
+        "first_omitted_electric_threshold_exact": "13/2",
+        "remaining_electric_threshold_exact": "12",
+        "hermiticity_error": 0.0,
+        "energy_intervals_evaluated_numerically": [
+          {
+            "index": 0,
+            "lower_estimate": 1.8343094913668554,
+            "upper_estimate": 1.840397168978756,
+            "width_estimate": 0.006087677611900544,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          },
+          {
+            "index": 1,
+            "lower_estimate": 4.801777670021915,
+            "upper_estimate": 5.0,
+            "width_estimate": 0.1982223299780852,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          }
+        ],
+        "numerical_ordering_consistent": true,
+        "roundoff_limited": false,
+        "roundoff_diagnostic_scale": 2.605323364453701e-12,
+        "roundoff_diagnostic_is_error_bound": false,
+        "machine_certified": false,
+        "reason": "Eigenvalue evaluations and matrix inputs use floating point.",
+        "gap_interval_evaluated_numerically": [
+          2.961380501043159,
+          3.1656905086331446
+        ]
+      }
+    },
+    {
+      "jmax": 1.0,
+      "dimension": 11,
+      "nu_over_kappa": 1,
+      "E0": 1.8360460285814744,
+      "E1": 4.930560435217819,
+      "E2": 4.950356134662641,
+      "gap": 3.0945144066363444,
+      "change_in_E0": -0.004351140397281572,
+      "change_in_E1": -0.06943956478218105,
+      "analytic_bounds_evaluated_numerically": {
+        "retained_dimension": 11,
+        "extended_dimension": 23,
+        "first_omitted_electric_threshold_exact": "12",
+        "remaining_electric_threshold_exact": "18",
+        "hermiticity_error": 0.0,
+        "energy_intervals_evaluated_numerically": [
+          {
+            "index": 0,
+            "lower_estimate": 1.8360043553374297,
+            "upper_estimate": 1.8360460285814744,
+            "width_estimate": 4.167324404469319e-05,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          },
+          {
+            "index": 1,
+            "lower_estimate": 4.927261458532848,
+            "upper_estimate": 4.930560435217819,
+            "width_estimate": 0.0032989766849711444,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          }
+        ],
+        "numerical_ordering_consistent": true,
+        "roundoff_limited": false,
+        "roundoff_diagnostic_scale": 8.963063843330713e-12,
+        "roundoff_diagnostic_is_error_bound": false,
+        "machine_certified": false,
+        "reason": "Eigenvalue evaluations and matrix inputs use floating point.",
+        "gap_interval_evaluated_numerically": [
+          3.091215429951373,
+          3.0945560798803893
+        ]
+      }
+    },
+    {
+      "jmax": 1.5,
+      "dimension": 23,
+      "nu_over_kappa": 1,
+      "E0": 1.8360111129668724,
+      "E1": 4.927983118216209,
+      "E2": 4.949969813102717,
+      "gap": 3.0919720052493362,
+      "change_in_E0": -3.491561460200465e-05,
+      "change_in_E1": -0.0025773170016103464,
+      "analytic_bounds_evaluated_numerically": {
+        "retained_dimension": 23,
+        "extended_dimension": 42,
+        "first_omitted_electric_threshold_exact": "18",
+        "remaining_electric_threshold_exact": "26",
+        "hermiticity_error": 0.0,
+        "energy_intervals_evaluated_numerically": [
+          {
+            "index": 0,
+            "lower_estimate": 1.8360109894150305,
+            "upper_estimate": 1.8360111129668724,
+            "width_estimate": 1.2355184186851886e-07,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          },
+          {
+            "index": 1,
+            "lower_estimate": 4.927968137816927,
+            "upper_estimate": 4.927983118216209,
+            "width_estimate": 1.4980399281938617e-05,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          }
+        ],
+        "numerical_ordering_consistent": true,
+        "roundoff_limited": false,
+        "roundoff_diagnostic_scale": 2.6679458642320243e-11,
+        "roundoff_diagnostic_is_error_bound": false,
+        "machine_certified": false,
+        "reason": "Eigenvalue evaluations and matrix inputs use floating point.",
+        "gap_interval_evaluated_numerically": [
+          3.0919570248500543,
+          3.091972128801178
+        ]
+      }
+    },
+    {
+      "jmax": 2.0,
+      "dimension": 42,
+      "nu_over_kappa": 1,
+      "E0": 1.8360110025337173,
+      "E1": 4.92797004954677,
+      "E2": 4.949968727228555,
+      "gap": 3.091959047013053,
+      "change_in_E0": -1.1043315506498175e-07,
+      "change_in_E1": -1.3068669438176528e-05,
+      "analytic_bounds_evaluated_numerically": {
+        "retained_dimension": 42,
+        "extended_dimension": 69,
+        "first_omitted_electric_threshold_exact": "26",
+        "remaining_electric_threshold_exact": "69/2",
+        "hermiticity_error": 0.0,
+        "energy_intervals_evaluated_numerically": [
+          {
+            "index": 0,
+            "lower_estimate": 1.8360110023508571,
+            "upper_estimate": 1.8360110025337173,
+            "width_estimate": 1.828601714493061e-10,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          },
+          {
+            "index": 1,
+            "lower_estimate": 4.927970019955698,
+            "upper_estimate": 4.92797004954677,
+            "width_estimate": 2.9591072703283317e-08,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          }
+        ],
+        "numerical_ordering_consistent": true,
+        "roundoff_limited": false,
+        "roundoff_diagnostic_scale": 6.025786960985912e-11,
+        "roundoff_diagnostic_is_error_bound": false,
+        "machine_certified": false,
+        "reason": "Eigenvalue evaluations and matrix inputs use floating point.",
+        "gap_interval_evaluated_numerically": [
+          3.0919590174219804,
+          3.091959047195913
+        ]
+      }
+    },
+    {
+      "jmax": 3.0,
+      "dimension": 106,
+      "nu_over_kappa": 1,
+      "E0": 1.8360110023644716,
+      "E1": 4.927970022453064,
+      "E2": 4.949968725805812,
+      "gap": 3.0919590200885922,
+      "change_in_E0": -1.6924572854293274e-10,
+      "change_in_E1": -2.709370683362522e-08,
+      "analytic_bounds_evaluated_numerically": {
+        "retained_dimension": 106,
+        "extended_dimension": 154,
+        "first_omitted_electric_threshold_exact": "45",
+        "remaining_electric_threshold_exact": "56",
+        "hermiticity_error": 0.0,
+        "energy_intervals_evaluated_numerically": [
+          {
+            "index": 0,
+            "lower_estimate": 1.8360110023644716,
+            "upper_estimate": 1.8360110023644716,
+            "width_estimate": 0.0,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": true
+          },
+          {
+            "index": 1,
+            "lower_estimate": 4.927970022453046,
+            "upper_estimate": 4.927970022453064,
+            "width_estimate": 1.7763568394002505e-14,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": true
+          }
+        ],
+        "numerical_ordering_consistent": true,
+        "roundoff_limited": true,
+        "roundoff_diagnostic_scale": 2.3956359134811463e-10,
+        "roundoff_diagnostic_is_error_bound": false,
+        "machine_certified": false,
+        "reason": "Eigenvalue evaluations and matrix inputs use floating point.",
+        "gap_interval_evaluated_numerically": [
+          3.0919590200885745,
+          3.0919590200885922
+        ]
+      }
+    },
+    {
+      "jmax": 4.0,
+      "dimension": 215,
+      "nu_over_kappa": 1,
+      "E0": 1.8360110023644716,
+      "E1": 4.927970022453048,
+      "E2": 4.949968725805818,
+      "gap": 3.0919590200885763,
+      "change_in_E0": 0.0,
+      "change_in_E1": -1.5987211554602254e-14,
+      "analytic_bounds_evaluated_numerically": {
+        "retained_dimension": 215,
+        "extended_dimension": 290,
+        "first_omitted_electric_threshold_exact": "69",
+        "remaining_electric_threshold_exact": "165/2",
+        "hermiticity_error": 0.0,
+        "energy_intervals_evaluated_numerically": [
+          {
+            "index": 0,
+            "lower_estimate": 1.8360110023644716,
+            "upper_estimate": 1.8360110023644716,
+            "width_estimate": 0.0,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": true
+          },
+          {
+            "index": 1,
+            "lower_estimate": 4.927970022453049,
+            "upper_estimate": 4.927970022453048,
+            "width_estimate": -1.7763568394002505e-15,
+            "numerical_ordering_consistent": false,
+            "roundoff_limited": true
+          }
+        ],
+        "numerical_ordering_consistent": false,
+        "roundoff_limited": true,
+        "roundoff_diagnostic_scale": 7.066674154646867e-10,
+        "roundoff_diagnostic_is_error_bound": false,
+        "machine_certified": false,
+        "reason": "Eigenvalue evaluations and matrix inputs use floating point.",
+        "gap_interval_evaluated_numerically": [
+          3.091959020088578,
+          3.0919590200885763
+        ]
+      }
+    },
+    {
+      "jmax": 5.0,
+      "dimension": 381,
+      "nu_over_kappa": 1,
+      "E0": 1.8360110023644716,
+      "E1": 4.927970022453047,
+      "E2": 4.949968725805779,
+      "gap": 3.0919590200885754,
+      "change_in_E0": 0.0,
+      "change_in_E1": -8.881784197001252e-16,
+      "analytic_bounds_evaluated_numerically": {
+        "retained_dimension": 381,
+        "extended_dimension": 489,
+        "first_omitted_electric_threshold_exact": "98",
+        "remaining_electric_threshold_exact": "114",
+        "hermiticity_error": 0.0,
+        "energy_intervals_evaluated_numerically": [
+          {
+            "index": 0,
+            "lower_estimate": 1.8360110023644716,
+            "upper_estimate": 1.8360110023644716,
+            "width_estimate": 0.0,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": true
+          },
+          {
+            "index": 1,
+            "lower_estimate": 4.927970022453048,
+            "upper_estimate": 4.927970022453047,
+            "width_estimate": -8.881784197001252e-16,
+            "numerical_ordering_consistent": false,
+            "roundoff_limited": true
+          }
+        ],
+        "numerical_ordering_consistent": false,
+        "roundoff_limited": true,
+        "roundoff_diagnostic_scale": 1.7197522249317736e-09,
+        "roundoff_diagnostic_is_error_bound": false,
+        "machine_certified": false,
+        "reason": "Eigenvalue evaluations and matrix inputs use floating point.",
+        "gap_interval_evaluated_numerically": [
+          3.0919590200885763,
+          3.0919590200885754
+        ]
+      }
+    },
+    {
+      "jmax": 6.0,
+      "dimension": 616,
+      "nu_over_kappa": 1,
+      "E0": 1.8360110023644716,
+      "E1": 4.927970022453047,
+      "E2": 4.949968725805835,
+      "gap": 3.0919590200885754,
+      "change_in_E0": 0.0,
+      "change_in_E1": 0.0,
+      "analytic_bounds_evaluated_numerically": {
+        "retained_dimension": 616,
+        "extended_dimension": 763,
+        "first_omitted_electric_threshold_exact": "132",
+        "remaining_electric_threshold_exact": "301/2",
+        "hermiticity_error": 0.0,
+        "energy_intervals_evaluated_numerically": [
+          {
+            "index": 0,
+            "lower_estimate": 1.8360110023644716,
+            "upper_estimate": 1.8360110023644716,
+            "width_estimate": 0.0,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": true
+          },
+          {
+            "index": 1,
+            "lower_estimate": 4.927970022453049,
+            "upper_estimate": 4.927970022453047,
+            "width_estimate": -2.6645352591003757e-15,
+            "numerical_ordering_consistent": false,
+            "roundoff_limited": true
+          }
+        ],
+        "numerical_ordering_consistent": false,
+        "roundoff_limited": true,
+        "roundoff_diagnostic_scale": 3.6592710480726794e-09,
+        "roundoff_diagnostic_is_error_bound": false,
+        "machine_certified": false,
+        "reason": "Eigenvalue evaluations and matrix inputs use floating point.",
+        "gap_interval_evaluated_numerically": [
+          3.091959020088578,
+          3.0919590200885754
+        ]
+      }
+    },
+    {
+      "jmax": 0.5,
+      "dimension": 4,
+      "nu_over_kappa": 2,
+      "E0": 3.4247476563465282,
+      "E1": 6.999999999999998,
+      "E2": 7.22699847236145,
+      "gap": 3.57525234365347,
+      "change_in_E0": null,
+      "change_in_E1": null
+    },
+    {
+      "jmax": 1.0,
+      "dimension": 11,
+      "nu_over_kappa": 2,
+      "E0": 3.373808205906708,
+      "E1": 6.756562318439257,
+      "E2": 6.805474512593503,
+      "gap": 3.382754112532549,
+      "change_in_E0": -0.05093945043982018,
+      "change_in_E1": -0.2434376815607413
+    },
+    {
+      "jmax": 1.5,
+      "dimension": 23,
+      "nu_over_kappa": 2,
+      "E0": 3.3722260379487357,
+      "E1": 6.727394299744852,
+      "E2": 6.799619326078873,
+      "gap": 3.3551682617961167,
+      "change_in_E0": -0.0015821679579723913,
+      "change_in_E1": -0.02916801869440455
+    },
+    {
+      "jmax": 2.0,
+      "dimension": 42,
+      "nu_over_kappa": 2,
+      "E0": 3.372206586854414,
+      "E1": 6.726795970210087,
+      "E2": 6.799552870549632,
+      "gap": 3.3545893833556724,
+      "change_in_E0": -1.9451094321443207e-05,
+      "change_in_E1": -0.0005983295347657958
+    },
+    {
+      "jmax": 3.0,
+      "dimension": 106,
+      "nu_over_kappa": 2,
+      "E0": 3.372206470497719,
+      "E1": 6.72679098979616,
+      "E2": 6.799552522094791,
+      "gap": 3.354584519298441,
+      "change_in_E0": -1.1635669538989646e-07,
+      "change_in_E1": -4.980413926602978e-06
+    },
+    {
+      "jmax": 4.0,
+      "dimension": 215,
+      "nu_over_kappa": 2,
+      "E0": 3.3722064704969728,
+      "E1": 6.726790989748361,
+      "E2": 6.799552522093126,
+      "gap": 3.354584519251388,
+      "change_in_E0": -7.460698725481052e-13,
+      "change_in_E1": -4.779909801300164e-11
+    },
+    {
+      "jmax": 5.0,
+      "dimension": 381,
+      "nu_over_kappa": 2,
+      "E0": 3.3722064704969728,
+      "E1": 6.726790989748361,
+      "E2": 6.7995525220931174,
+      "gap": 3.354584519251388,
+      "change_in_E0": 0.0,
+      "change_in_E1": 0.0
+    },
+    {
+      "jmax": 6.0,
+      "dimension": 616,
+      "nu_over_kappa": 2,
+      "E0": 3.3722064704969728,
+      "E1": 6.726790989748361,
+      "E2": 6.799552522093153,
+      "gap": 3.354584519251388,
+      "change_in_E0": 0.0,
+      "change_in_E1": 0.0
+    },
+    {
+      "jmax": 0.5,
+      "dimension": 4,
+      "nu_over_kappa": 4,
+      "E0": 6.21077815322448,
+      "E1": 11.0,
+      "E2": 11.439649529044482,
+      "gap": 4.78922184677552,
+      "change_in_E0": null,
+      "change_in_E1": null,
+      "analytic_bounds_evaluated_numerically": {
+        "retained_dimension": 4,
+        "extended_dimension": 11,
+        "first_omitted_electric_threshold_exact": "13/2",
+        "remaining_electric_threshold_exact": "12",
+        "hermiticity_error": 0.0,
+        "energy_intervals_evaluated_numerically": [
+          {
+            "index": 0,
+            "lower_estimate": 4.4341500908729525,
+            "upper_estimate": 6.21077815322448,
+            "width_estimate": 1.7766280623515271,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          },
+          {
+            "index": 1,
+            "lower_estimate": 6.9999999999999964,
+            "upper_estimate": 11.0,
+            "width_estimate": 4.0000000000000036,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          }
+        ],
+        "numerical_ordering_consistent": true,
+        "roundoff_limited": false,
+        "roundoff_diagnostic_scale": 3.8558785793914775e-12,
+        "roundoff_diagnostic_is_error_bound": false,
+        "machine_certified": false,
+        "reason": "Eigenvalue evaluations and matrix inputs use floating point.",
+        "gap_interval_evaluated_numerically": [
+          0.7892218467755168,
+          6.5658499091270475
+        ]
+      }
+    },
+    {
+      "jmax": 1.0,
+      "dimension": 11,
+      "nu_over_kappa": 4,
+      "E0": 5.836362410138079,
+      "E1": 10.212196070539859,
+      "E2": 10.276097379387108,
+      "gap": 4.37583366040178,
+      "change_in_E0": -0.37441574308640035,
+      "change_in_E1": -0.7878039294601411,
+      "analytic_bounds_evaluated_numerically": {
+        "retained_dimension": 11,
+        "extended_dimension": 23,
+        "first_omitted_electric_threshold_exact": "12",
+        "remaining_electric_threshold_exact": "18",
+        "hermiticity_error": 0.0,
+        "energy_intervals_evaluated_numerically": [
+          {
+            "index": 0,
+            "lower_estimate": 5.742543968970232,
+            "upper_estimate": 5.836362410138079,
+            "width_estimate": 0.09381844116784777,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          },
+          {
+            "index": 1,
+            "lower_estimate": 9.257048195296669,
+            "upper_estimate": 10.212196070539859,
+            "width_estimate": 0.9551478752431901,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          }
+        ],
+        "numerical_ordering_consistent": true,
+        "roundoff_limited": false,
+        "roundoff_diagnostic_scale": 1.1828805477273865e-11,
+        "roundoff_diagnostic_is_error_bound": false,
+        "machine_certified": false,
+        "reason": "Eigenvalue evaluations and matrix inputs use floating point.",
+        "gap_interval_evaluated_numerically": [
+          3.4206857851585895,
+          4.469652101569627
+        ]
+      }
+    },
+    {
+      "jmax": 1.5,
+      "dimension": 23,
+      "nu_over_kappa": 4,
+      "E0": 5.798603856071526,
+      "E1": 10.022083334316514,
+      "E2": 10.199452940880247,
+      "gap": 4.223479478244989,
+      "change_in_E0": -0.03775855406655371,
+      "change_in_E1": -0.19011273622334457,
+      "analytic_bounds_evaluated_numerically": {
+        "retained_dimension": 23,
+        "extended_dimension": 42,
+        "first_omitted_electric_threshold_exact": "18",
+        "remaining_electric_threshold_exact": "26",
+        "hermiticity_error": 0.0,
+        "energy_intervals_evaluated_numerically": [
+          {
+            "index": 0,
+            "lower_estimate": 5.795816319863303,
+            "upper_estimate": 5.798603856071526,
+            "width_estimate": 0.002787536208222363,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          },
+          {
+            "index": 1,
+            "lower_estimate": 9.99071639669659,
+            "upper_estimate": 10.022083334316514,
+            "width_estimate": 0.03136693761992504,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          }
+        ],
+        "numerical_ordering_consistent": true,
+        "roundoff_limited": false,
+        "roundoff_diagnostic_scale": 3.151399141643196e-11,
+        "roundoff_diagnostic_is_error_bound": false,
+        "machine_certified": false,
+        "reason": "Eigenvalue evaluations and matrix inputs use floating point.",
+        "gap_interval_evaluated_numerically": [
+          4.192112540625064,
+          4.226267014453211
+        ]
+      }
+    },
+    {
+      "jmax": 2.0,
+      "dimension": 42,
+      "nu_over_kappa": 4,
+      "E0": 5.796925034789091,
+      "E1": 10.006832645171901,
+      "E2": 10.195937283574668,
+      "gap": 4.20990761038281,
+      "change_in_E0": -0.0016788212824350168,
+      "change_in_E1": -0.01525068914461336,
+      "analytic_bounds_evaluated_numerically": {
+        "retained_dimension": 42,
+        "extended_dimension": 69,
+        "first_omitted_electric_threshold_exact": "26",
+        "remaining_electric_threshold_exact": "69/2",
+        "hermiticity_error": 0.0,
+        "energy_intervals_evaluated_numerically": [
+          {
+            "index": 0,
+            "lower_estimate": 5.79687357802025,
+            "upper_estimate": 5.796925034789091,
+            "width_estimate": 5.145676884055206e-05,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          },
+          {
+            "index": 1,
+            "lower_estimate": 10.006064475312089,
+            "upper_estimate": 10.006832645171901,
+            "width_estimate": 0.0007681698598123177,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          }
+        ],
+        "numerical_ordering_consistent": true,
+        "roundoff_limited": false,
+        "roundoff_diagnostic_scale": 6.894513326569781e-11,
+        "roundoff_diagnostic_is_error_bound": false,
+        "machine_certified": false,
+        "reason": "Eigenvalue evaluations and matrix inputs use floating point.",
+        "gap_interval_evaluated_numerically": [
+          4.209139440522998,
+          4.209959067151651
+        ]
+      }
+    },
+    {
+      "jmax": 3.0,
+      "dimension": 106,
+      "nu_over_kappa": 4,
+      "E0": 5.79688777917541,
+      "E1": 10.00631531436637,
+      "E2": 10.195863420730397,
+      "gap": 4.20942753519096,
+      "change_in_E0": -3.725561368028707e-05,
+      "change_in_E1": -0.0005173308055308468,
+      "analytic_bounds_evaluated_numerically": {
+        "retained_dimension": 106,
+        "extended_dimension": 154,
+        "first_omitted_electric_threshold_exact": "45",
+        "remaining_electric_threshold_exact": "56",
+        "hermiticity_error": 0.0,
+        "energy_intervals_evaluated_numerically": [
+          {
+            "index": 0,
+            "lower_estimate": 5.7968877751839205,
+            "upper_estimate": 5.79688777917541,
+            "width_estimate": 3.991489805343917e-09,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          },
+          {
+            "index": 1,
+            "lower_estimate": 10.00631522068909,
+            "upper_estimate": 10.00631531436637,
+            "width_estimate": 9.367727926701264e-08,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          }
+        ],
+        "numerical_ordering_consistent": true,
+        "roundoff_limited": false,
+        "roundoff_diagnostic_scale": 2.590376808403742e-10,
+        "roundoff_diagnostic_is_error_bound": false,
+        "machine_certified": false,
+        "reason": "Eigenvalue evaluations and matrix inputs use floating point.",
+        "gap_interval_evaluated_numerically": [
+          4.2094274415136805,
+          4.20942753918245
+        ]
+      }
+    },
+    {
+      "jmax": 4.0,
+      "dimension": 215,
+      "nu_over_kappa": 4,
+      "E0": 5.796887775839386,
+      "E1": 10.006315237571892,
+      "E2": 10.195863415274626,
+      "gap": 4.209427461732505,
+      "change_in_E0": -3.3360239015678417e-09,
+      "change_in_E1": -7.679447833197628e-08,
+      "analytic_bounds_evaluated_numerically": {
+        "retained_dimension": 215,
+        "extended_dimension": 290,
+        "first_omitted_electric_threshold_exact": "69",
+        "remaining_electric_threshold_exact": "165/2",
+        "hermiticity_error": 0.0,
+        "energy_intervals_evaluated_numerically": [
+          {
+            "index": 0,
+            "lower_estimate": 5.7968877758393305,
+            "upper_estimate": 5.796887775839386,
+            "width_estimate": 5.595524044110789e-14,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": true
+          },
+          {
+            "index": 1,
+            "lower_estimate": 10.00631523757012,
+            "upper_estimate": 10.006315237571892,
+            "width_estimate": 1.7710277688820497e-12,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": true
+          }
+        ],
+        "numerical_ordering_consistent": true,
+        "roundoff_limited": true,
+        "roundoff_diagnostic_scale": 7.43429414883709e-10,
+        "roundoff_diagnostic_is_error_bound": false,
+        "machine_certified": false,
+        "reason": "Eigenvalue evaluations and matrix inputs use floating point.",
+        "gap_interval_evaluated_numerically": [
+          4.209427461730734,
+          4.209427461732561
+        ]
+      }
+    },
+    {
+      "jmax": 5.0,
+      "dimension": 381,
+      "nu_over_kappa": 4,
+      "E0": 5.796887775839337,
+      "E1": 10.00631523757033,
+      "E2": 10.195863415274603,
+      "gap": 4.209427461730994,
+      "change_in_E0": -4.973799150320701e-14,
+      "change_in_E1": -1.5614176618328202e-12,
+      "analytic_bounds_evaluated_numerically": {
+        "retained_dimension": 381,
+        "extended_dimension": 489,
+        "first_omitted_electric_threshold_exact": "98",
+        "remaining_electric_threshold_exact": "114",
+        "hermiticity_error": 0.0,
+        "energy_intervals_evaluated_numerically": [
+          {
+            "index": 0,
+            "lower_estimate": 5.796887775839337,
+            "upper_estimate": 5.796887775839337,
+            "width_estimate": 0.0,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": true
+          },
+          {
+            "index": 1,
+            "lower_estimate": 10.006315237570329,
+            "upper_estimate": 10.00631523757033,
+            "width_estimate": 1.7763568394002505e-15,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": true
+          }
+        ],
+        "numerical_ordering_consistent": true,
+        "roundoff_limited": true,
+        "roundoff_diagnostic_scale": 1.781838214196367e-09,
+        "roundoff_diagnostic_is_error_bound": false,
+        "machine_certified": false,
+        "reason": "Eigenvalue evaluations and matrix inputs use floating point.",
+        "gap_interval_evaluated_numerically": [
+          4.209427461730992,
+          4.209427461730994
+        ]
+      }
+    },
+    {
+      "jmax": 6.0,
+      "dimension": 616,
+      "nu_over_kappa": 4,
+      "E0": 5.796887775839337,
+      "E1": 10.006315237570329,
+      "E2": 10.195863415274589,
+      "gap": 4.209427461730992,
+      "change_in_E0": 0.0,
+      "change_in_E1": -1.7763568394002505e-15,
+      "analytic_bounds_evaluated_numerically": {
+        "retained_dimension": 616,
+        "extended_dimension": 763,
+        "first_omitted_electric_threshold_exact": "132",
+        "remaining_electric_threshold_exact": "301/2",
+        "hermiticity_error": 0.0,
+        "energy_intervals_evaluated_numerically": [
+          {
+            "index": 0,
+            "lower_estimate": 5.796887775839337,
+            "upper_estimate": 5.796887775839337,
+            "width_estimate": 0.0,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": true
+          },
+          {
+            "index": 1,
+            "lower_estimate": 10.006315237570329,
+            "upper_estimate": 10.006315237570329,
+            "width_estimate": 0.0,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": true
+          }
+        ],
+        "numerical_ordering_consistent": true,
+        "roundoff_limited": true,
+        "roundoff_diagnostic_scale": 3.7562519570746424e-09,
+        "roundoff_diagnostic_is_error_bound": false,
+        "machine_certified": false,
+        "reason": "Eigenvalue evaluations and matrix inputs use floating point.",
+        "gap_interval_evaluated_numerically": [
+          4.209427461730992,
+          4.209427461730992
+        ]
+      }
+    },
+    {
+      "jmax": 0.5,
+      "dimension": 4,
+      "nu_over_kappa": 10,
+      "E0": 13.786397387820244,
+      "E1": 22.999999999999986,
+      "E2": 23.569728575260708,
+      "gap": 9.213602612179741,
+      "change_in_E0": null,
+      "change_in_E1": null
+    },
+    {
+      "jmax": 1.0,
+      "dimension": 11,
+      "nu_over_kappa": 10,
+      "E0": 11.451833472822159,
+      "E1": 19.020232338625895,
+      "E2": 19.648810372796593,
+      "gap": 7.568398865803736,
+      "change_in_E0": -2.3345639149980855,
+      "change_in_E1": -3.9797676613740904
+    },
+    {
+      "jmax": 1.5,
+      "dimension": 23,
+      "nu_over_kappa": 10,
+      "E0": 10.83164109032806,
+      "E1": 17.945837105622566,
+      "E2": 18.495133856212924,
+      "gap": 7.114196015294505,
+      "change_in_E0": -0.620192382494098,
+      "change_in_E1": -1.0743952330033295
+    },
+    {
+      "jmax": 2.0,
+      "dimension": 42,
+      "nu_over_kappa": 10,
+      "E0": 10.726744415323695,
+      "E1": 17.72273972473263,
+      "E2": 18.245600215636735,
+      "gap": 6.995995309408935,
+      "change_in_E0": -0.10489667500436539,
+      "change_in_E1": -0.2230973808899357
+    },
+    {
+      "jmax": 3.0,
+      "dimension": 106,
+      "nu_over_kappa": 10,
+      "E0": 10.71574288468689,
+      "E1": 17.681227905797908,
+      "E2": 18.215035618209832,
+      "gap": 6.965485021111018,
+      "change_in_E0": -0.011001530636805867,
+      "change_in_E1": -0.041511818934722555
+    },
+    {
+      "jmax": 4.0,
+      "dimension": 215,
+      "nu_over_kappa": 10,
+      "E0": 10.715719926282953,
+      "E1": 17.681032994943656,
+      "E2": 18.21496569031379,
+      "gap": 6.965313068660704,
+      "change_in_E0": -2.295840393706783e-05,
+      "change_in_E1": -0.0001949108542511624
+    },
+    {
+      "jmax": 5.0,
+      "dimension": 381,
+      "nu_over_kappa": 10,
+      "E0": 10.715719916949805,
+      "E1": 17.681032865965793,
+      "E2": 18.214965662703165,
+      "gap": 6.965312949015988,
+      "change_in_E0": -9.333147588108659e-09,
+      "change_in_E1": -1.2897786305643422e-07
+    },
+    {
+      "jmax": 6.0,
+      "dimension": 616,
+      "nu_over_kappa": 10,
+      "E0": 10.71571991694882,
+      "E1": 17.681032865946925,
+      "E2": 18.214965662700322,
+      "gap": 6.965312948998104,
+      "change_in_E0": -9.841016890277388e-13,
+      "change_in_E1": -1.886846234810946e-11
+    },
+    {
+      "jmax": 0.5,
+      "dimension": 4,
+      "nu_over_kappa": 40,
+      "E0": 50.25955676490417,
+      "E1": 83.0,
+      "E2": 83.5980591565897,
+      "gap": 32.74044323509583,
+      "change_in_E0": null,
+      "change_in_E1": null,
+      "analytic_bounds_evaluated_numerically": {
+        "retained_dimension": 4,
+        "extended_dimension": 11,
+        "first_omitted_electric_threshold_exact": "13/2",
+        "remaining_electric_threshold_exact": "12",
+        "hermiticity_error": 0.0,
+        "energy_intervals_evaluated_numerically": [
+          {
+            "index": 0,
+            "lower_estimate": -6.11552429218091,
+            "upper_estimate": 50.25955676490417,
+            "width_estimate": 56.375081057085076,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          },
+          {
+            "index": 1,
+            "lower_estimate": 1.876905466817543,
+            "upper_estimate": 83.0,
+            "width_estimate": 81.12309453318245,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          }
+        ],
+        "numerical_ordering_consistent": true,
+        "roundoff_limited": false,
+        "roundoff_diagnostic_scale": 2.349801191076859e-11,
+        "roundoff_diagnostic_is_error_bound": false,
+        "machine_certified": false,
+        "reason": "Eigenvalue evaluations and matrix inputs use floating point.",
+        "gap_interval_evaluated_numerically": [
+          -48.38265129808663,
+          89.11552429218091
+        ]
+      }
+    },
+    {
+      "jmax": 1.0,
+      "dimension": 11,
+      "nu_over_kappa": 40,
+      "E0": 35.17648847652019,
+      "E1": 56.82075443331919,
+      "E2": 62.94156245813638,
+      "gap": 21.644265956798996,
+      "change_in_E0": -15.083068288383977,
+      "change_in_E1": -26.179245566680812,
+      "analytic_bounds_evaluated_numerically": {
+        "retained_dimension": 11,
+        "extended_dimension": 23,
+        "first_omitted_electric_threshold_exact": "12",
+        "remaining_electric_threshold_exact": "18",
+        "hermiticity_error": 0.0,
+        "energy_intervals_evaluated_numerically": [
+          {
+            "index": 0,
+            "lower_estimate": -3.6332890243057956,
+            "upper_estimate": 35.17648847652019,
+            "width_estimate": 38.80977750082599,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          },
+          {
+            "index": 1,
+            "lower_estimate": 4.7230085182595865,
+            "upper_estimate": 56.82075443331919,
+            "width_estimate": 52.097745915059605,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          }
+        ],
+        "numerical_ordering_consistent": true,
+        "roundoff_limited": false,
+        "roundoff_diagnostic_scale": 5.64979836657322e-11,
+        "roundoff_diagnostic_is_error_bound": false,
+        "machine_certified": false,
+        "reason": "Eigenvalue evaluations and matrix inputs use floating point.",
+        "gap_interval_evaluated_numerically": [
+          -30.453479958260605,
+          60.454043457624984
+        ]
+      }
+    },
+    {
+      "jmax": 1.5,
+      "dimension": 23,
+      "nu_over_kappa": 40,
+      "E0": 28.31233135159698,
+      "E1": 45.739187780849996,
+      "E2": 50.876843150219585,
+      "gap": 17.426856429253014,
+      "change_in_E0": -6.86415712492321,
+      "change_in_E1": -11.081566652469192,
+      "analytic_bounds_evaluated_numerically": {
+        "retained_dimension": 23,
+        "extended_dimension": 42,
+        "first_omitted_electric_threshold_exact": "18",
+        "remaining_electric_threshold_exact": "26",
+        "hermiticity_error": 0.0,
+        "energy_intervals_evaluated_numerically": [
+          {
+            "index": 0,
+            "lower_estimate": 1.3501550979728363,
+            "upper_estimate": 28.31233135159698,
+            "width_estimate": 26.962176253624143,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          },
+          {
+            "index": 1,
+            "lower_estimate": 8.581878705550825,
+            "upper_estimate": 45.739187780849996,
+            "width_estimate": 37.15730907529917,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          }
+        ],
+        "numerical_ordering_consistent": true,
+        "roundoff_limited": false,
+        "roundoff_diagnostic_scale": 1.0942868081956474e-10,
+        "roundoff_diagnostic_is_error_bound": false,
+        "machine_certified": false,
+        "reason": "Eigenvalue evaluations and matrix inputs use floating point.",
+        "gap_interval_evaluated_numerically": [
+          -19.730452646046157,
+          44.38903268287716
+        ]
+      }
+    },
+    {
+      "jmax": 2.0,
+      "dimension": 42,
+      "nu_over_kappa": 40,
+      "E0": 25.478077423823336,
+      "E1": 41.02230024932759,
+      "E2": 44.60686298238429,
+      "gap": 15.544222825504256,
+      "change_in_E0": -2.834253927773645,
+      "change_in_E1": -4.716887531522403,
+      "analytic_bounds_evaluated_numerically": {
+        "retained_dimension": 42,
+        "extended_dimension": 69,
+        "first_omitted_electric_threshold_exact": "26",
+        "remaining_electric_threshold_exact": "69/2",
+        "hermiticity_error": 0.0,
+        "energy_intervals_evaluated_numerically": [
+          {
+            "index": 0,
+            "lower_estimate": 7.953259825702807,
+            "upper_estimate": 25.478077423823336,
+            "width_estimate": 17.524817598120528,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          },
+          {
+            "index": 1,
+            "lower_estimate": 14.531100268132425,
+            "upper_estimate": 41.02230024932759,
+            "width_estimate": 26.491199981195166,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          }
+        ],
+        "numerical_ordering_consistent": true,
+        "roundoff_limited": false,
+        "roundoff_diagnostic_scale": 1.97674670772817e-10,
+        "roundoff_diagnostic_is_error_bound": false,
+        "machine_certified": false,
+        "reason": "Eigenvalue evaluations and matrix inputs use floating point.",
+        "gap_interval_evaluated_numerically": [
+          -10.946977155690911,
+          33.069040423624784
+        ]
+      }
+    },
+    {
+      "jmax": 3.0,
+      "dimension": 106,
+      "nu_over_kappa": 40,
+      "E0": 24.136808793908408,
+      "E1": 38.98544369128837,
+      "E2": 40.873666995663434,
+      "gap": 14.84863489737996,
+      "change_in_E0": -1.3412686299149286,
+      "change_in_E1": -2.0368565580392257,
+      "analytic_bounds_evaluated_numerically": {
+        "retained_dimension": 106,
+        "extended_dimension": 154,
+        "first_omitted_electric_threshold_exact": "45",
+        "remaining_electric_threshold_exact": "56",
+        "hermiticity_error": 0.0,
+        "energy_intervals_evaluated_numerically": [
+          {
+            "index": 0,
+            "lower_estimate": 22.86561627286288,
+            "upper_estimate": 24.136808793908408,
+            "width_estimate": 1.2711925210455277,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          },
+          {
+            "index": 1,
+            "lower_estimate": 27.32094633034307,
+            "upper_estimate": 38.98544369128837,
+            "width_estimate": 11.664497360945298,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          }
+        ],
+        "numerical_ordering_consistent": true,
+        "roundoff_limited": false,
+        "roundoff_diagnostic_scale": 5.335381476544572e-10,
+        "roundoff_diagnostic_is_error_bound": false,
+        "machine_certified": false,
+        "reason": "Eigenvalue evaluations and matrix inputs use floating point.",
+        "gap_interval_evaluated_numerically": [
+          3.184137536434662,
+          16.119827418425487
+        ]
+      }
+    },
+    {
+      "jmax": 4.0,
+      "dimension": 215,
+      "nu_over_kappa": 40,
+      "E0": 24.05260819690349,
+      "E1": 38.87442315621213,
+      "E2": 40.546571778109666,
+      "gap": 14.821814959308643,
+      "change_in_E0": -0.08420059700491933,
+      "change_in_E1": -0.11102053507623566,
+      "analytic_bounds_evaluated_numerically": {
+        "retained_dimension": 215,
+        "extended_dimension": 290,
+        "first_omitted_electric_threshold_exact": "69",
+        "remaining_electric_threshold_exact": "165/2",
+        "hermiticity_error": 0.0,
+        "energy_intervals_evaluated_numerically": [
+          {
+            "index": 0,
+            "lower_estimate": 24.046969331104854,
+            "upper_estimate": 24.05260819690349,
+            "width_estimate": 0.00563886579863393,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          },
+          {
+            "index": 1,
+            "lower_estimate": 38.853985204503275,
+            "upper_estimate": 38.87442315621213,
+            "width_estimate": 0.020437951708856872,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          }
+        ],
+        "numerical_ordering_consistent": true,
+        "roundoff_limited": false,
+        "roundoff_diagnostic_scale": 1.2358339964464374e-09,
+        "roundoff_diagnostic_is_error_bound": false,
+        "machine_certified": false,
+        "reason": "Eigenvalue evaluations and matrix inputs use floating point.",
+        "gap_interval_evaluated_numerically": [
+          14.801377007599786,
+          14.827453825107277
+        ]
+      }
+    },
+    {
+      "jmax": 5.0,
+      "dimension": 381,
+      "nu_over_kappa": 40,
+      "E0": 24.05083420544076,
+      "E1": 38.87070865623234,
+      "E2": 40.537355880229725,
+      "gap": 14.819874450791577,
+      "change_in_E0": -0.0017739914627270537,
+      "change_in_E1": -0.0037144999797931177,
+      "analytic_bounds_evaluated_numerically": {
+        "retained_dimension": 381,
+        "extended_dimension": 489,
+        "first_omitted_electric_threshold_exact": "98",
+        "remaining_electric_threshold_exact": "114",
+        "hermiticity_error": 0.0,
+        "energy_intervals_evaluated_numerically": [
+          {
+            "index": 0,
+            "lower_estimate": 24.05080638468905,
+            "upper_estimate": 24.05083420544076,
+            "width_estimate": 2.7820751711260527e-05,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          },
+          {
+            "index": 1,
+            "lower_estimate": 38.870595937467975,
+            "upper_estimate": 38.87070865623234,
+            "width_estimate": 0.00011271876436325101,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          }
+        ],
+        "numerical_ordering_consistent": true,
+        "roundoff_limited": false,
+        "roundoff_diagnostic_scale": 2.5705944456666048e-09,
+        "roundoff_diagnostic_is_error_bound": false,
+        "machine_certified": false,
+        "reason": "Eigenvalue evaluations and matrix inputs use floating point.",
+        "gap_interval_evaluated_numerically": [
+          14.819761732027214,
+          14.819902271543288
+        ]
+      }
+    },
+    {
+      "jmax": 6.0,
+      "dimension": 616,
+      "nu_over_kappa": 40,
+      "E0": 24.05082101593775,
+      "E1": 38.87066205891236,
+      "E2": 40.537273003489375,
+      "gap": 14.819841042974609,
+      "change_in_E0": -1.3189503011545867e-05,
+      "change_in_E1": -4.659731997946892e-05,
+      "analytic_bounds_evaluated_numerically": {
+        "retained_dimension": 616,
+        "extended_dimension": 763,
+        "first_omitted_electric_threshold_exact": "132",
+        "remaining_electric_threshold_exact": "301/2",
+        "hermiticity_error": 0.0,
+        "energy_intervals_evaluated_numerically": [
+          {
+            "index": 0,
+            "lower_estimate": 24.050820948599675,
+            "upper_estimate": 24.05082101593775,
+            "width_estimate": 6.733807467185216e-08,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          },
+          {
+            "index": 1,
+            "lower_estimate": 38.870661672917095,
+            "upper_estimate": 38.87066205891236,
+            "width_estimate": 3.8599526419602626e-07,
+            "numerical_ordering_consistent": true,
+            "roundoff_limited": false
+          }
+        ],
+        "numerical_ordering_consistent": true,
+        "roundoff_limited": false,
+        "roundoff_diagnostic_scale": 4.922025952478757e-09,
+        "roundoff_diagnostic_is_error_bound": false,
+        "machine_certified": false,
+        "reason": "Eigenvalue evaluations and matrix inputs use floating point.",
+        "gap_interval_evaluated_numerically": [
+          14.819840656979345,
+          14.819841110312684
+        ]
+      }
+    }
+  ],
+  "correlation_study": {
+    "jmax": 6,
+    "dimension": 616,
+    "nu_over_kappa": 1,
+    "first_six_energies": [
+      1.8360110023644711,
+      4.927970022453048,
+      4.949968725805802,
+      6.495336154673462,
+      8.5210214296059,
+      9.895900901927085
+    ],
+    "exchange_parities": [
+      0.9999999999999999,
+      0.9999999999999992,
+      -0.9999999999999993,
+      1.0000000000000007,
+      0.9999999999999988,
+      1.0000000000000002
+    ],
+    "channels": [
+      {
+        "name": "symmetric",
+        "vacuum_expectation": 0.22826026047836806,
+        "first_excitation_overlap_squared": 0.23165988544514862,
+        "lowest_detected_gap": 3.0919590200885763,
+        "spectral_weight_threshold": 1e-18,
+        "discarded_weight": 1.1867236529840832e-19,
+        "dt": 0.25,
+        "correlators": [
+          {
+            "time": 0.25,
+            "C_connected": 0.10803399021938719,
+            "effective_gap": 3.1073407166378515
+          },
+          {
+            "time": 0.5,
+            "C_connected": 0.04968041160437165,
+            "effective_gap": 3.100821991273295
+          },
+          {
+            "time": 1,
+            "C_connected": 0.010549025939531864,
+            "effective_gap": 3.095553626262701
+          },
+          {
+            "time": 2,
+            "C_connected": 0.00047802657346377776,
+            "effective_gap": 3.092684426100886
+          },
+          {
+            "time": 4,
+            "C_connected": 9.853225510674946e-07,
+            "effective_gap": 3.091990515838293
+          },
+          {
+            "time": 8,
+            "C_connected": 4.190684170957803e-12,
+            "effective_gap": 3.0919590797169305
+          }
+        ]
+      },
+      {
+        "name": "antisymmetric",
+        "vacuum_expectation": -4.2825985813177425e-17,
+        "first_excitation_overlap_squared": 8.41670843152464e-28,
+        "lowest_detected_gap": 3.113957723441331,
+        "spectral_weight_threshold": 1e-18,
+        "discarded_weight": 1.1390578595872073e-19,
+        "dt": 0.25,
+        "correlators": [
+          {
+            "time": 0.25,
+            "C_connected": 0.10765814268244714,
+            "effective_gap": 3.1174876217866188
+          },
+          {
+            "time": 0.5,
+            "C_connected": 0.049382146690300166,
+            "effective_gap": 3.1149794888608437
+          },
+          {
+            "time": 1,
+            "C_connected": 0.010404939734409027,
+            "effective_gap": 3.114043488057046
+          },
+          {
+            "time": 2,
+            "C_connected": 0.00046222336079925326,
+            "effective_gap": 3.1139583307183365
+          },
+          {
+            "time": 4,
+            "C_connected": 9.122260830070785e-07,
+            "effective_gap": 3.1139577234719797
+          },
+          {
+            "time": 8,
+            "C_connected": 3.5530707961983094e-12,
+            "effective_gap": 3.1139577234413314
+          }
+        ]
+      }
+    ],
+    "interpretation": "Correlators from the same Hamiltonian test operator overlap, not independent data"
+  },
+  "matrix_validation": {
+    "sources": [
+      "https://arxiv.org/abs/hep-lat/9906036",
+      "https://arxiv.org/abs/hep-lat/9911019",
+      "https://arxiv.org/abs/2307.11829"
+    ],
+    "four_state_matrix_residual": 0.0,
+    "independent_projector_entries_checked": 48,
+    "independent_projector_max_residual": 4.440892098500626e-16,
+    "rational_congruence_vs_float_residual": 2.220446049250313e-16,
+    "cutoff_matrix_checks": [
+      {
+        "jmax": 0.5,
+        "dimension": 4,
+        "WA_nonzero": 4,
+        "WB_nonzero": 4,
+        "Hermiticity_residual": 0.0,
+        "A_B_exchange_residual": 0.0,
+        "Wilson_operator_norms": [
+          0.5,
+          0.5
+        ]
+      },
+      {
+        "jmax": 1.0,
+        "dimension": 11,
+        "WA_nonzero": 18,
+        "WB_nonzero": 18,
+        "Hermiticity_residual": 0.0,
+        "A_B_exchange_residual": 0.0,
+        "Wilson_operator_norms": [
+          0.7071067811865477,
+          0.7071067811865477
+        ]
+      },
+      {
+        "jmax": 1.5,
+        "dimension": 23,
+        "WA_nonzero": 48,
+        "WB_nonzero": 48,
+        "Hermiticity_residual": 0.0,
+        "A_B_exchange_residual": 0.0,
+        "Wilson_operator_norms": [
+          0.8090169943749476,
+          0.8090169943749476
+        ]
+      },
+      {
+        "jmax": 2.0,
+        "dimension": 42,
+        "WA_nonzero": 100,
+        "WB_nonzero": 100,
+        "Hermiticity_residual": 0.0,
+        "A_B_exchange_residual": 0.0,
+        "Wilson_operator_norms": [
+          0.866025403784439,
+          0.866025403784439
+        ]
+      },
+      {
+        "jmax": 3.0,
+        "dimension": 106,
+        "WA_nonzero": 294,
+        "WB_nonzero": 294,
+        "Hermiticity_residual": 0.0,
+        "A_B_exchange_residual": 0.0,
+        "Wilson_operator_norms": [
+          0.923879532511287,
+          0.923879532511287
+        ]
+      },
+      {
+        "jmax": 4.0,
+        "dimension": 215,
+        "WA_nonzero": 648,
+        "WB_nonzero": 648,
+        "Hermiticity_residual": 0.0,
+        "A_B_exchange_residual": 0.0
+      },
+      {
+        "jmax": 5.0,
+        "dimension": 381,
+        "WA_nonzero": 1210,
+        "WB_nonzero": 1210,
+        "Hermiticity_residual": 0.0,
+        "A_B_exchange_residual": 0.0
+      },
+      {
+        "jmax": 6.0,
+        "dimension": 616,
+        "WA_nonzero": 2028,
+        "WB_nonzero": 2028,
+        "Hermiticity_residual": 0.0,
+        "A_B_exchange_residual": 0.0
+      }
+    ]
+  }
+}

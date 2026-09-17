@@ -1,0 +1,58 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "terry_cubes"
+version = "0.1.1"
+description = "Finite SU(2) Hamiltonian spectra on joined cubic cell complexes"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{name = "Terrance Mullee"}]
+keywords = ["SU2", "lattice-gauge-theory", "Hamiltonian", "Yang-Mills", "recoupling"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Physics",
+]
+dependencies = [
+    "numpy>=1.23",
+    "scipy>=1.9",
+    "sympy>=1.10",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7", "build>=1"]
+
+[project.scripts]
+terry-cubes = "terry_cubes.cli:main"
+
+[project.urls]
+Repository = "https://github.com/BoredPuzzleSolver/Joined-Cube-Hamiltonian-Engine-"
+Issues = "https://github.com/BoredPuzzleSolver/Joined-Cube-Hamiltonian-Engine-/issues"
+
+[tool.setuptools]
+packages = ["terry_cubes", "terry_cubes.data"]
+include-package-data = true
+
+[tool.setuptools.package-dir]
+"terry_cubes.data" = "data"
+
+[tool.setuptools.package-data]
+"terry_cubes.data" = ["*.json", "*.zip"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+markers = [
+    "slow: full baseline reproduction requiring substantial time and memory",
+    "research: independent tensor checks, extended references and exact certificates",
+]

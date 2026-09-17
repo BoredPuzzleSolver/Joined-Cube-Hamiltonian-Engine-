@@ -1,0 +1,79 @@
+{
+  "model": "Open single SU(2) cube, Gauss law all vertices, kappa=nu=1",
+  "scope": "Untruncated physical Hilbert space on the fixed cube, conditional on stated basis and recoupling identities",
+  "retained_dimension": 32,
+  "reachable_auxiliary_dimension": 212,
+  "remaining_electric_threshold_exact": "13/2",
+  "threshold_proof": "See su2_cube_bounds.py and accompanying bound note; every state outside link-spin cutoff 1/2 has electric energy at least 13/2",
+  "matrix_comparison": "H >= L direct-sum T_rest; H minus comparison is QVQ >= 0",
+  "rounding_scale": 1000000000000,
+  "A_operator_error_bound_exact": "0",
+  "L_operator_error_bound_exact": "1/125000000000",
+  "rounding_method": "Integer-isqrt brackets of exact rational squared amplitudes; symmetric maximum row-error sum bounds spectral norm",
+  "inertia_method": "Exact rational Schur complement eliminates positive diagonal omitted block; 32-by-32 integer Bareiss inertia",
+  "energy_intervals": [
+    {
+      "index": 0,
+      "lower_exact": "53040003/10000000",
+      "upper_exact": "554178379/100000000",
+      "lower_decimal": 5.3040003,
+      "upper_decimal": 5.54178379,
+      "rounded_lower_probe_exact": "663000037501/125000000000",
+      "rounded_upper_probe_exact": "554178379/100000000",
+      "lower_auxiliary_inertia": {
+        "negative": 0,
+        "zero": 0,
+        "positive": 212
+      },
+      "upper_projection_inertia": {
+        "negative": 1,
+        "zero": 0,
+        "positive": 31
+      },
+      "certified": true
+    },
+    {
+      "index": 1,
+      "lower_exact": "310490169/50000000",
+      "upper_exact": "877237429/100000000",
+      "lower_decimal": 6.20980338,
+      "upper_decimal": 8.77237429,
+      "rounded_lower_probe_exact": "776225422501/125000000000",
+      "rounded_upper_probe_exact": "877237429/100000000",
+      "lower_auxiliary_inertia": {
+        "negative": 1,
+        "zero": 0,
+        "positive": 211
+      },
+      "upper_projection_inertia": {
+        "negative": 3,
+        "zero": 0,
+        "positive": 29
+      },
+      "certified": true
+    }
+  ],
+  "gap_interval_exact": [
+    "66801959/100000000",
+    "346837399/100000000"
+  ],
+  "gap_interval_decimal": [
+    0.66801959,
+    3.46837399
+  ],
+  "all_certified": true,
+  "numerical_comparison_only": {
+    "first_L_levels": [
+      5.3040003049241315,
+      6.209803389642065,
+      6.209803389642071,
+      6.209803389642079
+    ],
+    "first_A_levels": [
+      5.541783784346632,
+      8.772374284672091,
+      8.772374284672098,
+      8.848612181134
+    ]
+  }
+}

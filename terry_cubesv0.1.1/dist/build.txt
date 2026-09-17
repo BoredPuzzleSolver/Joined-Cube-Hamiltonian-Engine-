@@ -1,0 +1,360 @@
+running egg_info
+creating terry_cubes.egg-info
+writing terry_cubes.egg-info\PKG-INFO
+writing dependency_links to terry_cubes.egg-info\dependency_links.txt
+writing entry points to terry_cubes.egg-info\entry_points.txt
+writing requirements to terry_cubes.egg-info\requires.txt
+writing top-level names to terry_cubes.egg-info\top_level.txt
+writing manifest file 'terry_cubes.egg-info\SOURCES.txt'
+reading manifest file 'terry_cubes.egg-info\SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+adding license file 'LICENSE'
+writing manifest file 'terry_cubes.egg-info\SOURCES.txt'
+running sdist
+running egg_info
+writing terry_cubes.egg-info\PKG-INFO
+writing dependency_links to terry_cubes.egg-info\dependency_links.txt
+writing entry points to terry_cubes.egg-info\entry_points.txt
+writing requirements to terry_cubes.egg-info\requires.txt
+writing top-level names to terry_cubes.egg-info\top_level.txt
+reading manifest file 'terry_cubes.egg-info\SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+adding license file 'LICENSE'
+writing manifest file 'terry_cubes.egg-info\SOURCES.txt'
+running check
+creating terry_cubes-0.1.1
+creating terry_cubes-0.1.1\.github\workflows
+creating terry_cubes-0.1.1\certificates\single_cube
+creating terry_cubes-0.1.1\certificates\single_cube\outputs
+creating terry_cubes-0.1.1\certificates\single_cube\reference_results
+creating terry_cubes-0.1.1\certificates\single_cube\work
+creating terry_cubes-0.1.1\certificates\two_plaquette
+creating terry_cubes-0.1.1\certificates\two_plaquette\outputs
+creating terry_cubes-0.1.1\certificates\two_plaquette\reference_results
+creating terry_cubes-0.1.1\certificates\two_plaquette\work
+creating terry_cubes-0.1.1\data
+creating terry_cubes-0.1.1\docs\research
+creating terry_cubes-0.1.1\docs\theory
+creating terry_cubes-0.1.1\examples
+creating terry_cubes-0.1.1\terry_cubes
+creating terry_cubes-0.1.1\terry_cubes.egg-info
+creating terry_cubes-0.1.1\tests
+creating terry_cubes-0.1.1\tests\reference
+creating terry_cubes-0.1.1\validation
+creating terry_cubes-0.1.1\validation\example_runs
+creating terry_cubes-0.1.1\validation\history
+creating terry_cubes-0.1.1\validation\reference_joined
+copying files to terry_cubes-0.1.1...
+copying .gitattributes -> terry_cubes-0.1.1
+copying .gitignore -> terry_cubes-0.1.1
+copying CHANGELOG.md -> terry_cubes-0.1.1
+copying LICENSE -> terry_cubes-0.1.1
+copying MANIFEST.in -> terry_cubes-0.1.1
+copying README.md -> terry_cubes-0.1.1
+copying RELEASE_PROVENANCE.json -> terry_cubes-0.1.1
+copying SOURCE_PROVENANCE.json -> terry_cubes-0.1.1
+copying VALIDATION.md -> terry_cubes-0.1.1
+copying pyproject.toml -> terry_cubes-0.1.1
+copying requirements.txt -> terry_cubes-0.1.1
+copying setup.py -> terry_cubes-0.1.1
+copying .github\workflows\tests.yml -> terry_cubes-0.1.1\.github\workflows
+copying certificates\single_cube\README.md -> terry_cubes-0.1.1\certificates\single_cube
+copying certificates\single_cube\SHA256SUMS.txt -> terry_cubes-0.1.1\certificates\single_cube
+copying certificates\single_cube\reproduce.py -> terry_cubes-0.1.1\certificates\single_cube
+copying certificates\single_cube\outputs\Reproduction_Check.json -> terry_cubes-0.1.1\certificates\single_cube\outputs
+copying certificates\single_cube\outputs\Reproduction_Log.txt -> terry_cubes-0.1.1\certificates\single_cube\outputs
+copying certificates\single_cube\outputs\SU2_Cube_Bounds_Results.json -> terry_cubes-0.1.1\certificates\single_cube\outputs
+copying certificates\single_cube\outputs\SU2_Cube_Certificate_Independent_Audit.json -> terry_cubes-0.1.1\certificates\single_cube\outputs
+copying certificates\single_cube\outputs\SU2_Cube_Energy_Certificates.json -> terry_cubes-0.1.1\certificates\single_cube\outputs
+copying certificates\single_cube\outputs\SU2_Cube_Energy_Study_Results.json -> terry_cubes-0.1.1\certificates\single_cube\outputs
+copying certificates\single_cube\outputs\SU2_Cube_Gap_Certificate.json -> terry_cubes-0.1.1\certificates\single_cube\outputs
+copying certificates\single_cube\outputs\SU2_Cube_Independent_Validation.json -> terry_cubes-0.1.1\certificates\single_cube\outputs
+copying certificates\single_cube\outputs\SU2_Cube_Recoupling_Validation.json -> terry_cubes-0.1.1\certificates\single_cube\outputs
+copying certificates\single_cube\outputs\SU2_Cube_Study_Results.json -> terry_cubes-0.1.1\certificates\single_cube\outputs
+copying certificates\single_cube\outputs\SU2_Cube_Study_and_Gap_Bounds.md -> terry_cubes-0.1.1\certificates\single_cube\outputs
+copying certificates\single_cube\outputs\SU2_Interval_Inertia_Independent_Audit.json -> terry_cubes-0.1.1\certificates\single_cube\outputs
+copying certificates\single_cube\outputs\SU2_Interval_Inertia_Validation.json -> terry_cubes-0.1.1\certificates\single_cube\outputs
+copying certificates\single_cube\reference_results\SU2_Cube_Bounds_Results.json -> terry_cubes-0.1.1\certificates\single_cube\reference_results
+copying certificates\single_cube\reference_results\SU2_Cube_Certificate_Independent_Audit.json -> terry_cubes-0.1.1\certificates\single_cube\reference_results
+copying certificates\single_cube\reference_results\SU2_Cube_Energy_Certificates.json -> terry_cubes-0.1.1\certificates\single_cube\reference_results
+copying certificates\single_cube\reference_results\SU2_Cube_Energy_Study_Results.json -> terry_cubes-0.1.1\certificates\single_cube\reference_results
+copying certificates\single_cube\reference_results\SU2_Cube_Gap_Certificate.json -> terry_cubes-0.1.1\certificates\single_cube\reference_results
+copying certificates\single_cube\reference_results\SU2_Cube_Independent_Validation.json -> terry_cubes-0.1.1\certificates\single_cube\reference_results
+copying certificates\single_cube\reference_results\SU2_Cube_Recoupling_Validation.json -> terry_cubes-0.1.1\certificates\single_cube\reference_results
+copying certificates\single_cube\reference_results\SU2_Cube_Study_Results.json -> terry_cubes-0.1.1\certificates\single_cube\reference_results
+copying certificates\single_cube\reference_results\SU2_Interval_Inertia_Independent_Audit.json -> terry_cubes-0.1.1\certificates\single_cube\reference_results
+copying certificates\single_cube\reference_results\SU2_Interval_Inertia_Validation.json -> terry_cubes-0.1.1\certificates\single_cube\reference_results
+copying certificates\single_cube\work\su2_cube_bounds.py -> terry_cubes-0.1.1\certificates\single_cube\work
+copying certificates\single_cube\work\su2_cube_bounds_note.md -> terry_cubes-0.1.1\certificates\single_cube\work
+copying certificates\single_cube\work\su2_cube_certificate_audit_check.py -> terry_cubes-0.1.1\certificates\single_cube\work
+copying certificates\single_cube\work\su2_cube_certificate_independent_audit.md -> terry_cubes-0.1.1\certificates\single_cube\work
+copying certificates\single_cube\work\su2_cube_energy_certificate.py -> terry_cubes-0.1.1\certificates\single_cube\work
+copying certificates\single_cube\work\su2_cube_energy_study.py -> terry_cubes-0.1.1\certificates\single_cube\work
+copying certificates\single_cube\work\su2_cube_independent_audit.md -> terry_cubes-0.1.1\certificates\single_cube\work
+copying certificates\single_cube\work\su2_cube_independent_check.py -> terry_cubes-0.1.1\certificates\single_cube\work
+copying certificates\single_cube\work\su2_cube_model.py -> terry_cubes-0.1.1\certificates\single_cube\work
+copying certificates\single_cube\work\su2_cube_rational_certificate.py -> terry_cubes-0.1.1\certificates\single_cube\work
+copying certificates\single_cube\work\su2_cube_study.py -> terry_cubes-0.1.1\certificates\single_cube\work
+copying certificates\single_cube\work\su2_cutoff_bounds.py -> terry_cubes-0.1.1\certificates\single_cube\work
+copying certificates\single_cube\work\su2_interval_inertia.py -> terry_cubes-0.1.1\certificates\single_cube\work
+copying certificates\single_cube\work\su2_interval_inertia_independent_audit.md -> terry_cubes-0.1.1\certificates\single_cube\work
+copying certificates\single_cube\work\su2_interval_inertia_independent_audit.py -> terry_cubes-0.1.1\certificates\single_cube\work
+copying certificates\single_cube\work\su2_recoupling.py -> terry_cubes-0.1.1\certificates\single_cube\work
+copying certificates\single_cube\work\su2_sparse_spectrum.py -> terry_cubes-0.1.1\certificates\single_cube\work
+copying certificates\two_plaquette\README.md -> terry_cubes-0.1.1\certificates\two_plaquette
+copying certificates\two_plaquette\SHA256SUMS.txt -> terry_cubes-0.1.1\certificates\two_plaquette
+copying certificates\two_plaquette\reproduce.py -> terry_cubes-0.1.1\certificates\two_plaquette
+copying certificates\two_plaquette\outputs\Reproduction_Check.json -> terry_cubes-0.1.1\certificates\two_plaquette\outputs
+copying certificates\two_plaquette\outputs\Reproduction_Log.txt -> terry_cubes-0.1.1\certificates\two_plaquette\outputs
+copying certificates\two_plaquette\outputs\SU2_Direct_Haar_Validation.json -> terry_cubes-0.1.1\certificates\two_plaquette\outputs
+copying certificates\two_plaquette\outputs\Shared_SU2_Cutoff_Certificate_Checks.json -> terry_cubes-0.1.1\certificates\two_plaquette\outputs
+copying certificates\two_plaquette\outputs\Shared_SU2_Cutoff_Study_Results.json -> terry_cubes-0.1.1\certificates\two_plaquette\outputs
+copying certificates\two_plaquette\outputs\Shared_SU2_Cutoff_Study_and_Certified_Gap.md -> terry_cubes-0.1.1\certificates\two_plaquette\outputs
+copying certificates\two_plaquette\reference_results\SU2_Direct_Haar_Validation.json -> terry_cubes-0.1.1\certificates\two_plaquette\reference_results
+copying certificates\two_plaquette\reference_results\Shared_SU2_Cutoff_Certificate_Checks.json -> terry_cubes-0.1.1\certificates\two_plaquette\reference_results
+copying certificates\two_plaquette\reference_results\Shared_SU2_Cutoff_Study_Results.json -> terry_cubes-0.1.1\certificates\two_plaquette\reference_results
+copying certificates\two_plaquette\work\shared_su2_cutoff_study.py -> terry_cubes-0.1.1\certificates\two_plaquette\work
+copying certificates\two_plaquette\work\su2_bounds_audit_check.py -> terry_cubes-0.1.1\certificates\two_plaquette\work
+copying certificates\two_plaquette\work\su2_bounds_independent_audit.md -> terry_cubes-0.1.1\certificates\two_plaquette\work
+copying certificates\two_plaquette\work\su2_cutoff_bounds.py -> terry_cubes-0.1.1\certificates\two_plaquette\work
+copying certificates\two_plaquette\work\su2_cutoff_bounds_note.md -> terry_cubes-0.1.1\certificates\two_plaquette\work
+copying certificates\two_plaquette\work\su2_direct_haar_validation.py -> terry_cubes-0.1.1\certificates\two_plaquette\work
+copying certificates\two_plaquette\work\su2_recoupling.py -> terry_cubes-0.1.1\certificates\two_plaquette\work
+copying certificates\two_plaquette\work\verify_su2_cutoff_certificates.py -> terry_cubes-0.1.1\certificates\two_plaquette\work
+copying data\SU2_Cube_Bounds_Results.json -> terry_cubes-0.1.1\data
+copying data\SU2_Cube_Energy_Certificates.json -> terry_cubes-0.1.1\data
+copying data\SU2_Cube_Energy_Study_Results.json -> terry_cubes-0.1.1\data
+copying data\SU2_Cube_Gap_Certificate.json -> terry_cubes-0.1.1\data
+copying data\SU2_Cube_Study_Results.json -> terry_cubes-0.1.1\data
+copying data\SU2_Joined_Cubes_N1_Spectra.json -> terry_cubes-0.1.1\data
+copying data\SU2_Joined_Cubes_N2_Spectra.json -> terry_cubes-0.1.1\data
+copying data\SU2_Joined_Cubes_N3_Spectra.json -> terry_cubes-0.1.1\data
+copying data\Shared_SU2_Cutoff_Certificate_Checks.json -> terry_cubes-0.1.1\data
+copying data\Shared_SU2_Cutoff_Study_Results.json -> terry_cubes-0.1.1\data
+copying data\__init__.py -> terry_cubes-0.1.1\data
+copying data\certificate_archive_hashes.json -> terry_cubes-0.1.1\data
+copying data\single_cube_certificate_sources.zip -> terry_cubes-0.1.1\data
+copying data\two_plaquette_certificate_sources.zip -> terry_cubes-0.1.1\data
+copying docs\research\RESEARCH_INDEX.md -> terry_cubes-0.1.1\docs\research
+copying docs\research\Yang_Mills_Research_Chronology.docx -> terry_cubes-0.1.1\docs\research
+copying docs\theory\SU2_Cube_Study_and_Gap_Bounds.md -> terry_cubes-0.1.1\docs\theory
+copying docs\theory\SU2_Joined_Cubes_Volume_Study.md -> terry_cubes-0.1.1\docs\theory
+copying docs\theory\Shared_SU2_Cutoff_Study_and_Certified_Gap.md -> terry_cubes-0.1.1\docs\theory
+copying docs\theory\joined_cubes_volume_bound_audit.md -> terry_cubes-0.1.1\docs\theory
+copying docs\theory\su2_joined_cubes_derivation.md -> terry_cubes-0.1.1\docs\theory
+copying docs\theory\su2_joined_cubes_independent_audit.md -> terry_cubes-0.1.1\docs\theory
+copying examples\cube_observables.py -> terry_cubes-0.1.1\examples
+copying examples\cutoff_comparison.py -> terry_cubes-0.1.1\examples
+copying examples\two_plaquette_observables.py -> terry_cubes-0.1.1\examples
+copying examples\verify_single_cube.py -> terry_cubes-0.1.1\examples
+copying terry_cubes\__init__.py -> terry_cubes-0.1.1\terry_cubes
+copying terry_cubes\__main__.py -> terry_cubes-0.1.1\terry_cubes
+copying terry_cubes\_certificate_worker.py -> terry_cubes-0.1.1\terry_cubes
+copying terry_cubes\_version.py -> terry_cubes-0.1.1\terry_cubes
+copying terry_cubes\certification.py -> terry_cubes-0.1.1\terry_cubes
+copying terry_cubes\cli.py -> terry_cubes-0.1.1\terry_cubes
+copying terry_cubes\geometry.py -> terry_cubes-0.1.1\terry_cubes
+copying terry_cubes\hamiltonian.py -> terry_cubes-0.1.1\terry_cubes
+copying terry_cubes\observables.py -> terry_cubes-0.1.1\terry_cubes
+copying terry_cubes\recoupling.py -> terry_cubes-0.1.1\terry_cubes
+copying terry_cubes\solver.py -> terry_cubes-0.1.1\terry_cubes
+copying terry_cubes\studies.py -> terry_cubes-0.1.1\terry_cubes
+copying terry_cubes\two_plaquette.py -> terry_cubes-0.1.1\terry_cubes
+copying terry_cubes.egg-info\PKG-INFO -> terry_cubes-0.1.1\terry_cubes.egg-info
+copying terry_cubes.egg-info\SOURCES.txt -> terry_cubes-0.1.1\terry_cubes.egg-info
+copying terry_cubes.egg-info\dependency_links.txt -> terry_cubes-0.1.1\terry_cubes.egg-info
+copying terry_cubes.egg-info\entry_points.txt -> terry_cubes-0.1.1\terry_cubes.egg-info
+copying terry_cubes.egg-info\requires.txt -> terry_cubes-0.1.1\terry_cubes.egg-info
+copying terry_cubes.egg-info\top_level.txt -> terry_cubes-0.1.1\terry_cubes.egg-info
+copying tests\conftest.py -> terry_cubes-0.1.1\tests
+copying tests\test_cli.py -> terry_cubes-0.1.1\tests
+copying tests\test_independent_research.py -> terry_cubes-0.1.1\tests
+copying tests\test_preservation.py -> terry_cubes-0.1.1\tests
+copying tests\test_research_interfaces.py -> terry_cubes-0.1.1\tests
+copying tests\test_spectrum.py -> terry_cubes-0.1.1\tests
+copying tests\reference\su2_cube_model.py -> terry_cubes-0.1.1\tests\reference
+copying tests\reference\su2_joined_cubes_model.py -> terry_cubes-0.1.1\tests\reference
+copying tests\reference\su2_oriented_vertex.py -> terry_cubes-0.1.1\tests\reference
+copying tests\reference\su2_recoupling.py -> terry_cubes-0.1.1\tests\reference
+copying tests\reference\su2_sparse_spectrum.py -> terry_cubes-0.1.1\tests\reference
+copying validation\certificate_cap10_fresh.json -> terry_cubes-0.1.1\validation
+copying validation\certificate_cap8_fresh.json -> terry_cubes-0.1.1\validation
+copying validation\installed_wheel_checks.json -> terry_cubes-0.1.1\validation
+copying validation\installed_wheel_tests.xml -> terry_cubes-0.1.1\validation
+copying validation\orientation_fresh.json -> terry_cubes-0.1.1\validation
+copying validation\original_package_sha256.json -> terry_cubes-0.1.1\validation
+copying validation\preservation_fresh.json -> terry_cubes-0.1.1\validation
+copying validation\research_tests.xml -> terry_cubes-0.1.1\validation
+copying validation\routine_tests.xml -> terry_cubes-0.1.1\validation
+copying validation\single_cube_cap24_ratio1_fresh.json -> terry_cubes-0.1.1\validation
+copying validation\single_cube_cap24_ratio4_fresh.json -> terry_cubes-0.1.1\validation
+copying validation\single_cube_cap30_ratio1_fresh.json -> terry_cubes-0.1.1\validation
+copying validation\single_cube_cap30_ratio4_fresh.json -> terry_cubes-0.1.1\validation
+copying validation\single_cube_certificate_fresh.json -> terry_cubes-0.1.1\validation
+copying validation\two_plaquette_certificate_fresh.json -> terry_cubes-0.1.1\validation
+copying validation\example_runs\cube_observables.json -> terry_cubes-0.1.1\validation\example_runs
+copying validation\example_runs\cutoff_comparison.json -> terry_cubes-0.1.1\validation\example_runs
+copying validation\example_runs\two_plaquette_observables.json -> terry_cubes-0.1.1\validation\example_runs
+copying validation\history\README_0.1.0.md -> terry_cubes-0.1.1\validation\history
+copying validation\history\VALIDATION_0.1.0.md -> terry_cubes-0.1.1\validation\history
+copying validation\history\two_cubes_cutoff16_0.1.0.json -> terry_cubes-0.1.1\validation\history
+copying validation\reference_joined\README.md -> terry_cubes-0.1.1\validation\reference_joined
+copying validation\reference_joined\SHA256SUMS.json -> terry_cubes-0.1.1\validation\reference_joined
+copying validation\reference_joined\SU2_Joined_Cubes_Independent_Validation.json -> terry_cubes-0.1.1\validation\reference_joined
+copying validation\reference_joined\SU2_Joined_Cubes_N1_Spectra.json -> terry_cubes-0.1.1\validation\reference_joined
+copying validation\reference_joined\SU2_Joined_Cubes_N2_Spectra.json -> terry_cubes-0.1.1\validation\reference_joined
+copying validation\reference_joined\SU2_Joined_Cubes_N3_Spectra.json -> terry_cubes-0.1.1\validation\reference_joined
+copying validation\reference_joined\SU2_Joined_Cubes_Orientation_Validation.json -> terry_cubes-0.1.1\validation\reference_joined
+copying validation\reference_joined\SU2_Joined_Cubes_Reproduction_Checks.json -> terry_cubes-0.1.1\validation\reference_joined
+copying validation\reference_joined\SU2_Joined_Cubes_Volume_Study.md -> terry_cubes-0.1.1\validation\reference_joined
+copying validation\reference_joined\Space_Mathematical_Reality_and_Proof.md -> terry_cubes-0.1.1\validation\reference_joined
+copying validation\reference_joined\joined_cubes_volume_bound_audit.md -> terry_cubes-0.1.1\validation\reference_joined
+copying validation\reference_joined\space_philosophy_audit.md -> terry_cubes-0.1.1\validation\reference_joined
+copying validation\reference_joined\su2_cube_model.py -> terry_cubes-0.1.1\validation\reference_joined
+copying validation\reference_joined\su2_joined_cubes_derivation.md -> terry_cubes-0.1.1\validation\reference_joined
+copying validation\reference_joined\su2_joined_cubes_independent_audit.md -> terry_cubes-0.1.1\validation\reference_joined
+copying validation\reference_joined\su2_joined_cubes_independent_check.py -> terry_cubes-0.1.1\validation\reference_joined
+copying validation\reference_joined\su2_joined_cubes_model.py -> terry_cubes-0.1.1\validation\reference_joined
+copying validation\reference_joined\su2_joined_cubes_study.py -> terry_cubes-0.1.1\validation\reference_joined
+copying validation\reference_joined\su2_joined_cubes_tensor_probe.py -> terry_cubes-0.1.1\validation\reference_joined
+copying validation\reference_joined\su2_joined_orientation_validation.py -> terry_cubes-0.1.1\validation\reference_joined
+copying validation\reference_joined\su2_oriented_vertex.py -> terry_cubes-0.1.1\validation\reference_joined
+copying validation\reference_joined\su2_recoupling.py -> terry_cubes-0.1.1\validation\reference_joined
+copying validation\reference_joined\su2_sparse_spectrum.py -> terry_cubes-0.1.1\validation\reference_joined
+Writing terry_cubes-0.1.1\setup.cfg
+Creating tar archive
+removing 'terry_cubes-0.1.1' (and everything under it)
+running egg_info
+writing terry_cubes.egg-info\PKG-INFO
+writing dependency_links to terry_cubes.egg-info\dependency_links.txt
+writing entry points to terry_cubes.egg-info\entry_points.txt
+writing requirements to terry_cubes.egg-info\requires.txt
+writing top-level names to terry_cubes.egg-info\top_level.txt
+reading manifest file 'terry_cubes.egg-info\SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+adding license file 'LICENSE'
+writing manifest file 'terry_cubes.egg-info\SOURCES.txt'
+running bdist_wheel
+running build
+running build_py
+creating build\lib\terry_cubes
+copying terry_cubes\certification.py -> build\lib\terry_cubes
+copying terry_cubes\cli.py -> build\lib\terry_cubes
+copying terry_cubes\geometry.py -> build\lib\terry_cubes
+copying terry_cubes\hamiltonian.py -> build\lib\terry_cubes
+copying terry_cubes\observables.py -> build\lib\terry_cubes
+copying terry_cubes\recoupling.py -> build\lib\terry_cubes
+copying terry_cubes\solver.py -> build\lib\terry_cubes
+copying terry_cubes\studies.py -> build\lib\terry_cubes
+copying terry_cubes\two_plaquette.py -> build\lib\terry_cubes
+copying terry_cubes\_certificate_worker.py -> build\lib\terry_cubes
+copying terry_cubes\_version.py -> build\lib\terry_cubes
+copying terry_cubes\__init__.py -> build\lib\terry_cubes
+copying terry_cubes\__main__.py -> build\lib\terry_cubes
+creating build\lib\terry_cubes\data
+copying data\__init__.py -> build\lib\terry_cubes\data
+running egg_info
+writing terry_cubes.egg-info\PKG-INFO
+writing dependency_links to terry_cubes.egg-info\dependency_links.txt
+writing entry points to terry_cubes.egg-info\entry_points.txt
+writing requirements to terry_cubes.egg-info\requires.txt
+writing top-level names to terry_cubes.egg-info\top_level.txt
+reading manifest file 'terry_cubes.egg-info\SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+adding license file 'LICENSE'
+writing manifest file 'terry_cubes.egg-info\SOURCES.txt'
+copying data\SU2_Cube_Bounds_Results.json -> build\lib\terry_cubes\data
+copying data\SU2_Cube_Energy_Certificates.json -> build\lib\terry_cubes\data
+copying data\SU2_Cube_Energy_Study_Results.json -> build\lib\terry_cubes\data
+copying data\SU2_Cube_Gap_Certificate.json -> build\lib\terry_cubes\data
+copying data\SU2_Cube_Study_Results.json -> build\lib\terry_cubes\data
+copying data\SU2_Joined_Cubes_N1_Spectra.json -> build\lib\terry_cubes\data
+copying data\SU2_Joined_Cubes_N2_Spectra.json -> build\lib\terry_cubes\data
+copying data\SU2_Joined_Cubes_N3_Spectra.json -> build\lib\terry_cubes\data
+copying data\Shared_SU2_Cutoff_Certificate_Checks.json -> build\lib\terry_cubes\data
+copying data\Shared_SU2_Cutoff_Study_Results.json -> build\lib\terry_cubes\data
+copying data\certificate_archive_hashes.json -> build\lib\terry_cubes\data
+copying data\single_cube_certificate_sources.zip -> build\lib\terry_cubes\data
+copying data\two_plaquette_certificate_sources.zip -> build\lib\terry_cubes\data
+installing to build\bdist.win-amd64\wheel
+running install
+running install_lib
+creating build\bdist.win-amd64\wheel
+creating build\bdist.win-amd64\wheel\terry_cubes
+copying build\lib\terry_cubes\certification.py -> build\bdist.win-amd64\wheel\.\terry_cubes
+copying build\lib\terry_cubes\cli.py -> build\bdist.win-amd64\wheel\.\terry_cubes
+creating build\bdist.win-amd64\wheel\terry_cubes\data
+copying build\lib\terry_cubes\data\certificate_archive_hashes.json -> build\bdist.win-amd64\wheel\.\terry_cubes\data
+copying build\lib\terry_cubes\data\Shared_SU2_Cutoff_Certificate_Checks.json -> build\bdist.win-amd64\wheel\.\terry_cubes\data
+copying build\lib\terry_cubes\data\Shared_SU2_Cutoff_Study_Results.json -> build\bdist.win-amd64\wheel\.\terry_cubes\data
+copying build\lib\terry_cubes\data\single_cube_certificate_sources.zip -> build\bdist.win-amd64\wheel\.\terry_cubes\data
+copying build\lib\terry_cubes\data\SU2_Cube_Bounds_Results.json -> build\bdist.win-amd64\wheel\.\terry_cubes\data
+copying build\lib\terry_cubes\data\SU2_Cube_Energy_Certificates.json -> build\bdist.win-amd64\wheel\.\terry_cubes\data
+copying build\lib\terry_cubes\data\SU2_Cube_Energy_Study_Results.json -> build\bdist.win-amd64\wheel\.\terry_cubes\data
+copying build\lib\terry_cubes\data\SU2_Cube_Gap_Certificate.json -> build\bdist.win-amd64\wheel\.\terry_cubes\data
+copying build\lib\terry_cubes\data\SU2_Cube_Study_Results.json -> build\bdist.win-amd64\wheel\.\terry_cubes\data
+copying build\lib\terry_cubes\data\SU2_Joined_Cubes_N1_Spectra.json -> build\bdist.win-amd64\wheel\.\terry_cubes\data
+copying build\lib\terry_cubes\data\SU2_Joined_Cubes_N2_Spectra.json -> build\bdist.win-amd64\wheel\.\terry_cubes\data
+copying build\lib\terry_cubes\data\SU2_Joined_Cubes_N3_Spectra.json -> build\bdist.win-amd64\wheel\.\terry_cubes\data
+copying build\lib\terry_cubes\data\two_plaquette_certificate_sources.zip -> build\bdist.win-amd64\wheel\.\terry_cubes\data
+copying build\lib\terry_cubes\data\__init__.py -> build\bdist.win-amd64\wheel\.\terry_cubes\data
+copying build\lib\terry_cubes\geometry.py -> build\bdist.win-amd64\wheel\.\terry_cubes
+copying build\lib\terry_cubes\hamiltonian.py -> build\bdist.win-amd64\wheel\.\terry_cubes
+copying build\lib\terry_cubes\observables.py -> build\bdist.win-amd64\wheel\.\terry_cubes
+copying build\lib\terry_cubes\recoupling.py -> build\bdist.win-amd64\wheel\.\terry_cubes
+copying build\lib\terry_cubes\solver.py -> build\bdist.win-amd64\wheel\.\terry_cubes
+copying build\lib\terry_cubes\studies.py -> build\bdist.win-amd64\wheel\.\terry_cubes
+copying build\lib\terry_cubes\two_plaquette.py -> build\bdist.win-amd64\wheel\.\terry_cubes
+copying build\lib\terry_cubes\_certificate_worker.py -> build\bdist.win-amd64\wheel\.\terry_cubes
+copying build\lib\terry_cubes\_version.py -> build\bdist.win-amd64\wheel\.\terry_cubes
+copying build\lib\terry_cubes\__init__.py -> build\bdist.win-amd64\wheel\.\terry_cubes
+copying build\lib\terry_cubes\__main__.py -> build\bdist.win-amd64\wheel\.\terry_cubes
+running install_egg_info
+Copying terry_cubes.egg-info to build\bdist.win-amd64\wheel\.\terry_cubes-0.1.1-py3.12.egg-info
+running install_scripts
+creating build\bdist.win-amd64\wheel\terry_cubes-0.1.1.dist-info\WHEEL
+creating 'C:\\Users\\terra\\.codex\\.chatgpt-projects\\g-p-6aa86d3ff8748191bda736cd4b4618b7\\release-build-final\\terry_cubes-0.1.1\\dist\\.tmp-ywbis_8l\\terry_cubes-0.1.1-py3-none-any.whl' and adding 'build\\bdist.win-amd64\\wheel' to it
+adding 'terry_cubes/__init__.py'
+adding 'terry_cubes/__main__.py'
+adding 'terry_cubes/_certificate_worker.py'
+adding 'terry_cubes/_version.py'
+adding 'terry_cubes/certification.py'
+adding 'terry_cubes/cli.py'
+adding 'terry_cubes/geometry.py'
+adding 'terry_cubes/hamiltonian.py'
+adding 'terry_cubes/observables.py'
+adding 'terry_cubes/recoupling.py'
+adding 'terry_cubes/solver.py'
+adding 'terry_cubes/studies.py'
+adding 'terry_cubes/two_plaquette.py'
+adding 'terry_cubes/data/SU2_Cube_Bounds_Results.json'
+adding 'terry_cubes/data/SU2_Cube_Energy_Certificates.json'
+adding 'terry_cubes/data/SU2_Cube_Energy_Study_Results.json'
+adding 'terry_cubes/data/SU2_Cube_Gap_Certificate.json'
+adding 'terry_cubes/data/SU2_Cube_Study_Results.json'
+adding 'terry_cubes/data/SU2_Joined_Cubes_N1_Spectra.json'
+adding 'terry_cubes/data/SU2_Joined_Cubes_N2_Spectra.json'
+adding 'terry_cubes/data/SU2_Joined_Cubes_N3_Spectra.json'
+adding 'terry_cubes/data/Shared_SU2_Cutoff_Certificate_Checks.json'
+adding 'terry_cubes/data/Shared_SU2_Cutoff_Study_Results.json'
+adding 'terry_cubes/data/__init__.py'
+adding 'terry_cubes/data/certificate_archive_hashes.json'
+adding 'terry_cubes/data/single_cube_certificate_sources.zip'
+adding 'terry_cubes/data/two_plaquette_certificate_sources.zip'
+adding 'terry_cubes-0.1.1.dist-info/licenses/LICENSE'
+adding 'terry_cubes-0.1.1.dist-info/METADATA'
+adding 'terry_cubes-0.1.1.dist-info/WHEEL'
+adding 'terry_cubes-0.1.1.dist-info/entry_points.txt'
+adding 'terry_cubes-0.1.1.dist-info/top_level.txt'
+adding 'terry_cubes-0.1.1.dist-info/RECORD'
+removing build\bdist.win-amd64\wheel
+Successfully built terry_cubes-0.1.1.tar.gz and terry_cubes-0.1.1-py3-none-any.whl
+* Getting build dependencies for sdist...
+warning: no files found matching '*.txt' under directory 'validation'
+* Building sdist...
+warning: no files found matching '*.txt' under directory 'validation'
+* Building wheel from sdist
+* Getting build dependencies for wheel...
+warning: no files found matching '*.txt' under directory 'validation'
+* Building wheel...
+warning: no files found matching '*.txt' under directory 'validation'

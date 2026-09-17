@@ -1,0 +1,20 @@
+include LICENSE
+include README.md
+include requirements.txt
+include pyproject.toml
+include setup.py
+include SOURCE_PROVENANCE.json
+recursive-include terry_cubes *.py
+recursive-include data *.py *.json
+recursive-include tests *.py
+include VALIDATION.md
+include .gitattributes
+include .gitignore
+include .github/workflows/tests.yml
+include CHANGELOG.md
+include RELEASE_PROVENANCE.json
+recursive-include data *.zip
+recursive-include certificates *.py *.json *.md *.txt
+recursive-include validation *.py *.json *.md *.txt *.xml
+recursive-include docs *.md *.docx
+recursive-include examples *.py

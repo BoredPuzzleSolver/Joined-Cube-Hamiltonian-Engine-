@@ -1,0 +1,43 @@
+{
+  "release_version": "0.1.1",
+  "based_on": "terry_cubes 0.1.0",
+  "original_package_directory": "C:\\Users\\terra\\Documents\\Codex\\2026-09-15\\Yang mills project and ideas\\outputs\\terry_cubes-0.1.0",
+  "copied_original_package_hashes": "validation/original_package_sha256.json",
+  "unchanged_runtime_files": {
+    "geometry.py": "317af54534295fe40ddf2ebb79623a6fdc0789728d19768a11b4fb988f222ad2",
+    "hamiltonian.py": "cd832f90801f7768af7cd9f7a075d5c53bf394637764b947a71bc30bc37363af",
+    "recoupling.py": "380f0f7843b5bf58c88017c985875049b188a11782d949a465c1566201efd972"
+  },
+  "added_reference_data_sha256": {
+    "SU2_Cube_Energy_Study_Results.json": "03e09c1f9b6f7b1b91cd1da87e4bb213e3b1179f17e91a05746ddf592df9c867",
+    "SU2_Cube_Study_Results.json": "fb0517d02060afcddd6c9efc8a5e7ea9ca93a88232aa2e15902269823f83c87d",
+    "SU2_Cube_Energy_Certificates.json": "ebc99372ad6ec91f66091ba8b33a4a09ca77142f52b8cfce9f3c3c18fd98920b",
+    "SU2_Cube_Gap_Certificate.json": "f59f76f7bb1e6904f26a8f8a4b5f38bbfacc95fb8db0c9f0db495d70669fd8d1",
+    "SU2_Cube_Bounds_Results.json": "96782738ae8e33aca99578bff50df72ede7d29f33cc8130b1a3b4c3eaff816dd",
+    "Shared_SU2_Cutoff_Study_Results.json": "5174aa111343acf849f8cab443da855386408dc77f10d1d68060ad8b70e28b09",
+    "Shared_SU2_Cutoff_Certificate_Checks.json": "2a7467fdc90f6ef5365643e7ee1632ddf875876cad3dc2c46db413addb464bf5"
+  },
+  "certificate_archive_sha256": {
+    "single_cube": "586c40b1f1569eced4f4297a7a9483ad38c62ced4cf9be8c68066614915b0df1",
+    "two_plaquette": "040436b86bae10d9d2bd73f7cee576fb0e0fcd3194a8c9022672fe32b9db371e"
+  },
+  "scope": "Original formulas, indexing, reference scripts, datasets, and certificate sources are preserved. New interfaces are separately tested.",
+  "unchanged_runtime_lf_sha256": {
+    "geometry.py": "e9d26d91b4bead1eeb86a647eab9e3ba8c342094d7db6b64a51dfb8c02093115",
+    "hamiltonian.py": "aebbf098d0457c3540ce60160847eb693ca19bef5c0ceb6b59f921d4e01c22d4",
+    "recoupling.py": "c16081fc5c88f68eab0fc9201749ea5494008b8457381dd4ed367b42aa5f4ae9"
+  },
+  "added_reference_data_lf_sha256": {
+    "SU2_Cube_Energy_Study_Results.json": "55fde387705429cf8a67ba17a8553b7de332190b673bde3f9847aac533db5051",
+    "SU2_Cube_Study_Results.json": "028bae85f3cc56a7d96a3df5a27fd256e635bd592d04d4704c018060e0ff2597",
+    "SU2_Cube_Energy_Certificates.json": "9d5b4ee510d65657005389722a72844f6263aaf19079f98e3e5b2718718cdffe",
+    "SU2_Cube_Gap_Certificate.json": "5ac524c01f7741b623195a3ba1da1d64d06ca21988574ace697964d14cf077e8",
+    "SU2_Cube_Bounds_Results.json": "cd6cf4c847e5a3c2e053731d7c6c5e03acfb1399d83365056636fadd4d9d2246",
+    "Shared_SU2_Cutoff_Study_Results.json": "5ec8e3c4f03ae863647b88045770b605f2f1de2e3e0b314382b27dfac76e83b2",
+    "Shared_SU2_Cutoff_Certificate_Checks.json": "dcb20617d08f0686ff57f19521a9d0abd732ea131b19d5bbd1b770bc34f75975"
+  },
+  "unchanged_solver_ast_sha256": {
+    "smallest_ritz": "0c7f8b2c551e75a0bcbbc2cfa8290303edd3692304b58d9e2cceb455e5e9f4ee",
+    "SymmetricOperator": "0e6952a442dfb14295e5b4f76f38c2b27583c8e26834fa102196d217c16ad099"
+  }
+}
