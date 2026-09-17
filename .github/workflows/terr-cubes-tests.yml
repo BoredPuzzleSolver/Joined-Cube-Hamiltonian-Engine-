@@ -1,0 +1,105 @@
+name: Terry Cubes 0.1.1 tests
+
+on:
+  push:
+    paths:
+      - "terry_cubesv0.1.1/**"
+      - ".github/workflows/terry-cubes-tests.yml"
+  pull_request:
+    paths:
+      - "terry_cubesv0.1.1/**"
+      - ".github/workflows/terry-cubes-tests.yml"
+  workflow_dispatch:
+    inputs:
+      research:
+        description: Also run independent research and exact certificate checks
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: terry_cubesv0.1.1
+
+env:
+  OPENBLAS_NUM_THREADS: "1"
+  OMP_NUM_THREADS: "1"
+  TERRY_RESEARCH: ${{ github.event_name == 'workflow_dispatch' && inputs.research }}
+
+jobs:
+  test:
+    name: ${{ matrix.os }} / Python ${{ matrix.python }}
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            python: "3.10"
+          - os: ubuntu-latest
+            python: "3.12"
+          - os: windows-latest
+            python: "3.12"
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+          cache-dependency-path: terry_cubesv0.1.1/pyproject.toml
+
+      - name: Install development dependencies
+        run: python -m pip install -e ".[dev]"
+
+      - name: Run routine tests
+        run: python -m pytest -q
+
+      - name: Run independent research checks
+        if: github.event_name == 'workflow_dispatch' && inputs.research
+        run: python -m pytest -q --run-research -m research
+
+      - name: Build fresh source and wheel distributions
+        run: python -m build --outdir "${{ runner.temp }}/terry-cubes-dist"
+
+      - name: Install the freshly built wheel
+        env:
+          TERRY_CI_DIST: ${{ runner.temp }}/terry-cubes-dist
+        run: >-
+          python -c
+          "import os, pathlib, subprocess, sys;
+          wheels = list(pathlib.Path(os.environ['TERRY_CI_DIST']).glob('*.whl'));
+          assert len(wheels) == 1, 'Expected exactly one freshly built wheel';
+          subprocess.check_call([sys.executable, '-m', 'pip', 'install', '--force-reinstall', '--no-deps', str(wheels[0])])"
+
+      - name: Verify installed version and research data
+        run: >-
+          python -I -c
+          "from terry_cubes import __version__;
+          from terry_cubes.data import load_spectra, list_research_datasets, load_research_dataset;
+          assert __version__ == '0.1.1';
+          assert all(load_spectra(n)['model']['num_cubes'] == n for n in (1, 2, 3));
+          assert len(list_research_datasets()) == 7;
+          [load_research_dataset(x['name']) for x in list_research_datasets()];
+          print('Version 0.1.1 and all ten research datasets loaded successfully.')"
+
+      - name: Test installed wheel outside the source checkout
+        run: >-
+          python -c
+          "import os, pathlib, shutil, subprocess, sys, tempfile;
+          root = pathlib.Path.cwd();
+          target = pathlib.Path(tempfile.mkdtemp(prefix='terry-cubes-installed-tests-'));
+          shutil.copytree(root / 'tests', target / 'tests');
+          shutil.copytree(root / 'data', target / 'data');
+          shutil.copytree(root / 'validation' / 'reference_joined', target / 'validation' / 'reference_joined');
+          shutil.copy2(root / 'SOURCE_PROVENANCE.json', target / 'SOURCE_PROVENANCE.json');
+          shutil.copy2(root / 'RELEASE_PROVENANCE.json', target / 'RELEASE_PROVENANCE.json');
+          options = ['--run-research'] if os.environ.get('TERRY_RESEARCH') == 'true' else [];
+          subprocess.check_call([sys.executable, '-I', '-m', 'pytest', '-q', *options, str(target / 'tests')], cwd=target)"
+
+      - name: Verify command-line entry point
+        working-directory: ${{ runner.temp }}
+        run: terry-cubes --version
