@@ -23,11 +23,27 @@ def test_original_math_files_and_extra_datasets_are_preserved():
         assert sha256((package/name).read_bytes().replace(b"\r\n", b"\n")).hexdigest() == expected
     for name, expected in manifest["added_reference_data_lf_sha256"].items():
         assert sha256((root/"data"/name).read_bytes().replace(b"\r\n", b"\n")).hexdigest() == expected
+    # Python 3.12 added AST fields that do not exist in Python 3.10/3.11.
+    # Parse both sources with this interpreter instead of comparing ast.dump()
+    # against a fingerprint produced by a different Python version.
+    reference_name = "su2_sparse_spectrum.py"
+    reference_bytes = (root/"tests"/"reference"/reference_name).read_bytes()
+    source_manifest = json.loads((root/"SOURCE_PROVENANCE.json").read_text())
+    expected_reference = source_manifest["source_lf_normalized_sha256"][reference_name]
+    assert sha256(reference_bytes.replace(b"\r\n", b"\n")).hexdigest() == expected_reference
     tree = ast.parse((package/"solver.py").read_text(encoding="utf-8"))
-    for node in tree.body:
-        if getattr(node, "name", None) in manifest["unchanged_solver_ast_sha256"]:
-            digest = sha256(ast.dump(node, include_attributes=False).encode()).hexdigest()
-            assert digest == manifest["unchanged_solver_ast_sha256"][node.name]
+    reference_tree = ast.parse(reference_bytes.decode("utf-8"))
+    names = set(manifest["unchanged_solver_ast_sha256"])
+    actual_nodes = {node.name: node for node in tree.body
+                    if getattr(node, "name", None) in names}
+    reference_nodes = {node.name: node for node in reference_tree.body
+                       if getattr(node, "name", None) in names}
+    assert set(actual_nodes) == names, "A preserved solver definition is missing"
+    assert set(reference_nodes) == names, "An original solver definition is missing"
+    for name in sorted(names):
+        assert ast.dump(actual_nodes[name], include_attributes=False) == ast.dump(
+            reference_nodes[name], include_attributes=False
+        ), f"Original solver definition changed: {name}"
     assert __version__ == "0.1.1"
 
 
