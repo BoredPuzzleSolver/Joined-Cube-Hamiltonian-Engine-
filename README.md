@@ -1,240 +1,81 @@
-# Terry Cubes (`terry_cubes`)
+# Terry Cubes — Joined-Cube Hamiltonian Engine
 
-**A Python research library for gauge-invariant SU(2) Hamiltonian calculations on finite open chains of joined cubes.**
+**A Python research toolkit for exploring finite quantum gauge systems, reproducing spectral calculations, and developing research benchmarks.**
 
-`terry_cubes` constructs spin-network bases, evaluates local SU(2) recoupling coefficients, assembles sparse Hamiltonians, and computes numerical ground-state energies, low-lying excitation energies, and spectral-gap estimates. It provides a Python API, a command-line interface, automated tests, and reference datasets for one, two, and three cubes.
+Terry Cubes (`terry_cubes`) calculates the allowed quantum states and low-energy behavior of an SU(2) lattice gauge model on open chains of joined cubes. It constructs states that satisfy the model's local symmetry constraints, builds the Hamiltonian—the operator describing the system's energy—and computes energy levels, excitation gaps, and selected observables.
 
-The package is intended for finite-lattice studies, numerical benchmarking, cutoff comparisons, and educational exploration of Hamiltonian lattice gauge theory. It implements a finite-graph SU(2) model based on the Kogut–Susskind Hamiltonian framework.
+In practical terms, it lets you investigate how a small quantum system changes when you adjust its couplings, connect more cubes, or increase the number of states retained in a calculation. Reference datasets, numerical diagnostics, and separate verification tools make those calculations reproducible and useful for comparison.
 
-**Status:** research prototype, version 0.1.0. The published spectra are finite-basis numerical results. An infinite-volume gap, a three-dimensional bulk bound, and a continuum Yang–Mills mass gap have not been established by this package.
+**Current release: 0.1.1.** The project supports finite-system research, numerical-method development, and education. Game applications and broader physical simulations are potential extensions described below.
 
-## Implemented features
+## What the tool does today
 
-- Open `N × 1 × 1` chains of cubes, with shared physical links and faces.
-- Gauge-invariant state enumeration using SU(2) singlet constraints.
-- Complete sets of compatible intertwiner channels at four-valent joining vertices.
-- Exact signed local recoupling data, with floating-point conversion for numerical matrix construction.
-- Sparse electric and magnetic Hamiltonian terms.
-- A fully reorthogonalized Lanczos solver and an optional SciPy ARPACK backend.
-- Eigenpair residual checks and explicit convergence reporting.
-- Python and command-line interfaces, with JSON output.
-- Reference spectra and regression tests for `N = 1, 2, 3`.
+- **Builds gauge-invariant quantum bases** for open `N × 1 × 1` chains of joined cubes, including the compatible coupling channels at joining vertices.
+- **Constructs sparse Hamiltonians** using exact local SU(2) recoupling data, converted to floating point for numerical calculations.
+- **Computes low-energy spectra and eigenvectors**, including ground-state energies, excitation energies, and spectral-gap estimates.
+- **Compares electric cutoffs and solver results**, helping users examine numerical convergence and sensitivity to omitted states.
+- **Calculates selected plaquette observables and imaginary-time correlations** within the retained quantum basis.
+- **Provides reproducible reference calculations** for one, two, and three cubes, plus a separate two-square benchmark.
+- **Includes fixed-case certificate verifiers** that establish bounds for specified finite models under their documented assumptions.
+- **Offers a Python API and command-line interface**, with JSON output, examples, research records, and automated tests.
 
-The current implementation supports **SU(2)** and the specified chain geometry. General three-dimensional lattices, six-valent bulk vertices, and SU(3) are not implemented.
+The implementation uses established Hamiltonian lattice gauge methods. Its contribution is the specific joined-cube implementation, documented conventions, reference calculations, and connection to reproducible finite-graph verification.
 
-## Model and truncation
+## Practical uses
 
-The Hamiltonian is
+| Application | How Terry Cubes can help |
+| --- | --- |
+| **Finite quantum-system research** | Explore low-energy spectra, coupling dependence, operator overlaps, and cutoff behavior on the supported graphs. |
+| **Numerical-method benchmarking** | Compare eigensolvers, truncation strategies, and independent implementations against documented reference cases. |
+| **Quantum-algorithm development** | Supply classical reference energies and states for a matching quantum simulation or variational calculation. Qubit encodings and hardware integration would be additional work. |
+| **Computational mathematics** | Study concrete examples of constrained state spaces, angular-momentum recoupling, and finite-graph spectral bounds. |
+| **Education and visualization** | Build demonstrations of spin networks, local symmetry constraints, energy levels, and how numerical approximations change a result. |
+| **Testing approximate models** | Generate small-system reference data against which proposed reduced models or other approximations can be evaluated. |
 
-$$
-H = \kappa\sum_{e\in E_{\mathrm{physical}}}j_e(j_e+1)
-  + \nu\sum_{p\in F}\left(1-\frac{1}{2}\operatorname{Tr}_{\mathrm{fund}}U_p\right),
-\qquad \kappa>0,\quad \nu\geq0.
-$$
+Benchmark comparisons must match the geometry, boundary conditions, Hamiltonian normalization, and retained state space. The project does not currently claim measured speed or accuracy advantages over other research packages.
 
-Here, `kappa` is the electric coefficient, `nu` is the magnetic plaquette coefficient, and `U_p` is the ordered product of link matrices around a face.
+## Potential game and interactive applications
 
-The basis includes every compatible physical state satisfying the **total electric-energy cutoff**
+The existing calculations could provide a mathematical basis for educational games and deliberately fictional behavior. Possible applications include:
 
-$$
-\sum_{e\in E_{\mathrm{physical}}}j_e(j_e+1)\leq C.
-$$
+- **Quantum puzzles:** players choose allowed link states, satisfy local constraints, or change couplings to reach a target energy pattern.
+- **Fictional materials and devices:** a game adapter maps calculated energy gaps or observables to a shield's activation threshold, a reactor's operating modes, or a fictional material's response.
+- **Procedural visuals and sound:** selected observables or energy differences drive colors, patterns, animation parameters, or musical relationships.
+- **Interactive simulation exhibits:** users explore how a small quantum model responds to changes in its parameters and computational cutoff.
 
-This is the meaning of `electric_cutoff`. It is independent of `kappa` and is different from imposing the same fixed maximum spin on every link. All compatible auxiliary coupling channels are retained; these labels resolve vertex intertwiners and carry no additional electric energy.
+A practical first prototype could precompute a small library of results and expose them through a game interface, while the game's existing physics system handles movement and contact. These mappings would be authored gameplay rules; their usefulness and performance would need to be tested.
 
-For the largest supplied calculation, `N = 3` and `C = 16` produce **771,425 basis states**. The largest physical spin present in that basis is `j = 3/2`; auxiliary coupling spins reach `2`. This basis size counts quantum states, not spatial voxels.
+Further development could add real-time quantum evolution, state preparation, and measurement rules for small interactive models. The current imaginary-time correlation calculations do not provide that complete interaction loop. New fictional interaction laws would also require new operators or an explicit adapter.
 
-The reported gap is the finite-basis estimate
+**These are proposed applications. Version 0.1.1 does not include a game-engine adapter or a general gameplay physics system.**
 
-$$
-\Delta = E_1-E_0.
-$$
+## Possible future versions: mechanics and materials
 
-At fixed cutoff and `nu / kappa`, a common rescaling of `kappa` and `nu` rescales all energies. Comparison with the supplied `kappa = 1` datasets should therefore use `E0 / kappa`, `E1 / kappa`, and `gap / kappa`. Conversion to physical units requires a separate scale-setting prescription.
+A broader version could introduce a separate mechanics module, or integrate with an existing simulator, to explore friction, stress, deformation, and different materials. That would require new physical models, state variables, and validation alongside the current quantum calculations.
 
-## Installation
+| Possible addition | What would need to be implemented | Potential use after validation |
+| --- | --- | --- |
+| **Motion, collisions, and friction** | Positions, velocities, masses, contact detection, friction laws, and stable time integration. | Interactive mechanical systems and object-contact simulations. |
+| **Elasticity and stress** | Displacement and strain fields, material response laws, loads, boundary conditions, and a suitable mechanical solver. | Deformation studies and comparisons of modeled structural responses. |
+| **Different material behaviors** | Calibrated density, stiffness, damping, plasticity, or other relevant properties. | Comparing how specified material models respond to the same conditions. |
+| **Damage and fracture** | Failure criteria, damage evolution, and methods for updating connectivity as objects break. | Destruction effects and controlled fracture simulations. |
 
-Requires **Python 3.10 or later**, NumPy, SciPy, and SymPy.
+This direction could support fictional material systems, teaching tools, and eventually selected real-world modeling tasks if the added models were calibrated and independently validated. Friction and other dissipative effects need explicit treatment of energy loss.
 
-The installable package currently lives inside the repository's `terry_cubes-0.1.0` directory:
+The present SU(2) spectral gap does not directly determine friction, stiffness, stress, or material strength. Any physical connection would need to be derived or validated; assigning a connection for a game is a design choice. Existing quantum certificates would continue to apply only to the models and parameters they verify.
 
-```bash
-git clone https://github.com/BoredPuzzleSolver/Joined-Cube-Hamiltonian-Engine-.git
-cd Joined-Cube-Hamiltonian-Engine-/terry_cubes-0.1.0
-python -m venv .venv
-```
+These are possible development directions, with no committed release schedule.
 
-Activate the virtual environment using the command for your platform.
+## Reference results and scope
 
-**Windows PowerShell:**
+For one open cube at `nu / kappa = 1`, the reference calculations give a numerical gap near **`2.951043 × kappa`**. A separate verified certificate bounds the gap in the full spin space of that fixed graph within **`[2.941733, 2.958693] × kappa`**.
 
-```powershell
-.\.venv\Scripts\Activate.ps1
-```
+Version 0.1.1 includes tools to rerun the specified certificate checks. Ordinary numerical results remain marked `certified: false`; loading a saved certificate does not perform fresh verification. Multi-cube spectra are finite-basis numerical results, and the two-square benchmark concerns a different graph.
 
-**macOS / Linux:**
+The current model is a finite SU(2) cube chain. Increasing its length extends one spatial direction, and the number of quantum states can grow rapidly. The supplied three-cube calculation with 771,425 basis states describes three spatial cubes with many quantum configurations. It does not establish real-time performance for large worlds.
 
-```bash
-source .venv/bin/activate
-```
+These calculations do not establish an infinite-volume or continuum Yang–Mills mass gap, or calibrated predictions for real materials.
 
-Then install:
+## Getting started
 
-```bash
-python -m pip install -e .
-```
-
-This installs the Python library and the `terry-cubes` command. These instructions install from the repository; they do not assume a PyPI release.
-
-## Python quick start
-
-A small example:
-
-```python
-from terry_cubes import JoinedCubesModel, SpectrumSolver
-
-model = JoinedCubesModel(num_cubes=1, kappa=1.0, nu=1.0)
-solver = SpectrumSolver(model, electric_cutoff=12)
-results = solver.compute_mass_gap()
-
-print("Ground-state energy E0:", results.e0)
-print("First-excitation energy E1:", results.e1)
-print("Finite-basis gap:", results.gap)
-print("Basis dimension:", results.dimension)
-print("Residual norms:", results.residual_norms)
-print("Residual tolerance satisfied:", results.converged)
-```
-
-Change `num_cubes`, `electric_cutoff`, and the coupling ratio to study other finite systems. Increasing the cutoff can change the result even when the eigensolver residual is very small.
-
-To use SciPy's sparse eigensolver:
-
-```python
-solver = SpectrumSolver(
-    model,
-    electric_cutoff=12,
-    backend="arpack",
-    max_iterations=1000,
-)
-results = solver.compute_mass_gap()
-```
-
-## Command line
-
-```bash
-terry-cubes run --cubes 2 --kappa 1.0 --nu 0.25 --cutoff 16 --output results.json
-```
-
-Additional options include `--backend`, `--pairing`, `--tolerance`, `--max-iterations`, `--levels`, and `--seed`.
-
-```bash
-terry-cubes run --help
-```
-
-## Reference calculations
-
-The bundled data contain 40 finite-basis reference cases across `N = 1, 2, 3`, several electric cutoffs, and the ratios `nu / kappa = 0.25` and `1.0`.
-
-Selected equal-coupling results (`kappa = nu = 1`):
-
-| Cubes | Electric cutoff | Basis dimension | Numerical gap |
-|---:|---:|---:|---:|
-| 1 | 18 | 2,920 | 2.95111924 |
-| 2 | 18 | 201,248 | 2.91087079 |
-| 3 | 16 | 771,425 | 2.90154382 |
-
-These are eigenvalue differences of the specified finite matrices. Their displayed digits do not provide an error bound for the untruncated theory. The different cutoffs and small number of volumes do not establish exponential saturation or a positive infinite-volume limit.
-
-The data are in [`terry_cubes-0.1.0/data/`](terry_cubes-0.1.0/data/). See the [validation record](terry_cubes-0.1.0/VALIDATION.md) for the documented numerical reproduction checks and their scope.
-
-### Numerical convergence and certification
-
-A small eigenpair residual measures how accurately the computed vector satisfies the retained matrix equation. It does not bound the effect of omitted states, establish spectral multiplicities, or prove a bulk or continuum gap. Solver output is explicitly marked `certified: false`.
-
-The default single-vector Lanczos backend can omit repeated copies of degenerate eigenvalues. Researchers studying degeneracies or spectral counting should use additional solver and symmetry checks. Failed residual convergence raises `SpectrumConvergenceError`.
-
-A separate research calculation gives the fixed single-cube interval `[2.941733, 2.958693] * kappa` at `nu / kappa = 1`, with control of omitted spin states. The package tests check numerical consistency with that reported interval. **The separate certificate verifier and derivation are not included in this release**, and interval membership is not a certification procedure. No corresponding untruncated multi-cube certificate is supplied.
-
-## Intended uses
-
-### Current applications
-
-- Calculate low-energy spectra for the implemented finite SU(2) cube chains.
-- Investigate sensitivity to the electric cutoff and magnetic/electric ratio.
-- Compare equivalent intertwiner coupling trees and numerical eigensolvers.
-- Supply finite-system reference matrices and spectra for testing other numerical methods.
-- Demonstrate spin networks, SU(2) recoupling, and local Gauss-law constraints.
-
-### Exploratory extensions
-
-The generated Hamiltonians and spectra may serve as inputs to future work on observables, finite-system time evolution, quantum-algorithm benchmarks, or visual demonstrations. Those applications require additional implementation and validation.
-
-For a game or visualization, a custom adapter could map a computed value to an interaction parameter. That mapping would be part of the demonstration's chosen model. The current package supplies no game-engine integration or validated model of fluids, elasticity, friction, fracture, or material strength. A computed spectral gap alone does not determine those properties.
-
-## Limits and computational cost
-
-- Increasing `num_cubes` extends only one spatial direction. The transverse dimensions remain one cube wide.
-- The package does not perform physical scale setting, continuum extrapolation, or a two-loop scaling test.
-- Cutoff convergence, volume dependence, and continuum scaling are separate questions.
-- The implementation constructs a global finite Hamiltonian. It does not implement independent per-cube solves, a linear-time parallel physics algorithm, GPU acceleration, or exact voxel level-of-detail decimation.
-- Large bases can require several gigabytes of memory. The default Lanczos implementation stores its Krylov vectors explicitly, in addition to state labels and sparse matrix arrays.
-
-## Tests
-
-From the `terry_cubes-0.1.0` directory:
-
-```bash
-python -m pip install -e ".[dev]"
-python -m pytest
-```
-
-To recompute all 40 recorded baseline cases:
-
-```bash
-python -m pytest --run-slow -m slow tests/test_spectrum.py
-```
-
-The full reproduction takes more time and memory than the routine suite. Passing a reference comparison establishes numerical agreement for the specified finite model; it does not supply a new rigorous enclosure of an untruncated spectrum.
-
-## Repository layout
-
-```text
-Joined-Cube-Hamiltonian-Engine-/
-├── README.md
-├── LICENSE
-├── terry_cubes-0.1.0/       # Installable package and its documentation
-│   ├── terry_cubes/        # Current implementation and public API
-│   ├── data/              # Reference spectra
-│   ├── tests/             # Tests and preserved reference implementations
-│   ├── pyproject.toml
-│   ├── README.md
-│   └── VALIDATION.md
-└── research_scripts/      # Archived standalone research scripts
-```
-
-Use the installable `terry_cubes` package for new calculations. The archived scripts document the earlier implementation.
-
-## Citation
-
-When reporting results, include the package version or commit, geometry, cutoff, coupling ratio, solver settings, and any additional error analysis.
-
-```bibtex
-@software{mullee2026terrycubes,
-  author = {Mullee, Terrance},
-  title = {Terry Cubes: Finite SU(2) Hamiltonian Spectra on Joined Cubes},
-  version = {0.1.0},
-  year = {2026},
-  url = {https://github.com/BoredPuzzleSolver/Joined-Cube-Hamiltonian-Engine-}
-}
-```
-
-## License
-
-MIT. See [LICENSE](LICENSE).
-
-Original research implementation: Terrance Mullee / BoredPuzzleSolver.
-
-
-
-
-
+Use the **`terry_cubesv0.1.1`** directory for the current release. It requires Python 3.10 or later, NumPy, SciPy, and Sym
