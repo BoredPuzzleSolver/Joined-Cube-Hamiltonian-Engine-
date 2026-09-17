@@ -1,0 +1,6 @@
+# Preserve the reference JSON bytes exactly as stored in the original repository.
+data/SU2_Joined_Cubes_N*_Spectra.json -text
+data/*.json -text
+data/*.zip -text
+certificates/** -text
+validation/reference_joined/** -text
