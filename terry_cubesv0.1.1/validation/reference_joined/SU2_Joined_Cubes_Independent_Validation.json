@@ -1,0 +1,228 @@
+{
+  "title": "Independent joined-cube gauge-invariant basis and local four-leg intertwiner audit",
+  "physical_spin_cutoff": 0.5,
+  "counts": [
+    {
+      "cubes": 1,
+      "real_vertices": 8,
+      "real_edges": 12,
+      "degree_four_vertices": [],
+      "cycle_pattern_count": 32,
+      "physical_basis_dimension": 32,
+      "cycle_patterns_by_number_of_four_half_vertices": {
+        "0": 32
+      },
+      "interpretation": "Sum 2^r over physical even-parity edge masks, with r four-half degree-four vertices."
+    },
+    {
+      "cubes": 2,
+      "real_vertices": 12,
+      "real_edges": 20,
+      "degree_four_vertices": [
+        1,
+        4,
+        7,
+        10
+      ],
+      "cycle_pattern_count": 512,
+      "physical_basis_dimension": 868,
+      "cycle_patterns_by_number_of_four_half_vertices": {
+        "0": 324,
+        "1": 128,
+        "2": 56,
+        "4": 4
+      },
+      "interpretation": "Sum 2^r over physical even-parity edge masks, with r four-half degree-four vertices."
+    },
+    {
+      "cubes": 3,
+      "real_vertices": 16,
+      "real_edges": 28,
+      "degree_four_vertices": [
+        1,
+        2,
+        5,
+        6,
+        9,
+        10,
+        13,
+        14
+      ],
+      "cycle_pattern_count": 8192,
+      "physical_basis_dimension": 25676,
+      "cycle_patterns_by_number_of_four_half_vertices": {
+        "0": 3468,
+        "1": 2368,
+        "2": 1616,
+        "3": 480,
+        "4": 192,
+        "6": 32,
+        "5": 32,
+        "8": 4
+      },
+      "interpretation": "Sum 2^r over physical even-parity edge masks, with r four-half degree-four vertices."
+    }
+  ],
+  "local_four_leg_invariants": {
+    "four_fundamental_tensor_dimension": 16,
+    "total_spin_zero_dimension": 2,
+    "intermediate_k_values": [
+      0,
+      1
+    ],
+    "total_singlet_casimir_residual": 9.992007221626409e-16,
+    "pairing_changes": [
+      {
+        "alternative_pair": [
+          0,
+          2
+        ],
+        "absolute_pairing_change_matrix": [
+          [
+            0.5,
+            0.866025403784439
+          ],
+          [
+            0.8660254037844385,
+            0.49999999999999944
+          ]
+        ],
+        "squared_normalized_pair_contractions": [
+          0.25,
+          0.7499999999999997
+        ]
+      },
+      {
+        "alternative_pair": [
+          0,
+          3
+        ],
+        "absolute_pairing_change_matrix": [
+          [
+            0.49999999999999994,
+            0.8660254037844392
+          ],
+          [
+            0.8660254037844383,
+            0.4999999999999998
+          ]
+        ],
+        "squared_normalized_pair_contractions": [
+          0.24999999999999994,
+          0.7499999999999993
+        ]
+      }
+    ],
+    "generic_invariant_operator_spectrum": [
+      4.267949192431121,
+      7.73205080756888
+    ],
+    "spectrum_error_across_pairing_trees": 8.881784197001252e-16,
+    "plaquette_relevance": "A face connecting legs from different original pairs couples to both k=0 and k=1 invariant channels. Retaining only k=0 generally discards a nonzero component.",
+    "scope": "Local invariant-tensor and relative contraction test. Full lattice Wilson normalization is a separate check."
+  },
+  "virtual_edge_interpretation": "The extra k labels resolve an invariant tensor. They are not independent physical links; their electric weight is zero and they receive no physical spin cutoff.",
+  "all_checks_passed": true,
+  "complete_graph_pairing_invariance": {
+    "two_cubes": [
+      {
+        "pairing": "longitudinal",
+        "dimension": 868,
+        "resolved_edges": 24,
+        "resolved_vertices": 16,
+        "physical_faces": 11,
+        "virtual_electric_weights": 0,
+        "first_six_levels": [
+          10.171868019234555,
+          13.394461560012116,
+          13.426771293242826,
+          13.429763944987954,
+          13.46904522941879,
+          13.472667247783415
+        ],
+        "gap": 3.222593540777561,
+        "independent_states_match_model": true,
+        "all_face_matrices_match_model_under_one_common_basis_phase": true
+      },
+      {
+        "pairing": "crossed",
+        "dimension": 868,
+        "resolved_edges": 24,
+        "resolved_vertices": 16,
+        "physical_faces": 11,
+        "virtual_electric_weights": 0,
+        "first_six_levels": [
+          10.171868019234555,
+          13.394461560012115,
+          13.42677129324278,
+          13.429763944987966,
+          13.469045229418787,
+          13.472667247783415
+        ],
+        "gap": 3.2225935407775594,
+        "independent_states_match_model": true,
+        "all_face_matrices_match_model_under_one_common_basis_phase": true
+      },
+      {
+        "pairing": "mixed",
+        "dimension": 868,
+        "resolved_edges": 24,
+        "resolved_vertices": 16,
+        "physical_faces": 11,
+        "virtual_electric_weights": 0,
+        "first_six_levels": [
+          10.171868019234555,
+          13.39446156001214,
+          13.426771293242815,
+          13.429763944987952,
+          13.46904522941882,
+          13.472667247783415
+        ],
+        "gap": 3.2225935407775843,
+        "independent_states_match_model": true,
+        "all_face_matrices_match_model_under_one_common_basis_phase": true
+      }
+    ],
+    "full_spectrum_max_error_between_pairings": 9.947598300641403e-14,
+    "one_cube_reduction_matrix_max_error": 0.0,
+    "one_cube_ordering_correction_is_common_diagonal_basis_phase": true,
+    "pairing_invariance_passed": true,
+    "phase_handling": "Every edge uses D(U)epsilon with all indices outgoing. Casimir singlets have one fixed incident-edge order; explicit face epsilon contractions retain orientation signs.",
+    "scope": "Same real graph, three independently routed auxiliary pairing trees, complete real-spin cutoff. Independent Casimir/CG contractions determine support, magnitudes and signs without6j; comparison permits one common state-basis phase across all faces."
+  },
+  "higher_spin_tensor_checks": [
+    {
+      "fixture": "prior_single_cube",
+      "cubes": 1,
+      "electric_energy_cap": 12,
+      "dimension": 398,
+      "directed_face_matrix_entries": 4260,
+      "maximum_physical_spin_present": 1.5,
+      "maximum_magnitude_error": 6.106226635438361e-16,
+      "all_face_matrices_match_under_one_common_basis_phase": true,
+      "scope": "Retained matrices only; the independent support enumeration also checks expected zeros."
+    },
+    {
+      "fixture": "joined_cube_higher_spin",
+      "cubes": 2,
+      "electric_energy_cap": 8,
+      "dimension": 622,
+      "directed_face_matrix_entries": 5584,
+      "maximum_physical_spin_present": 1.0,
+      "maximum_magnitude_error": 8.326672684688674e-16,
+      "all_face_matrices_match_under_one_common_basis_phase": true,
+      "scope": "Retained matrices only; the independent support enumeration also checks expected zeros."
+    },
+    {
+      "fixture": "three_cubes_both_interior_planes",
+      "cubes": 3,
+      "electric_energy_cap": 6,
+      "dimension": 307,
+      "directed_face_matrix_entries": 1936,
+      "maximum_physical_spin_present": 0.5,
+      "maximum_magnitude_error": 8.881784197001252e-16,
+      "all_face_matrices_match_under_one_common_basis_phase": true,
+      "scope": "Retained matrices only; the independent support enumeration also checks expected zeros."
+    }
+  ]
+}

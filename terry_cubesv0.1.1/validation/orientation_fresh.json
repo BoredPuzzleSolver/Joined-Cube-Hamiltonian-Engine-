@@ -1,0 +1,9 @@
+{
+  "maximum_doubled_old_spin": 14,
+  "exact_vertex_contractions": 3368,
+  "unit_3j_norms": true,
+  "squared_6j_identity": true,
+  "all_radical_ratios_exact_rational_squares": true,
+  "exact_local_sign_relation_to_reference_6j_formula": true,
+  "exact_local_dimension_ratio_to_reference_6j_formula": true
+}

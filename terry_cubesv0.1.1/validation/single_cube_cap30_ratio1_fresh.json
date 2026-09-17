@@ -1,0 +1,37 @@
+{
+  "e0": 5.506497021344192,
+  "e1": 8.457539855871563,
+  "gap": 2.951042834527371,
+  "eigenvalues": [
+    5.506497021344192,
+    8.457539855871563,
+    8.588835112711706
+  ],
+  "residual_norms": [
+    2.208103702296933e-14,
+    2.2232056986062727e-14,
+    2.9961304633191226e-14
+  ],
+  "converged": true,
+  "dimension": 34680,
+  "num_cubes": 1,
+  "kappa": 1.0,
+  "nu": 1.0,
+  "electric_cutoff": "30",
+  "pairing": "longitudinal",
+  "backend": "arpack",
+  "method": "SciPy ARPACK eigsh",
+  "iterations": -1,
+  "seed": 1097,
+  "tolerance": 1e-10,
+  "max_iterations": 1000,
+  "hermiticity_error": 0.0,
+  "schema_version": 1,
+  "package_version": "0.1.1",
+  "model_id": "joined_cubes",
+  "nu_over_kappa": 1.0,
+  "gap_over_kappa": 2.951042834527371,
+  "certified": false,
+  "scope": "Numerical finite-basis spectrum. Residuals do not certify spectral ordering, omitted states, infinite volume, or the continuum limit. Single-vector Lanczos may omit copies of degenerate eigenvalues.",
+  "cutoff_definition": "sum_physical_links j(j+1) <= electric_cutoff"
+}

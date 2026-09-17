@@ -1,0 +1,20 @@
+{
+  "version": "0.1.1",
+  "original_files_checked": 37,
+  "original_package_unchanged": true,
+  "mathematical_core_byte_identical": true,
+  "original_references_byte_identical": true,
+  "archive_files_verified": {
+    "single_cube": 42,
+    "two_plaquette": 19,
+    "joined_archive": 22
+  },
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "numpy": "2.3.5",
+    "scipy": "1.18.1",
+    "sympy": "1.14.0",
+    "pytest": "9.1.1"
+  }
+}

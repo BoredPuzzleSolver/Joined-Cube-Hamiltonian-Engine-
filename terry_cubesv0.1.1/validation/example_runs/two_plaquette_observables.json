@@ -1,0 +1,90 @@
+{
+  "symmetric": {
+    "vacuum_expectation": 0.22826026047836814,
+    "first_excitation_overlap_squared": 0.23165988544514898,
+    "lowest_detected_gap": 3.091959020088576,
+    "spectral_weight_threshold": 1e-18,
+    "discarded_weight": 1.1867088479111777e-19,
+    "dt": 0.25,
+    "complete_retained_spectrum": true,
+    "unrepresented_weight": 0.0,
+    "correlators": [
+      {
+        "time": 0.25,
+        "C_connected": 0.10803399021938741,
+        "effective_gap": 3.107340716637852
+      },
+      {
+        "time": 0.5,
+        "C_connected": 0.04968041160437175,
+        "effective_gap": 3.100821991273296
+      },
+      {
+        "time": 1.0,
+        "C_connected": 0.01054902593953189,
+        "effective_gap": 3.0955536262626993
+      },
+      {
+        "time": 2.0,
+        "C_connected": 0.00047802657346377884,
+        "effective_gap": 3.092684426100888
+      },
+      {
+        "time": 4.0,
+        "C_connected": 9.85322551067497e-07,
+        "effective_gap": 3.0919905158382903
+      },
+      {
+        "time": 8.0,
+        "C_connected": 4.1906841709578225e-12,
+        "effective_gap": 3.091959079716929
+      }
+    ],
+    "certified": false,
+    "scope": "Connected imaginary-time spectral sum in a finite basis; partial modes or symmetry selection may miss the lowest excitation. No physical mass units are inferred."
+  },
+  "antisymmetric": {
+    "vacuum_expectation": -4.2825985813177425e-17,
+    "first_excitation_overlap_squared": 8.447419223977339e-28,
+    "lowest_detected_gap": 3.1139577234413136,
+    "spectral_weight_threshold": 1e-18,
+    "discarded_weight": 1.1390414933412074e-19,
+    "dt": 0.25,
+    "complete_retained_spectrum": true,
+    "unrepresented_weight": 0.0,
+    "correlators": [
+      {
+        "time": 0.25,
+        "C_connected": 0.10765814268244779,
+        "effective_gap": 3.117487621786603
+      },
+      {
+        "time": 0.5,
+        "C_connected": 0.04938214669030066,
+        "effective_gap": 3.1149794888608273
+      },
+      {
+        "time": 1.0,
+        "C_connected": 0.01040493973440923,
+        "effective_gap": 3.1140434880570353
+      },
+      {
+        "time": 2.0,
+        "C_connected": 0.00046222336079926985,
+        "effective_gap": 3.1139583307183187
+      },
+      {
+        "time": 4.0,
+        "C_connected": 9.122260830071421e-07,
+        "effective_gap": 3.1139577234719624
+      },
+      {
+        "time": 8.0,
+        "C_connected": 3.5530707961988126e-12,
+        "effective_gap": 3.113957723441331
+      }
+    ],
+    "certified": false,
+    "scope": "Connected imaginary-time spectral sum in a finite basis; partial modes or symmetry selection may miss the lowest excitation. No physical mass units are inferred."
+  }
+}

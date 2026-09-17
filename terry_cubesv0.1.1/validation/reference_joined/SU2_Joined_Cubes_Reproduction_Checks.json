@@ -1,0 +1,30 @@
+{
+  "all_checks_passed": true,
+  "final_orientation_implementation_full_study_reruns": [
+    {
+      "num_cubes": 1,
+      "number_of_cutoff_coupling_pairs": 14,
+      "largest_dimension": 2920,
+      "max_energy_or_gap_difference": 0.0,
+      "passed": true
+    },
+    {
+      "num_cubes": 2,
+      "number_of_cutoff_coupling_pairs": 14,
+      "largest_dimension": 201248,
+      "max_energy_or_gap_difference": 1.1191048088221578e-13,
+      "passed": true
+    },
+    {
+      "num_cubes": 3,
+      "number_of_cutoff_coupling_pairs": 12,
+      "largest_dimension": 771425,
+      "max_energy_or_gap_difference": 3.055333763768431e-13,
+      "passed": true
+    }
+  ],
+  "extracted_zip_crc_and_independent_tensor_audit_passed": true,
+  "extracted_zip_exact_orientation_audit_passed": true,
+  "extracted_zip_small_study_max_energy_difference": 0.0,
+  "scope": "Reproduction and finite-model validation only; no infinite-volume or continuum certificate."
+}

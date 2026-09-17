@@ -1,0 +1,186 @@
+{
+  "schema_version": 1,
+  "package_version": "0.1.1",
+  "model_id": "joined_cubes",
+  "num_cubes": 1,
+  "embedding_electric_cutoff": "18",
+  "embedding_dimension": 2920,
+  "results": [
+    {
+      "e0": 5.541783784346631,
+      "e1": 8.772374284672088,
+      "gap": 3.230590500325457,
+      "eigenvalues": [
+        5.541783784346631,
+        8.772374284672088
+      ],
+      "residual_norms": [
+        1.587324116160465e-15,
+        9.886836481634472e-15
+      ],
+      "converged": true,
+      "dimension": 32,
+      "num_cubes": 1,
+      "kappa": 1.0,
+      "nu": 1.0,
+      "electric_cutoff": "6",
+      "pairing": "longitudinal",
+      "backend": "arpack",
+      "method": "dense NumPy eigh (small ARPACK input)",
+      "iterations": -1,
+      "seed": 1097,
+      "tolerance": 1e-10,
+      "max_iterations": 1000,
+      "hermiticity_error": 0.0,
+      "schema_version": 1,
+      "package_version": "0.1.1",
+      "model_id": "joined_cubes",
+      "nu_over_kappa": 1.0,
+      "gap_over_kappa": 3.230590500325457,
+      "certified": false,
+      "scope": "Numerical finite-basis spectrum. Residuals do not certify spectral ordering, omitted states, infinite volume, or the continuum limit. Single-vector Lanczos may omit copies of degenerate eigenvalues.",
+      "cutoff_definition": "sum_physical_links j(j+1) <= electric_cutoff",
+      "change_in_e0": null,
+      "change_in_e1": null,
+      "nested_energy_ordering_consistent": true,
+      "residual_in_largest_test_basis": [
+        0.47000579426642797,
+        0.8341275911898974
+      ]
+    },
+    {
+      "e0": 5.509365430750085,
+      "e1": 8.570253100572375,
+      "gap": 3.0608876698222893,
+      "eigenvalues": [
+        5.509365430750085,
+        8.570253100572375
+      ],
+      "residual_norms": [
+        1.907002107058079e-15,
+        3.3737031319311187e-15
+      ],
+      "converged": true,
+      "dimension": 86,
+      "num_cubes": 1,
+      "kappa": 1.0,
+      "nu": 1.0,
+      "electric_cutoff": "8",
+      "pairing": "longitudinal",
+      "backend": "arpack",
+      "method": "dense NumPy eigh (small ARPACK input)",
+      "iterations": -1,
+      "seed": 1097,
+      "tolerance": 1e-10,
+      "max_iterations": 1000,
+      "hermiticity_error": 0.0,
+      "schema_version": 1,
+      "package_version": "0.1.1",
+      "model_id": "joined_cubes",
+      "nu_over_kappa": 1.0,
+      "gap_over_kappa": 3.0608876698222893,
+      "certified": false,
+      "scope": "Numerical finite-basis spectrum. Residuals do not certify spectral ordering, omitted states, infinite volume, or the continuum limit. Single-vector Lanczos may omit copies of degenerate eigenvalues.",
+      "cutoff_definition": "sum_physical_links j(j+1) <= electric_cutoff",
+      "change_in_e0": -0.03241835359654566,
+      "change_in_e1": -0.20212118409971325,
+      "nested_energy_ordering_consistent": true,
+      "residual_in_largest_test_basis": [
+        0.16279819469381082,
+        0.7803537781928775
+      ]
+    },
+    {
+      "e0": 5.507451350957262,
+      "e1": 8.485466982287848,
+      "gap": 2.978015631330586,
+      "eigenvalues": [
+        5.507451350957262,
+        8.485466982287848
+      ],
+      "residual_norms": [
+        4.711093739910641e-15,
+        1.5529225517993752e-14
+      ],
+      "converged": true,
+      "dimension": 212,
+      "num_cubes": 1,
+      "kappa": 1.0,
+      "nu": 1.0,
+      "electric_cutoff": "10",
+      "pairing": "longitudinal",
+      "backend": "arpack",
+      "method": "SciPy ARPACK eigsh",
+      "iterations": -1,
+      "seed": 1097,
+      "tolerance": 1e-10,
+      "max_iterations": 1000,
+      "hermiticity_error": 0.0,
+      "schema_version": 1,
+      "package_version": "0.1.1",
+      "model_id": "joined_cubes",
+      "nu_over_kappa": 1.0,
+      "gap_over_kappa": 2.978015631330586,
+      "certified": false,
+      "scope": "Numerical finite-basis spectrum. Residuals do not certify spectral ordering, omitted states, infinite volume, or the continuum limit. Single-vector Lanczos may omit copies of degenerate eigenvalues.",
+      "cutoff_definition": "sum_physical_links j(j+1) <= electric_cutoff",
+      "change_in_e0": -0.001914079792823209,
+      "change_in_e1": -0.08478611828452642,
+      "nested_energy_ordering_consistent": true,
+      "residual_in_largest_test_basis": [
+        0.102220341194698,
+        0.4610140670347412
+      ]
+    },
+    {
+      "e0": 5.506605041172799,
+      "e1": 8.465110234410915,
+      "gap": 2.958505193238116,
+      "eigenvalues": [
+        5.506605041172799,
+        8.465110234410915
+      ],
+      "residual_norms": [
+        1.1598319783855478e-14,
+        9.553174295429678e-15
+      ],
+      "converged": true,
+      "dimension": 398,
+      "num_cubes": 1,
+      "kappa": 1.0,
+      "nu": 1.0,
+      "electric_cutoff": "12",
+      "pairing": "longitudinal",
+      "backend": "arpack",
+      "method": "SciPy ARPACK eigsh",
+      "iterations": -1,
+      "seed": 1097,
+      "tolerance": 1e-10,
+      "max_iterations": 1000,
+      "hermiticity_error": 0.0,
+      "schema_version": 1,
+      "package_version": "0.1.1",
+      "model_id": "joined_cubes",
+      "nu_over_kappa": 1.0,
+      "gap_over_kappa": 2.958505193238116,
+      "certified": false,
+      "scope": "Numerical finite-basis spectrum. Residuals do not certify spectral ordering, omitted states, infinite volume, or the continuum limit. Single-vector Lanczos may omit copies of degenerate eigenvalues.",
+      "cutoff_definition": "sum_physical_links j(j+1) <= electric_cutoff",
+      "change_in_e0": -0.0008463097844630951,
+      "change_in_e1": -0.020356747876933312,
+      "nested_energy_ordering_consistent": true,
+      "residual_in_largest_test_basis": [
+        0.037827119146842864,
+        0.267841147374235
+      ],
+      "second_seed": 8917,
+      "second_seed_max_energy_difference": 3.552713678800501e-15,
+      "second_seed_residual_norms": [
+        4.516056181393662e-15,
+        9.228112725850194e-15
+      ]
+    }
+  ],
+  "certified": false,
+  "scope": "Numerical cutoff comparison at fixed finite geometry. Larger-basis residuals and changes in gaps are not untruncated error bounds."
+}

@@ -1,0 +1,402 @@
+{
+  "model": {
+    "num_cubes": 2,
+    "shape": [
+      2,
+      1,
+      1
+    ],
+    "pairing": "longitudinal",
+    "physical_vertices": 12,
+    "physical_edges": 20,
+    "physical_faces": 11,
+    "resolved_vertices": 16,
+    "resolved_edges": 24,
+    "auxiliary_coupling_edges": 4,
+    "independent_graph_cycles": 9,
+    "lifted_face_lengths": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      4,
+      4,
+      4
+    ],
+    "electric_energy": "Sum of j(j+1) on physical links only",
+    "intertwiners": "All common pair-coupling channels retained; no physical-spin cutoff is applied to auxiliary labels",
+    "fixed_3j_order": "Ascending resolved incident edge indices; exact old/new permutation phases",
+    "oriented_edge_convention": "K_j(U)=D_j(U)epsilon_j, lower endpoint to higher; minus sign per reversed fundamental edge",
+    "magnetic_sign_arithmetic": "Exact 3j finite sums and spin-half CG contractions; exact rational squared magnitudes",
+    "sources": [
+      "https://dlmf.nist.gov/34.2#E4",
+      "https://dlmf.nist.gov/34.3#ii",
+      "https://www.nature.com/articles/s42005-024-01697-4"
+    ]
+  },
+  "hamiltonian": "H = kappa sum_physical_links j(j+1) + nu sum_faces (1 - Tr(U_face)/2)",
+  "units": "kappa=1",
+  "cutoff": "Complete total physical electric energy <= cap; all compatible virtual coupling labels included",
+  "status": "Numerical finite-basis spectra. No untruncated or infinite-volume gap certificate is asserted.",
+  "max_cap": 18,
+  "hermiticity_error": 0.0,
+  "spectra": [
+    {
+      "num_cubes": 2,
+      "energy_cap": 6,
+      "dimension": 155,
+      "nu_over_kappa": 0.25,
+      "E0": 2.6931396216370564,
+      "E1": 5.708938170050002,
+      "gap": 3.015798548412946,
+      "solver": {
+        "method": "fully reorthogonalized Lanczos with direct Ritz residuals",
+        "iterations": 60,
+        "residual_norms": [
+          6.847555094228072e-15,
+          3.3098471009944748e-15
+        ],
+        "converged": true,
+        "seed": 1097,
+        "scope": "Numerical Ritz values; a residual check does not certify spectral ordering"
+      },
+      "residual_in_largest_test_basis": [
+        0.050253924597309214,
+        0.2052524555779816
+      ]
+    },
+    {
+      "num_cubes": 2,
+      "energy_cap": 6,
+      "dimension": 155,
+      "nu_over_kappa": 1.0,
+      "E0": 10.175781377098582,
+      "E1": 13.443473283463344,
+      "gap": 3.267691906364762,
+      "solver": {
+        "method": "fully reorthogonalized Lanczos with direct Ritz residuals",
+        "iterations": 60,
+        "residual_norms": [
+          2.30494458120714e-15,
+          4.0249266399754305e-15
+        ],
+        "converged": true,
+        "seed": 1097,
+        "scope": "Numerical Ritz values; a residual check does not certify spectral ordering"
+      },
+      "residual_in_largest_test_basis": [
+        0.7042311655106105,
+        1.0543803988181695
+      ]
+    },
+    {
+      "num_cubes": 2,
+      "energy_cap": 8,
+      "dimension": 622,
+      "nu_over_kappa": 0.25,
+      "E0": 2.692762866380209,
+      "E1": 5.692824457676412,
+      "gap": 3.000061591296203,
+      "solver": {
+        "method": "fully reorthogonalized Lanczos with direct Ritz residuals",
+        "iterations": 72,
+        "residual_norms": [
+          4.294706986180122e-15,
+          5.847941530806894e-12
+        ],
+        "converged": true,
+        "seed": 1097,
+        "scope": "Numerical Ritz values; a residual check does not certify spectral ordering"
+      },
+      "residual_in_largest_test_basis": [
+        0.007456297406199213,
+        0.09466401448366712
+      ]
+    },
+    {
+      "num_cubes": 2,
+      "energy_cap": 8,
+      "dimension": 622,
+      "nu_over_kappa": 1.0,
+      "E0": 10.110786417384812,
+      "E1": 13.190039494695492,
+      "gap": 3.07925307731068,
+      "solver": {
+        "method": "fully reorthogonalized Lanczos with direct Ritz residuals",
+        "iterations": 72,
+        "residual_norms": [
+          7.938659782248559e-14,
+          1.4843480205121527e-12
+        ],
+        "converged": true,
+        "seed": 1097,
+        "scope": "Numerical Ritz values; a residual check does not certify spectral ordering"
+      },
+      "residual_in_largest_test_basis": [
+        0.3759376763351254,
+        0.8295959831104629
+      ]
+    },
+    {
+      "num_cubes": 2,
+      "energy_cap": 10,
+      "dimension": 2395,
+      "nu_over_kappa": 0.25,
+      "E0": 2.692758082677766,
+      "E1": 5.6916088842995585,
+      "gap": 2.9988508016217925,
+      "solver": {
+        "method": "fully reorthogonalized Lanczos with direct Ritz residuals",
+        "iterations": 96,
+        "residual_norms": [
+          1.7778651491047165e-14,
+          3.3795785242401873e-14
+        ],
+        "converged": true,
+        "seed": 1097,
+        "scope": "Numerical Ritz values; a residual check does not certify spectral ordering"
+      },
+      "residual_in_largest_test_basis": [
+        0.003295770903445081,
+        0.044140563202366694
+      ]
+    },
+    {
+      "num_cubes": 2,
+      "energy_cap": 10,
+      "dimension": 2395,
+      "nu_over_kappa": 1.0,
+      "E0": 10.09876997220553,
+      "E1": 13.090438933340684,
+      "gap": 2.9916689611351543,
+      "solver": {
+        "method": "fully reorthogonalized Lanczos with direct Ritz residuals",
+        "iterations": 84,
+        "residual_norms": [
+          9.025991298266433e-14,
+          3.777517704790026e-12
+        ],
+        "converged": true,
+        "seed": 1097,
+        "scope": "Numerical Ritz values; a residual check does not certify spectral ordering"
+      },
+      "residual_in_largest_test_basis": [
+        0.2129004938435406,
+        0.764878158961238
+      ]
+    },
+    {
+      "num_cubes": 2,
+      "energy_cap": 12,
+      "dimension": 8289,
+      "nu_over_kappa": 0.25,
+      "E0": 2.6927571305234625,
+      "E1": 5.69137774612662,
+      "gap": 2.9986206156031576,
+      "solver": {
+        "method": "fully reorthogonalized Lanczos with direct Ritz residuals",
+        "iterations": 108,
+        "residual_norms": [
+          1.7781365109719017e-14,
+          2.6110004919131547e-14
+        ],
+        "converged": true,
+        "seed": 1097,
+        "scope": "Numerical Ritz values; a residual check does not certify spectral ordering"
+      },
+      "residual_in_largest_test_basis": [
+        0.0005831573657699453,
+        0.01074063931287828
+      ]
+    },
+    {
+      "num_cubes": 2,
+      "energy_cap": 12,
+      "dimension": 8289,
+      "nu_over_kappa": 1.0,
+      "E0": 10.095454197101672,
+      "E1": 13.033667758215346,
+      "gap": 2.938213561113674,
+      "solver": {
+        "method": "fully reorthogonalized Lanczos with direct Ritz residuals",
+        "iterations": 96,
+        "residual_norms": [
+          1.3403236569222808e-13,
+          2.1340479635374792e-13
+        ],
+        "converged": true,
+        "seed": 1097,
+        "scope": "Numerical Ritz values; a residual check does not certify spectral ordering"
+      },
+      "residual_in_largest_test_basis": [
+        0.11113405805037882,
+        0.5054504376909624
+      ]
+    },
+    {
+      "num_cubes": 2,
+      "energy_cap": 14,
+      "dimension": 26300,
+      "nu_over_kappa": 0.25,
+      "E0": 2.692757114960002,
+      "E1": 5.691369303622992,
+      "gap": 2.9986121886629906,
+      "solver": {
+        "method": "fully reorthogonalized Lanczos with direct Ritz residuals",
+        "iterations": 120,
+        "residual_norms": [
+          7.53036807556527e-14,
+          5.991568952525908e-14
+        ],
+        "converged": true,
+        "seed": 1097,
+        "scope": "Numerical Ritz values; a residual check does not certify spectral ordering"
+      },
+      "residual_in_largest_test_basis": [
+        0.00036919502168709424,
+        0.0055965539908751005
+      ]
+    },
+    {
+      "num_cubes": 2,
+      "energy_cap": 14,
+      "dimension": 26300,
+      "nu_over_kappa": 1.0,
+      "E0": 10.094764660001301,
+      "E1": 13.013223428484487,
+      "gap": 2.9184587684831858,
+      "solver": {
+        "method": "fully reorthogonalized Lanczos with direct Ritz residuals",
+        "iterations": 108,
+        "residual_norms": [
+          3.7278083915196196e-13,
+          1.1440961803448702e-13
+        ],
+        "converged": true,
+        "seed": 1097,
+        "scope": "Numerical Ritz values; a residual check does not certify spectral ordering"
+      },
+      "residual_in_largest_test_basis": [
+        0.06348826573600883,
+        0.30103621934619684
+      ]
+    },
+    {
+      "num_cubes": 2,
+      "energy_cap": 16,
+      "dimension": 76326,
+      "nu_over_kappa": 0.25,
+      "E0": 2.692757106197393,
+      "E1": 5.691366852440091,
+      "gap": 2.9986097462426984,
+      "solver": {
+        "method": "fully reorthogonalized Lanczos with direct Ritz residuals",
+        "iterations": 132,
+        "residual_norms": [
+          3.2333155714848454e-13,
+          1.170745956959287e-12
+        ],
+        "converged": true,
+        "seed": 1097,
+        "scope": "Numerical Ritz values; a residual check does not certify spectral ordering"
+      },
+      "residual_in_largest_test_basis": [
+        7.096247475833225e-05,
+        0.001429617701780866
+      ]
+    },
+    {
+      "num_cubes": 2,
+      "energy_cap": 16,
+      "dimension": 76326,
+      "nu_over_kappa": 1.0,
+      "E0": 10.094534776250049,
+      "E1": 13.00701854844128,
+      "gap": 2.912483772191232,
+      "solver": {
+        "method": "fully reorthogonalized Lanczos with direct Ritz residuals",
+        "iterations": 108,
+        "residual_norms": [
+          2.020506586086105e-13,
+          3.999077502108389e-12
+        ],
+        "converged": true,
+        "seed": 1097,
+        "scope": "Numerical Ritz values; a residual check does not certify spectral ordering"
+      },
+      "residual_in_largest_test_basis": [
+        0.02575472618564111,
+        0.1522161547494966
+      ]
+    },
+    {
+      "num_cubes": 2,
+      "energy_cap": 18,
+      "dimension": 201248,
+      "nu_over_kappa": 0.25,
+      "E0": 2.6927571059009217,
+      "E1": 5.69136670514202,
+      "gap": 2.998609599241098,
+      "solver": {
+        "method": "fully reorthogonalized Lanczos with direct Ritz residuals",
+        "iterations": 132,
+        "residual_norms": [
+          3.912236296269053e-13,
+          2.539995180466729e-11
+        ],
+        "converged": true,
+        "seed": 1097,
+        "scope": "Numerical Ritz values; a residual check does not certify spectral ordering"
+      },
+      "second_seed_max_energy_difference": 7.993605777301127e-15,
+      "second_seed_solver": {
+        "method": "fully reorthogonalized Lanczos with direct Ritz residuals",
+        "iterations": 132,
+        "residual_norms": [
+          3.8513360258839763e-13,
+          3.229597787314545e-11
+        ],
+        "converged": true,
+        "seed": 8917,
+        "scope": "Numerical Ritz values; a residual check does not certify spectral ordering"
+      }
+    },
+    {
+      "num_cubes": 2,
+      "energy_cap": 18,
+      "dimension": 201248,
+      "nu_over_kappa": 1.0,
+      "E0": 10.094496596746703,
+      "E1": 13.005367386246864,
+      "gap": 2.9108707895001604,
+      "solver": {
+        "method": "fully reorthogonalized Lanczos with direct Ritz residuals",
+        "iterations": 108,
+        "residual_norms": [
+          1.3077872309499562e-12,
+          4.680968281852896e-11
+        ],
+        "converged": true,
+        "seed": 1097,
+        "scope": "Numerical Ritz values; a residual check does not certify spectral ordering"
+      },
+      "second_seed_max_energy_difference": 2.842170943040401e-14,
+      "second_seed_solver": {
+        "method": "fully reorthogonalized Lanczos with direct Ritz residuals",
+        "iterations": 108,
+        "residual_norms": [
+          1.2813485807451785e-12,
+          3.833846035040049e-11
+        ],
+        "converged": true,
+        "seed": 8917,
+        "scope": "Numerical Ritz values; a residual check does not certify spectral ordering"
+      }
+    }
+  ],
+  "elapsed_seconds": 61.949874799998724
+}

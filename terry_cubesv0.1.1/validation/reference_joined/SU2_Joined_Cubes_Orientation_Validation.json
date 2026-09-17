@@ -1,0 +1,60 @@
+{
+  "local_exact_arithmetic_checks": {
+    "maximum_doubled_old_spin": 14,
+    "exact_vertex_contractions": 3368,
+    "unit_3j_norms": true,
+    "squared_6j_identity": true,
+    "all_radical_ratios_exact_rational_squares": true,
+    "exact_local_sign_relation_to_reference_6j_formula": true,
+    "exact_local_dimension_ratio_to_reference_6j_formula": true
+  },
+  "default_chain_phase_checks": [
+    {
+      "num_cubes": 1,
+      "phase_auxiliary_tuple_indices": [],
+      "exact_face_incidence_identity": true,
+      "same_common_phase_for_every_face": true
+    },
+    {
+      "num_cubes": 2,
+      "phase_auxiliary_tuple_indices": [
+        21,
+        22
+      ],
+      "exact_face_incidence_identity": true,
+      "same_common_phase_for_every_face": true
+    },
+    {
+      "num_cubes": 3,
+      "phase_auxiliary_tuple_indices": [
+        30,
+        31,
+        32,
+        33
+      ],
+      "exact_face_incidence_identity": true,
+      "same_common_phase_for_every_face": true
+    },
+    {
+      "num_cubes": 4,
+      "phase_auxiliary_tuple_indices": [
+        39,
+        40,
+        41,
+        42,
+        43,
+        44
+      ],
+      "exact_face_incidence_identity": true,
+      "same_common_phase_for_every_face": true
+    }
+  ],
+  "energy_study_covered": {
+    "maximum_total_electric_cutoff": 18,
+    "maximum_sufficient_physical_doubled_spin": 7,
+    "maximum_sufficient_auxiliary_doubled_spin": 14
+  },
+  "interpretation": "The final orientation-safe default Hamiltonian and the earlier fixed-order default differ by one diagonal state-sign transformation. Every spin/energy cutoff and every kappa/nu retain the same spectrum.",
+  "independent_tensor_validation": "SU2_Joined_Cubes_Independent_Validation.json",
+  "all_exact_checks_passed": true
+}
