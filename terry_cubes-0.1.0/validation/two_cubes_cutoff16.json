@@ -1,0 +1,36 @@
+{
+  "e0": 2.6927571061973903,
+  "e1": 5.69136685244009,
+  "gap": 2.9986097462427,
+  "eigenvalues": [
+    2.6927571061973903,
+    5.69136685244009,
+    5.694346173876504
+  ],
+  "residual_norms": [
+    3.2729435354361897e-13,
+    1.1718362530473314e-12,
+    2.1299567938626067e-12
+  ],
+  "converged": true,
+  "dimension": 76326,
+  "num_cubes": 2,
+  "kappa": 1.0,
+  "nu": 0.25,
+  "electric_cutoff": "16",
+  "pairing": "longitudinal",
+  "backend": "lanczos",
+  "method": "fully reorthogonalized Lanczos with direct Ritz residuals",
+  "iterations": 132,
+  "seed": 1097,
+  "tolerance": 1e-10,
+  "max_iterations": 240,
+  "hermiticity_error": 0.0,
+  "schema_version": 1,
+  "package_version": "0.1.0",
+  "nu_over_kappa": 0.25,
+  "gap_over_kappa": 2.9986097462427,
+  "certified": false,
+  "scope": "Numerical finite-basis spectrum. Residuals do not certify spectral ordering, omitted states, infinite volume, or the continuum limit.",
+  "cutoff_definition": "sum_physical_links j(j+1) <= electric_cutoff"
+}

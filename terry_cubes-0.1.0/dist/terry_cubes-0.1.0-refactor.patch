@@ -1,0 +1,2849 @@
+diff --git a/.gitattributes b/.gitattributes
+new file mode 100644
+index 0000000000000000000000000000000000000000..88ac69c53450db2b2ccc9154d17156ebd2060d99
+--- /dev/null
++++ b/.gitattributes
+@@ -0,0 +1,2 @@
++# Preserve the reference JSON bytes exactly as stored in the original repository.
++data/SU2_Joined_Cubes_N*_Spectra.json -text
+diff --git a/.github/workflows/tests.yml b/.github/workflows/tests.yml
+new file mode 100644
+index 0000000000000000000000000000000000000000..742f6ab2a9bd32fd471f065e4f515d1379662d62
+--- /dev/null
++++ b/.github/workflows/tests.yml
+@@ -0,0 +1,55 @@
++name: Tests and package build
++
++on:
++  push:
++  pull_request:
++
++env:
++  OPENBLAS_NUM_THREADS: "1"
++  OMP_NUM_THREADS: "1"
++
++permissions:
++  contents: read
++
++jobs:
++  test:
++    strategy:
++      fail-fast: false
++      matrix:
++        include:
++          - os: ubuntu-latest
++            python: "3.10"
++          - os: ubuntu-latest
++            python: "3.12"
++          - os: windows-latest
++            python: "3.12"
++    runs-on: ${{ matrix.os }}
++    steps:
++      - uses: actions/checkout@v4
++      - uses: actions/setup-python@v5
++        with:
++          python-version: ${{ matrix.python }}
++          cache: pip
++      - name: Install development dependencies
++        run: python -m pip install -e ".[dev]"
++      - name: Run routine tests
++        run: python -m pytest
++      - name: Build source and wheel distributions
++        run: python -m build
++      - name: Install the wheel
++        run: python -c "import pathlib, subprocess, sys; wheel = next(pathlib.Path('dist').glob('*.whl')); subprocess.check_call([sys.executable, '-m', 'pip', 'install', '--force-reinstall', '--no-deps', str(wheel)])"
++      - name: Verify installed package and bundled data
++        run: python -I -c "from terry_cubes import JoinedCubesModel, SpectrumSolver; from terry_cubes.data import load_spectra; assert all(load_spectra(n)['model']['num_cubes'] == n for n in (1, 2, 3)); print('Installed wheel and all three spectra files loaded successfully.')"
++      - name: Test installed wheel outside the source checkout
++        run: >-
++          python -c
++          "import pathlib, shutil, subprocess, sys, tempfile;
++          root = pathlib.Path.cwd();
++          target = pathlib.Path(tempfile.mkdtemp(prefix='terry-cubes-installed-tests-'));
++          shutil.copytree(root / 'tests', target / 'tests');
++          shutil.copytree(root / 'data', target / 'data');
++          shutil.copy2(root / 'SOURCE_PROVENANCE.json', target / 'SOURCE_PROVENANCE.json');
++          subprocess.check_call([sys.executable, '-I', '-m', 'pytest', '-q', str(target / 'tests')], cwd=target)"
++      - name: Verify command-line entry point
++        working-directory: ${{ runner.temp }}
++        run: terry-cubes --help
+diff --git a/.gitignore b/.gitignore
+new file mode 100644
+index 0000000000000000000000000000000000000000..d55af0d427f8061408cf520150bc5a756d5d3ed0
+--- /dev/null
++++ b/.gitignore
+@@ -0,0 +1,15 @@
++__pycache__/
++*.py[cod]
++*.egg-info/
++.venv/
++venv/
++build/
++dist/
++.pytest_cache/
++.coverage
++htmlcov/
++.tox/
++.idea/
++.vscode/
++results.json
++validation/*.xml
+diff --git a/MANIFEST.in b/MANIFEST.in
+new file mode 100644
+index 0000000000000000000000000000000000000000..a9bdd5b564d2b9c4d9e7de60a21ed2d2cbd4b83d
+--- /dev/null
++++ b/MANIFEST.in
+@@ -0,0 +1,12 @@
++include LICENSE
++include README.md
++include requirements.txt
++include pyproject.toml
++include setup.py
++include SOURCE_PROVENANCE.json
++recursive-include terry_cubes *.py
++recursive-include data *.py *.json
++recursive-include tests *.py
++include VALIDATION.md
++include .gitattributes
++include .github/workflows/tests.yml
+diff --git a/README.md b/README.md
+index a29b639e131f58abaa3ad7b069dd475062a854c9..6c93a9f74c5e0049e03946ca8be8c554bb16c52a 100644
+--- a/README.md
++++ b/README.md
+@@ -1,19 +1,284 @@
+-# Terry's Model: SU(2) Joined-Cubes Recoupling
++# terry_cubes
+ 
+-This Model implements Hamiltonian lattice Yang–Mills theory for the gauge group $SU(2)$ on 3D joined cubic cell complexes to calculate the non-perturbative mass gap.
+-A Hamiltonian lattice gauge theory implementation for SU(2) on 3D joined cubic cell complexes.
++A Python library for finite SU(2) Hamiltonian lattice gauge calculations on
++open chains of joined cubes. It provides gauge-invariant state enumeration,
++exact local recoupling coefficients, sparse Hamiltonian construction, and
++numerical low-energy spectra through a Python API and the `terry-cubes` command.
+ 
+-## Features
+-- Exact local Gauss law resolution using Wigner 6j angular momentum recoupling symbols.
+-- Certified single-cube mass gap bounds: Δ_cube ∈ [2.941733, 2.958693] κ.
+-- Multi-cube chain spectra (N = 1, 2, 3) demonstrating exponential boundary shift saturation (Δ_∞ ≈ 2.8987 κ).
+-- Analysis of 3D bulk coordination with 6 neighbors.
++**Scope:** the included JSON files contain finite-basis numerical spectra for
++one, two, and three cubes. They are reference results for reproducibility.
++The reported single-cube interval
++`[2.941733, 2.958693] * kappa` is checked for consistency with a numerical
++single-cube result at `nu / kappa = 1`; the solver does not produce that
++untruncated certificate. This package does not establish an infinite-volume
++or continuum Yang–Mills mass gap.
+ 
+-## Requirements
+-- Python 3.9+
+-- NumPy
+-- SciPy
+-- SymPy
++## Installation
+ 
+-## Author
+-Terrance Mullee (September 2026)
++Requires Python 3.10 or later, NumPy, SciPy, and SymPy.
++
++Clone this repository and install the package from its root:
++
++```bash
++git clone https://github.com/BoredPuzzleSolver/Joined-Cube-Hamiltonian-Engine-.git
++cd Joined-Cube-Hamiltonian-Engine-
++python -m venv .venv
++```
++
++Activate the environment on macOS or Linux:
++
++```bash
++source .venv/bin/activate
++```
++
++Or activate it in Windows PowerShell:
++
++```powershell
++.\.venv\Scripts\Activate.ps1
++```
++
++Then install:
++
++```bash
++python -m pip install -e .
++```
++
++This installs the library and the `terry-cubes` terminal command. The dependency
++list is also available in `requirements.txt`; installation with pip resolves it
++automatically. These are source-install instructions; no PyPI release is assumed.
++
++## Python quick start
++
++The requested two-cube calculation is:
++
++```python
++from terry_cubes import JoinedCubesModel, SpectrumSolver
++
++model = JoinedCubesModel(num_cubes=2, kappa=1.0, nu=1.0)
++solver = SpectrumSolver(model, electric_cutoff=16)
++results = solver.compute_mass_gap()
++
++print("Ground state E0:", results.e0)
++print("First excited state E1:", results.e1)
++print("Mass gap Delta:", results.gap)
++print("Basis dimension:", results.dimension)
++print("Residual norms:", results.residual_norms)
++print("Residual tolerance satisfied:", results.converged)
++```
++
++For a smaller first run, use `num_cubes=1` and `electric_cutoff=6`.
++This changes the finite basis and is not a converged-cutoff calculation.
++
++The result also provides `eigenvalues` and `to_dict()` for serialization:
++
++```python
++import json
++from pathlib import Path
++
++Path("results.json").write_text(
++    json.dumps(results.to_dict(), indent=2) + "\n",
++    encoding="utf-8",
++)
++```
++
++### Model and solver options
++
++| Argument | Default | Meaning |
++| --- | --- | --- |
++| `num_cubes` | `1` | Number of cubes in an open N-by-1-by-1 chain. |
++| `kappa` | `1.0` | Electric energy coefficient. |
++| `nu` | `1.0` | Magnetic plaquette coefficient. |
++| `pairing` | `"longitudinal"` | Four-valent intertwiner resolution; also `"crossed"` and `"mixed"`. |
++| `electric_cutoff` | `16` | Maximum sum of physical-link Casimirs, before multiplying by kappa. |
++| `backend` | `"lanczos"` | Original NumPy Lanczos solver, or optional SciPy `"arpack"`. |
++| `tolerance` | `1e-10` | Direct eigenvector residual tolerance. |
++| `max_iterations` | `240` | Iteration budget; its interpretation follows the selected solver. |
++| `levels` | `3` | Number of low-energy levels requested, including the ground state. |
++| `seed` | `1097` | Seed for the initial iterative-solver vector. |
++
++`JoinedCubesModel` accepts the first four arguments; `SpectrumSolver` accepts
++the model and the remaining arguments. A mass-gap calculation requires at
++least two states and two requested levels.
++
++The default backend preserves the original fully reorthogonalized NumPy
++Lanczos routine, including its dense diagonalization path for small matrices.
++The ARPACK backend uses the same Hamiltonian with SciPy's sparse eigensolver:
++
++```python
++solver = SpectrumSolver(
++    model,
++    electric_cutoff=16,
++    backend="arpack",
++    tolerance=1e-10,
++    max_iterations=1000,
++)
++results = solver.compute_mass_gap()
++```
++
++The API raises `SpectrumConvergenceError` if the requested residual tolerance
++is not met. Where available, the exception exposes a partial result as `.result`.
++Check `results.converged` and the reported residuals before using a result.
++A small residual measures how well an eigenpair satisfies the finite matrix
++equation; it does not by itself certify that every lower eigenvalue has been
++found or control the omitted states above the cutoff. The original
++single-vector Lanczos routine can omit repeated copies of degenerate
++eigenvalues, so its returned `eigenvalues` are observed Ritz values and do
++not establish multiplicities. The purely electric case (`nu=0`) is handled
++directly from the diagonal, preserving its exact degeneracies. The public
++API raises `SpectrumConvergenceError` if residual convergence fails.
++
++## Command line
++
++```bash
++terry-cubes run --cubes 2 --kappa 1.0 --nu 0.25 --cutoff 16 --output results.json
++```
++
++Use `--backend arpack`, `--tolerance`, `--max-iterations`, `--levels`,
++`--seed`, and `--pairing` to configure a run. View the complete options with:
++
++```bash
++terry-cubes run --help
++```
++
++## Hamiltonian, units, and basis conventions
++
++The original Hamiltonian and its additive plaquette constant are preserved:
++
++```text
++H = kappa * sum_physical_links j(j + 1)
++    + nu * sum_physical_faces (1 - Tr_fund(U_face) / 2)
++```
++
++The cutoff is imposed on
++
++```text
++sum_physical_links j(j + 1) <= electric_cutoff
++```
++
++It is independent of `kappa`. At `kappa = 1`, returned energies agree with
++the units used in the bundled records. To compare a run with another positive
++kappa to those records, match `nu / kappa` and the cutoff, then compare
++`e0 / kappa`, `e1 / kappa`, and `gap / kappa`.
++
++The refactor retains the original conventions:
++
++- All representation labels are doubled spins, so a label of 1 denotes
++  physical spin 1/2.
++- Physical links precede virtual coupling labels in each state. Virtual
++  labels resolve four-valent invariant tensor spaces, carry zero electric
++  energy, and retain every compatible pair-coupling channel.
++- Physical edge and face order, state enumeration order, and matrix indexing
++  remain as defined by the original scripts.
++- Wigner 6j and oriented 3j/Clebsch–Gordan contractions use the original exact
++  rational arithmetic and phase rules. Conversion to floating-point matrix
++  entries occurs at the same stage as before.
++- The oriented-edge convention is `K_j(U) = D_j(U) epsilon_j`, with a fixed
++  ascending incident-edge order at each resolved vertex and the original
++  signs for reversed face traversals.
++
++Increasing N grows only one spatial direction. Cutoff convergence and chain
++length dependence are separate questions; neither is a three-dimensional
++bulk or continuum limit.
++
++## Reference data
++
++The three original JSON files live in the repository's `data/` directory.
++They are installed as resources in `terry_cubes.data`, so loading works from
++both editable installations and wheels without relying on the working directory.
++
++```python
++from terry_cubes.data import load_spectra
++
++reference = load_spectra(2)
++print(reference["status"])
++for run in reference["spectra"]:
++    print(run["energy_cap"], run["nu_over_kappa"], run["E0"], run["E1"])
++```
++
++Each record preserves the original model description, cutoff, eigenvalues,
++and solver diagnostics. A comparison must match the number of cubes,
++electric cutoff, intertwiner pairing, and magnetic/electric ratio.
++Values labeled `residual_in_largest_test_basis` in the original records
++are distinct from residuals in the diagonalized finite matrix.
++
++## Tests and reproducibility
++
++Install the development dependencies and run the routine suite:
++
++```bash
++python -m pip install -e ".[dev]"
++python -m pytest
++```
++
++The spectrum tests load the original JSON files. Routine baseline comparisons
++cover N=1 at cutoff 12, N=2 at cutoff 8, and N=3 at cutoff 6, each at
++`nu / kappa = 0.25` and `1.0`. The single-cube consistency test checks the
++reported interval without treating interval membership as a certificate.
++Additional tests check recoupling, geometry, preserved matrix construction,
++solver behavior, and the API/CLI.
++
++To recompute all 40 recorded baseline cases:
++
++```bash
++python -m pytest --run-slow -m slow tests/test_spectrum.py
++```
++
++These full reproductions can require substantial time and several gigabytes
++of memory. The largest supplied basis has 771,425 states. The original
++Lanczos implementation stores its Krylov vectors explicitly; its basis
++allocation alone is approximately
++`8 * dimension * (min(dimension, max_iterations) + 1)` bytes. Sparse
++Hamiltonian arrays, state labels, and work arrays require additional memory.
++
++Reference eigenvalues are compared with numerical tolerances, not bitwise
++identity: floating-point results may vary across numerical-library versions
++and platforms. Reproducing a reference spectrum is a regression check for
++the specified finite model, not a new rigorous spectral enclosure.
++
++The untouched original five scripts are retained under `tests/reference/`
++for comparison. [SOURCE_PROVENANCE.json](SOURCE_PROVENANCE.json) records the
++source commit, file hashes, and the origin of the sparse-builder routines.
++The original scripts are included in the source distribution and excluded
++from the installed library. Use `terry_cubes` for new calculations.
++
++## Package layout
++
++```text
++terry_cubes/
++    __init__.py       # Public model and solver API
++    __main__.py       # python -m terry_cubes entry point
++    geometry.py       # Single-cube and joined-cube graph topology
++    recoupling.py     # Exact SU(2) recoupling and oriented intertwiners
++    hamiltonian.py    # State basis, electric terms, plaquette matrix terms
++    solver.py         # Sparse operators, eigensolvers, result objects
++    cli.py            # argparse command-line entry point
++data/
++    __init__.py       # Installed as terry_cubes.data
++    SU2_Joined_Cubes_N1_Spectra.json
++    SU2_Joined_Cubes_N2_Spectra.json
++    SU2_Joined_Cubes_N3_Spectra.json
++tests/
++    test_spectrum.py
++    reference/        # Original mathematical implementations
++pyproject.toml        # Authoritative package metadata and CLI entry point
++setup.py              # Minimal setuptools compatibility entry point
++requirements.txt
++README.md
++LICENSE
++```
++
++Build a source archive and an installable wheel with:
++
++```bash
++python -m build
++```
++
++The files are written to `dist/`. CI runs the routine suite on Linux and
++Windows, builds both distributions, and checks the installed wheel's data
++resources and terminal entry point. The full large-basis runs are opt-in.
++
++## Attribution and license
++
++Original research implementation: Terrance Mullee / BoredPuzzleSolver,
++September 2026. The existing MIT license and copyright notice are preserved
++in [LICENSE](LICENSE).
+diff --git a/SOURCE_PROVENANCE.json b/SOURCE_PROVENANCE.json
+new file mode 100644
+index 0000000000000000000000000000000000000000..dcf49f2884107cf6b06fd618ce6e12de53d99024
+--- /dev/null
++++ b/SOURCE_PROVENANCE.json
+@@ -0,0 +1,27 @@
++{
++  "repository": "https://github.com/BoredPuzzleSolver/Joined-Cube-Hamiltonian-Engine-",
++  "commit": "71c3190363791c0f4464ee5e24606876e9131636",
++  "source_sha256": {
++    "su2_cube_model.py": "2d362a432352e687ccbf2d90fd386de723f4a2d12662dca7858ca9eb4c7c28b3",
++    "su2_joined_cubes_model.py": "9dc3a81a452654edbcd363e0153905b22a200d8f79499a6067fdc8b134448125",
++    "su2_oriented_vertex.py": "34884319960496a63842766f754d2b3baa9386a46b323730b2dd1d6c27a52bfc",
++    "su2_recoupling.py": "bdc2e7ba502bb59ea61962ef391be24effd7539a46f2bef5820ae4fe58fc6b6b",
++    "su2_sparse_spectrum.py": "a05169132d9c59ac6d6e915a2ec2c94ad66c7c77ba9f8fdedaf4ed747ebc232f",
++    "SU2_Joined_Cubes_N1_Spectra.json": "101c6e2a62c24ffbf72e25993927601ea3e11e37ebd445f6996440db63ac988a",
++    "SU2_Joined_Cubes_N2_Spectra.json": "620cb29591ce31ac89b35184c4fed3309e486c302a180c4cb7beb3ef6ffdfb34",
++    "SU2_Joined_Cubes_N3_Spectra.json": "59ae2856273f1bf4353d839ebd08550f6b9096c11f2db4d43fb4a2fc3cb6c941"
++  },
++  "notes": "Original scripts in tests/reference are byte-preserved from the cloned checkout. JSON data are unchanged. Core function bodies are relocated; conflicting cube/joined names and imports are explicitly qualified.",
++  "sparse_builder_source": "The build_sparse and numerical_hermiticity functions are preserved from the adjacent original SU2_Joined_Cubes_Reproduction/su2_joined_cubes_study.py.",
++  "source_lf_normalized_sha256": {
++    "su2_cube_model.py": "259e239a2eae7917729c6503b10909ac3bc6ce3b3ffb4458639f3e699f70c72b",
++    "su2_joined_cubes_model.py": "2e16c924b0e207a849d81873fbe2c992014c8726a4e40c33136de092f70e737f",
++    "su2_oriented_vertex.py": "d9b3c7196d467034126b3f7c34693654446d843695e43b3dfe14859a6d06f33d",
++    "su2_recoupling.py": "b10db8af9844d071ff614baa6c0276a49c92262a14ce1e84c15ee0a8ebbe11b3",
++    "su2_sparse_spectrum.py": "14630d32ef29bc421fe854eb8d6b6c5e61fdf6eb909221594f05b5081b9765ad",
++    "SU2_Joined_Cubes_N1_Spectra.json": "f8543a3d8edfa83e3e6f0104c3d4eb1bc513d3c8fd72e4aea37f55521d7b5167",
++    "SU2_Joined_Cubes_N2_Spectra.json": "e4a95390b20a6ce9bae072eb3fef23b4983f83f1dd5fbcc71e0a79e0c4fc6a00",
++    "SU2_Joined_Cubes_N3_Spectra.json": "9c05a7e4d49071b2000636035d9fe568f9bab558ee55d5acefec0a03b729d092"
++  },
++  "line_ending_note": "source_sha256 records original Windows checkout bytes retained in this release; source_lf_normalized_sha256 permits cross-platform comparisons after CRLF/LF conversion by Git."
++}
+diff --git a/VALIDATION.md b/VALIDATION.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..1c1f54be0932860e0de5620da16741afb5c76db9
+--- /dev/null
++++ b/VALIDATION.md
+@@ -0,0 +1,115 @@
++# terry_cubes 0.1.0 — validation record
++
++## Source and scope
++
++Refactored from commit 71c3190363791c0f4464ee5e24606876e9131636 of
++https://github.com/BoredPuzzleSolver/Joined-Cube-Hamiltonian-Engine-.
++
++The original five Python scripts are preserved in tests/reference/.
++The three spectra JSON files are preserved in data/. Git recognizes all
++eight as 100% unchanged renames. SOURCE_PROVENANCE.json records original
++checkout checksums and LF-normalized checksums for cross-platform comparison.
++The original MIT license is unchanged.
++
++This validates a software refactor and numerical reproduction of the
++specified finite-basis Hamiltonians. It does not rerun the separate
++single-cube exact-arithmetic certificate or establish an infinite-volume
++or continuum Yang–Mills mass gap.
++
++## Tests executed
++
++| Check | Result |
++| --- | --- |
++| Routine source-checkout suite, python -m pytest -q | 68 passed; 40 large cases skipped by default |
++| All published spectra, python -m pytest --run-slow -m slow tests/test_spectrum.py -q | 40 passed; 30 routine spectrum tests deselected; 614.22 seconds |
++| Routine suite against an installed wheel outside the checkout | 68 passed; 40 large cases skipped |
++| Editable installation and actual console executable | Passed |
++| Source distribution and wheel built from that source distribution | Passed |
++| All three datasets loaded from an isolated wheel installation | Passed; original JSON checksums matched |
++| Original five scripts in source archive and absence of test code from wheel | Passed |
++| License retained in wheel | Passed |
++| Git whitespace check | Passed |
++
++The routine and full-baseline test sets contain **108 distinct passing test
++cases**. The wheel run additionally checks installation independently of
++imports from the working source directory.
++
++### Mathematical preservation checks
++
++The 26 dedicated preservation tests compare the package with the original
++implementations. They cover:
++
++- Graph topology, physical edge and face ordering, orientation phases, and
++  metadata for one, two, and three cubes with all three vertex pairings.
++- Exact ordered states and signed rational-squared Wilson amplitudes.
++- All compatible auxiliary intertwiner channels, including auxiliary spin
++  one with physical links restricted to spin one-half.
++- Zero electric energy on auxiliary channels.
++- Original cube bases, sparse entry order, and contributions from multiple
++  faces to the same matrix entry.
++- Independent SymPy Wigner 6j checks and 62 exact oriented-vertex contractions.
++
++### Numerical baseline coverage
++
++Every row in the three original spectra files was recomputed, using absolute
++eigenvalue/gap tolerance 1e-9 and zero relative tolerance:
++
++- N=1: cutoffs 6, 8, 10, 12, 14, 16, 18, at both coupling ratios.
++- N=2: cutoffs 6, 8, 10, 12, 14, 16, 18, at both coupling ratios.
++- N=3: cutoffs 6, 8, 10, 12, 14, 16, at both coupling ratios.
++- Coupling ratios: nu/kappa = 0.25 and 1.0.
++- Largest retained basis: 771,425 states.
++
++The N=1 cutoff-12 estimate at kappa=nu=1 lies within the previously reported
++single-cube interval [2.941733, 2.958693]. This is an interval-consistency
++regression, not a replacement for that certificate's proof machinery.
++
++## Exact requested CLI example
++
++Command:
++
++    terry-cubes run --cubes 2 --kappa 1.0 --nu 0.25 --cutoff 16 --output results.json
++
++Observed output:
++
++| Quantity | Value |
++| --- | --- |
++| Basis dimension | 76,326 |
++| E0 | 2.6927571061973903 |
++| E1 | 5.69136685244009 |
++| Gap | 2.9986097462427 |
++| Maximum retained-matrix residual | 2.13e-12 |
++| Original Lanczos iterations | 132 |
++
++Absolute differences from the matching original JSON row were approximately
++2.66e-15 for E0, 8.88e-16 for E1, and 1.78e-15 for the gap.
++The saved run is validation/two_cubes_cutoff16.json.
++
++## API and operational checks
++
++Tests also cover parameter validation, insufficient cutoff, direct
++pure-electric degeneracies, common rescaling of the couplings, ARPACK
++agreement, an independently known analytic sparse spectrum, strict JSON
++serialization, and failure without overwriting a previous output file.
++
++Changing a solver's model or cutoff rebuilds its cached Hamiltonian.
++Nonconverged solves raise SpectrumConvergenceError. The original
++single-vector Lanczos algorithm remains unchanged and can omit repeated
++copies of degenerate eigenvalues; its converged Ritz values alone do not
++certify spectral ordering or multiplicities.
++
++## Validation environment
++
++- Windows 11, build 26200
++- Python 3.12.14
++- NumPy 2.3.5
++- SciPy 1.18.1
++- SymPy 1.14.0
++- pytest 9.1.1
++- setuptools 84.0.0
++
++Runs used OPENBLAS_NUM_THREADS=1 and OMP_NUM_THREADS=1.
++Timings and residual roundoff will differ across machines.
++
++CI is configured for Linux with Python 3.10 and 3.12, and Windows with
++Python 3.12. Those remote CI jobs have not been run during this local refactor.
+diff --git a/SU2_Joined_Cubes_N1_Spectra.json b/data/SU2_Joined_Cubes_N1_Spectra.json
+similarity index 100%
+rename from SU2_Joined_Cubes_N1_Spectra.json
+rename to data/SU2_Joined_Cubes_N1_Spectra.json
+diff --git a/SU2_Joined_Cubes_N2_Spectra.json b/data/SU2_Joined_Cubes_N2_Spectra.json
+similarity index 100%
+rename from SU2_Joined_Cubes_N2_Spectra.json
+rename to data/SU2_Joined_Cubes_N2_Spectra.json
+diff --git a/SU2_Joined_Cubes_N3_Spectra.json b/data/SU2_Joined_Cubes_N3_Spectra.json
+similarity index 100%
+rename from SU2_Joined_Cubes_N3_Spectra.json
+rename to data/SU2_Joined_Cubes_N3_Spectra.json
+diff --git a/data/__init__.py b/data/__init__.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..99f1da3a6f8b068dbad6afce28fe4ef909b70772
+--- /dev/null
++++ b/data/__init__.py
+@@ -0,0 +1,22 @@
++"""Bundled, unchanged finite-basis spectra from the original research runs."""
++
++from importlib.resources import files
++import json
++from numbers import Integral
++
++__all__ = ["load_spectra"]
++
++
++def load_spectra(num_cubes: int) -> dict:
++    """Load the original JSON record for one, two, or three joined cubes.
++
++    The record includes its model, cutoff, normalization, solver diagnostics,
++    and finite-basis status. These data are reference calculations, not a
++    certificate for the untruncated Hamiltonian.
++    """
++    if isinstance(num_cubes, bool) or not isinstance(num_cubes, Integral):
++        raise ValueError("num_cubes must be one of the integers 1, 2, or 3")
++    if num_cubes not in (1, 2, 3):
++        raise ValueError("reference spectra are available only for 1, 2, or 3 cubes")
++    name = f"SU2_Joined_Cubes_N{int(num_cubes)}_Spectra.json"
++    return json.loads(files(__package__).joinpath(name).read_text(encoding="utf-8"))
+diff --git a/pyproject.toml b/pyproject.toml
+new file mode 100644
+index 0000000000000000000000000000000000000000..74b1f07c375c973d04d8d3c7e9e4e939ecf58cec
+--- /dev/null
++++ b/pyproject.toml
+@@ -0,0 +1,57 @@
++[build-system]
++requires = ["setuptools>=77", "wheel"]
++build-backend = "setuptools.build_meta"
++
++[project]
++name = "terry_cubes"
++version = "0.1.0"
++description = "Finite SU(2) Hamiltonian spectra on joined cubic cell complexes"
++readme = "README.md"
++requires-python = ">=3.10"
++license = "MIT"
++license-files = ["LICENSE"]
++authors = [{name = "Terrance Mullee"}]
++keywords = ["SU2", "lattice-gauge-theory", "Hamiltonian", "Yang-Mills", "recoupling"]
++classifiers = [
++    "Development Status :: 3 - Alpha",
++    "Intended Audience :: Science/Research",
++    "Operating System :: OS Independent",
++    "Programming Language :: Python :: 3",
++    "Programming Language :: Python :: 3 :: Only",
++    "Programming Language :: Python :: 3.10",
++    "Programming Language :: Python :: 3.11",
++    "Programming Language :: Python :: 3.12",
++    "Topic :: Scientific/Engineering :: Physics",
++]
++dependencies = [
++    "numpy>=1.23",
++    "scipy>=1.9",
++    "sympy>=1.10",
++]
++
++[project.optional-dependencies]
++dev = ["pytest>=7", "build>=1"]
++
++[project.scripts]
++terry-cubes = "terry_cubes.cli:main"
++
++[project.urls]
++Repository = "https://github.com/BoredPuzzleSolver/Joined-Cube-Hamiltonian-Engine-"
++Issues = "https://github.com/BoredPuzzleSolver/Joined-Cube-Hamiltonian-Engine-/issues"
++
++[tool.setuptools]
++packages = ["terry_cubes", "terry_cubes.data"]
++include-package-data = true
++
++[tool.setuptools.package-dir]
++"terry_cubes.data" = "data"
++
++[tool.setuptools.package-data]
++"terry_cubes.data" = ["*.json"]
++
++[tool.pytest.ini_options]
++testpaths = ["tests"]
++addopts = "-ra"
++markers = [
++    "slow: full baseline reproduction requiring substantial time and memory",
++]
+diff --git a/requirements.txt b/requirements.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..d353e7cfe3f6079bdbe1384c231a9ca7248fc96c
+--- /dev/null
++++ b/requirements.txt
+@@ -0,0 +1,3 @@
++numpy>=1.23
++scipy>=1.9
++sympy>=1.10
+diff --git a/setup.py b/setup.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..3443f83a2fc989cd8d31dbb21b3601f39fe96bb7
+--- /dev/null
++++ b/setup.py
+@@ -0,0 +1,6 @@
++"""Compatibility entry point; package metadata lives in pyproject.toml."""
++
++from setuptools import setup
++
++if __name__ == "__main__":
++    setup()
+diff --git a/terry_cubes/__init__.py b/terry_cubes/__init__.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..d0aa9d066e6b9112a7efc1c93cf630384b1c5d04
+--- /dev/null
++++ b/terry_cubes/__init__.py
+@@ -0,0 +1,6 @@
++"""Gauge-invariant SU(2) Hamiltonians on open cube chains."""
++from .hamiltonian import JoinedCubesModel
++from .solver import SpectrumSolver, SpectrumResult, SpectrumConvergenceError
++
++__version__ = "0.1.0"
++__all__ = ["JoinedCubesModel", "SpectrumSolver", "SpectrumResult", "SpectrumConvergenceError"]
+diff --git a/terry_cubes/__main__.py b/terry_cubes/__main__.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..6dcbe79fb1f8223127a86f21f8eab8cd70aef530
+--- /dev/null
++++ b/terry_cubes/__main__.py
+@@ -0,0 +1,5 @@
++"""Allow python -m terry_cubes."""
++from .cli import main
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/terry_cubes/cli.py b/terry_cubes/cli.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..dc0932a63ab3916435f67c01f03bf9990d5e39a1
+--- /dev/null
++++ b/terry_cubes/cli.py
+@@ -0,0 +1,79 @@
++"""Command-line interface to the same model and solver used by Python users."""
++from __future__ import annotations
++
++import argparse
++import json
++import os
++from pathlib import Path
++import sys
++import tempfile
++
++from . import __version__, JoinedCubesModel, SpectrumSolver, SpectrumConvergenceError
++
++
++def build_parser():
++    parser = argparse.ArgumentParser(
++        prog="terry-cubes",
++        description="Numerical finite-basis SU(2) cube-chain spectra.",
++    )
++    parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
++    commands = parser.add_subparsers(dest="command", required=True)
++    run = commands.add_parser("run", help="Compute the lowest levels and mass-gap estimate")
++    run.add_argument("--cubes", type=int, required=True, help="Number of cubes in an open N-by-1-by-1 chain")
++    run.add_argument("--kappa", type=float, default=1.0, help="Positive electric coefficient (default: 1)")
++    run.add_argument("--nu", type=float, default=1.0, help="Nonnegative magnetic coefficient (default: 1)")
++    run.add_argument("--cutoff", default="16", help="Cutoff on physical sum j(j+1), e.g. 16 or 33/2")
++    run.add_argument("--pairing", choices=("longitudinal", "crossed", "mixed"), default="longitudinal")
++    run.add_argument("--backend", choices=("lanczos", "arpack"), default="lanczos")
++    run.add_argument("--tolerance", type=float, default=1e-10, help="Absolute retained-matrix residual tolerance")
++    run.add_argument("--max-iterations", type=int, default=240)
++    run.add_argument("--levels", type=int, default=3, help="Number of low eigenvalues, at least 2")
++    run.add_argument("--seed", type=int, default=1097)
++    run.add_argument("--output", type=Path, help="Save JSON to this file; otherwise print JSON")
++    return parser
++
++
++def _write_json(path, text):
++    """Atomically replace the requested output after a successful calculation."""
++    path.parent.mkdir(parents=True, exist_ok=True)
++    temporary = None
++    try:
++        with tempfile.NamedTemporaryFile(
++            mode="w", encoding="utf-8", dir=path.parent,
++            prefix=f".{path.name}.", suffix=".tmp", delete=False,
++        ) as stream:
++            temporary = Path(stream.name)
++            stream.write(text)
++        os.replace(temporary, path)
++    finally:
++        if temporary is not None and temporary.exists():
++            temporary.unlink()
++
++
++def main(argv=None):
++    parser = build_parser()
++    args = parser.parse_args(argv)
++    try:
++        model = JoinedCubesModel(
++            num_cubes=args.cubes, kappa=args.kappa, nu=args.nu, pairing=args.pairing,
++        )
++        result = SpectrumSolver(
++            model, electric_cutoff=args.cutoff, backend=args.backend,
++            tolerance=args.tolerance, max_iterations=args.max_iterations,
++            levels=args.levels, seed=args.seed,
++        ).compute_mass_gap()
++        text = json.dumps(result.to_dict(), indent=2, allow_nan=False) + "\n"
++        if args.output is None:
++            sys.stdout.write(text)
++        else:
++            _write_json(args.output, text)
++            print(f"Saved {args.output}")
++            print(f"E0={result.e0:.12g}  E1={result.e1:.12g}  gap={result.gap:.12g}")
++        return 0
++    except (ValueError, TypeError, OSError, SpectrumConvergenceError) as exc:
++        print(f"terry-cubes: error: {exc}", file=sys.stderr)
++        return 2
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/terry_cubes/geometry.py b/terry_cubes/geometry.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..0ac5ae37ae8a2d2f16272cacfa7046168c92ec1d
+--- /dev/null
++++ b/terry_cubes/geometry.py
+@@ -0,0 +1,193 @@
++"""Original single-cube and joined-cube graph topologies.
++
++Edge, face, vertex, orientation, and auxiliary-channel indexing are retained
++from the research scripts. Spin-network enumeration lives in hamiltonian.py.
++"""
++
++
++from __future__ import annotations
++
++
++from dataclasses import dataclass
++
++
++VERTICES = tuple(range(8))
++
++
++EDGES = tuple((u,v) for u in VERTICES for v in VERTICES if u<v and (u^v) in (1,2,4))
++
++
++FACES = ((0,1,3,2),(4,5,7,6),(0,1,5,4),(2,3,7,6),(0,2,6,4),(1,3,7,5))
++
++
++EDGE_INDEX = {e:i for i,e in enumerate(EDGES)}
++
++
++INCIDENT = tuple(tuple(i for i,e in enumerate(EDGES) if v in e) for v in VERTICES)
++
++
++FACE_EDGES = tuple(tuple(EDGE_INDEX[tuple(sorted((cyc[k],cyc[(k+1)%len(cyc)])))]
++                              for k in range(len(cyc))) for cyc in FACES)
++
++
++def graph_face_data(edges,vertices,face_vertices):
++    index = {tuple(sorted(e)):i for i,e in enumerate(edges)}
++    incident = {v:tuple(i for i,e in enumerate(edges) if v in e) for v in vertices}
++    cycle_edges = tuple(index[tuple(sorted((face_vertices[k],face_vertices[(k+1)%len(face_vertices)])))]
++                        for k in range(len(face_vertices)))
++    data = []
++    for k,v in enumerate(face_vertices):
++        f,b = cycle_edges[k],cycle_edges[k-1]
++        spectator = [i for i in incident[v] if i not in (f,b)]
++        if len(spectator)>1:
++            raise ValueError('face has nontrivalent vertex')
++        data.append((spectator[0] if spectator else None,f,b))
++    return cycle_edges,tuple(data)
++
++
++FACE_DATA = tuple(graph_face_data(EDGES,VERTICES,f) for f in FACES)
++
++
++@dataclass(frozen=True)
++class VertexSplit:
++    original_vertex: int
++    first_vertex: int
++    second_vertex: int
++    first_pair: tuple
++    second_pair: tuple
++    auxiliary_edge: int
++
++
++@dataclass
++class JoinedCubeGraph:
++    num_cubes: int
++    pairing: str
++    real_vertices: tuple
++    real_coordinates: tuple
++    physical_edges: tuple
++    physical_faces: tuple
++    physical_incident: tuple
++    vertices: tuple
++    edges: tuple
++    faces: tuple
++    splits: tuple
++    face_data: tuple
++    face_order_parities: tuple
++    face_orientation_signs: tuple
++
++    @property
++    def physical_edge_count(self):return len(self.physical_edges)
++    @property
++    def virtual_edges(self):return tuple(s.auxiliary_edge for s in self.splits)
++    @property
++    def real_edges(self):return self.physical_edges
++    @property
++    def real_faces(self):return self.physical_faces
++    @property
++    def face_count(self):return len(self.physical_faces)
++
++
++def joined_graph(num_cubes: int,pairing='longitudinal'):
++    """Canonical chain with coordinates x+(N+1)y+2(N+1)z.
++
++    Physical edge order is lexicographic in endpoint IDs. Faces are XY
++    (z then x), XZ (y then x), then YZ (x). The default splitting pairs
++    the two X links against Y/Z. 'crossed' pairs X-minus/Y against X-plus/Z,
++    providing a second equivalent intertwiner resolution for validation.
++    'mixed' pairs X-minus with the first transverse edge by edge index;
++    its odd-length lifted faces test the orientation convention separately.
++    """
++    if int(num_cubes)!=num_cubes or num_cubes<1:
++        raise ValueError('num_cubes must be a positive integer')
++    if pairing not in ('longitudinal','crossed','mixed'):
++        raise ValueError('pairing must be longitudinal, crossed, or mixed')
++    n=int(num_cubes)
++    vid=lambda x,y,z:x+(n+1)*y+2*(n+1)*z
++    coords=tuple((v%(n+1),(v//(n+1))%2,v//(2*(n+1))) for v in range(4*(n+1)))
++    vertices=tuple(range(len(coords)))
++    edges=tuple((u,v) for u in vertices for v in vertices if u<v and
++                sum(abs(a-b) for a,b in zip(coords[u],coords[v]))==1)
++    faces=[]
++    for z in (0,1):
++        for x in range(n):faces.append((vid(x,0,z),vid(x+1,0,z),vid(x+1,1,z),vid(x,1,z)))
++    for y in (0,1):
++        for x in range(n):faces.append((vid(x,y,0),vid(x+1,y,0),vid(x+1,y,1),vid(x,y,1)))
++    for x in range(n+1):faces.append((vid(x,0,0),vid(x,1,0),vid(x,1,1),vid(x,0,1)))
++    incident=tuple(tuple(i for i,e in enumerate(edges) if v in e) for v in vertices)
++    splits=[]
++    branch={}
++    for v,es in enumerate(incident):
++        if len(es)==3:
++            for e in es:branch[v,e]=v
++            continue
++        assert len(es)==4
++        directional={}
++        for e in es:
++            u=edges[e][1] if edges[e][0]==v else edges[e][0]
++            delta=tuple(a-b for a,b in zip(coords[u],coords[v]))
++            directional[delta]=e
++        minus=directional[(-1,0,0)];plus=directional[(1,0,0)]
++        yedge=next(e for delta,e in directional.items() if delta[1])
++        zedge=next(e for delta,e in directional.items() if delta[2])
++        if pairing=='longitudinal':first,second=(minus,plus),(yedge,zedge)
++        else:
++            selected=yedge if pairing=='crossed' else min(yedge,zedge)
++            other_transverse=zedge if selected==yedge else yedge
++            first,second=(minus,selected),(plus,other_transverse)
++        other=len(vertices)+len(splits)
++        split=VertexSplit(v,v,other,tuple(first),tuple(second),len(edges)+len(splits))
++        splits.append(split)
++        for e in first:branch[v,e]=v
++        for e in second:branch[v,e]=other
++    resolved_edges=[tuple(sorted((branch[u,e],branch[v,e]))) for e,(u,v) in enumerate(edges)]
++    resolved_edges += [(s.first_vertex,s.second_vertex) for s in splits]
++    resolved_vertices=tuple(range(len(vertices)+len(splits)))
++    original_index={e:i for i,e in enumerate(edges)}
++    resolved_faces=[]
++    for face in faces:
++        lifted=[]
++        for i,v in enumerate(face):
++            incoming=original_index[tuple(sorted((face[i-1],v)))]
++            outgoing=original_index[tuple(sorted((v,face[(i+1)%len(face)])))]
++            before,after=branch[v,incoming],branch[v,outgoing]
++            lifted.append(before)
++            if after!=before:lifted.append(after)
++        resolved_faces.append(tuple(lifted))
++    resolved_edges=tuple(resolved_edges)
++    resolved_faces=tuple(resolved_faces)
++    data=tuple(graph_face_data(resolved_edges,resolved_vertices,f) for f in resolved_faces)
++    parities=[]
++    for _,local_vertices in data:
++        local=[]
++        for spectator,forward,backward in local_vertices:
++            order=(spectator,forward,backward)
++            assert spectator is not None
++            local.append(sum(order[i]>order[j] for i in range(3) for j in range(i+1,3))%2)
++        parities.append(tuple(local))
++    assert len(edges)==8*n+4 and len(vertices)==4*n+4 and len(faces)==5*n+1
++    assert len(splits)==4*(n-1)
++    assert all(sum(v in e for e in resolved_edges)==3 for v in resolved_vertices)
++    assert len(set(resolved_edges))==len(resolved_edges)
++    assert len(resolved_edges)-len(resolved_vertices)==len(edges)-len(vertices)
++    orientation_signs=tuple((-1)**sum(v>f[(i+1)%len(f)] for i,v in enumerate(f))
++                            for f in resolved_faces)
++    return JoinedCubeGraph(n,pairing,vertices,coords,edges,tuple(faces),incident,
++                           resolved_vertices,resolved_edges,resolved_faces,tuple(splits),data,
++                           tuple(parities),orientation_signs)
++
++
++def graph_metadata(model):
++    return {'num_cubes':model.num_cubes,'shape':[model.num_cubes,1,1],
++            'pairing':model.pairing,'physical_vertices':len(model.real_vertices),
++            'physical_edges':model.physical_edge_count,'physical_faces':model.face_count,
++            'resolved_vertices':len(model.vertices),'resolved_edges':len(model.edges),
++            'auxiliary_coupling_edges':len(model.splits),
++            'independent_graph_cycles':model.physical_edge_count-len(model.real_vertices)+1,
++            'lifted_face_lengths':[len(f) for f in model.faces],
++            'electric_energy':'Sum of j(j+1) on physical links only',
++            'intertwiners':'All common pair-coupling channels retained; no physical-spin cutoff is applied to auxiliary labels',
++            'fixed_3j_order':'Ascending resolved incident edge indices; exact old/new permutation phases',
++            'oriented_edge_convention':'K_j(U)=D_j(U)epsilon_j, lower endpoint to higher; minus sign per reversed fundamental edge',
++            'magnetic_sign_arithmetic':'Exact 3j finite sums and spin-half CG contractions; exact rational squared magnitudes',
++            'sources':['https://dlmf.nist.gov/34.2#E4','https://dlmf.nist.gov/34.3#ii',
++                       'https://www.nature.com/articles/s42005-024-01697-4']}
+diff --git a/terry_cubes/hamiltonian.py b/terry_cubes/hamiltonian.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..0d7bc59a312d89130dba629623cf4bf4aeb6800f
+--- /dev/null
++++ b/terry_cubes/hamiltonian.py
+@@ -0,0 +1,483 @@
++"""Exact bases and Hamiltonian assembly for the original SU(2) cube models.
++
++State order, doubled-spin labels, recoupling phases, and rational squared
++amplitudes are inherited from the original research scripts.
++"""
++from __future__ import annotations
++
++from array import array
++from dataclasses import dataclass
++from fractions import Fraction
++from functools import cached_property, lru_cache
++import itertools
++import math
++
++import numpy as np
++
++from .geometry import EDGES, VERTICES, FACES, FACE_DATA, graph_face_data, joined_graph
++from .recoupling import admissible, local_vertex_factor, singlet_exists, coupling_channels
++from .recoupling import oriented_local_vertex_factor as joined_local_vertex_factor
++
++def graph_basis(max_twice: int, edges=EDGES, vertices=VERTICES, *, max_four_energy=None):
++    """Backtracking with exact triangle/parity constraints; supports degree 2/3."""
++    if max_twice < 0 or int(max_twice) != max_twice:
++        raise ValueError('cutoff must be a nonnegative doubled-spin integer')
++    incident = {v:tuple(i for i,e in enumerate(edges) if v in e) for v in vertices}
++    if any(len(es) not in (2,3) for es in incident.values()):
++        raise ValueError('only degree-two and degree-three vertices are supported')
++    edge_vertices = [tuple(v for v in vertices if i in incident[v]) for i in range(len(edges))]
++    assigned = [-1]*len(edges)
++    answers = []
++    all_values = set(range(max_twice+1))
++    costs = [q*(q+2) for q in range(max_twice+1)]
++    if max_four_energy is not None:
++        completions = {
++            2:[(q,q) for q in range(max_twice+1)],
++            3:[t for t in itertools.product(range(max_twice+1),repeat=3) if admissible(*t)],
++        }
++        @lru_cache(maxsize=None)
++        def minimum_vertex_cost(values):
++            best = math.inf
++            for t in completions[len(values)]:
++                if all(v<0 or v==q for v,q in zip(values,t)):
++                    best = min(best,sum(costs[q] for v,q in zip(values,t) if v<0))
++            return best
++    def candidates(e):
++        allowed = all_values.copy()
++        for v in edge_vertices[e]:
++            others = [assigned[k] for k in incident[v] if k != e]
++            if len(others) == 1:
++                if others[0] >= 0:
++                    allowed.intersection_update([others[0]])
++            elif min(others) >= 0:
++                a,b = others
++                allowed.intersection_update(range(abs(a-b),min(a+b,max_twice)+1,2))
++        return sorted(allowed)
++    def recurse(left,energy=0):
++        if max_four_energy is not None:
++            if energy>max_four_energy:
++                return
++            # Each unassigned edge is counted at its two endpoints. A sum of
++            # independent vertex completion minima divided by two is therefore
++            # a rigorous lower bound for the remaining electric cost.
++            local_min_sum = sum(minimum_vertex_cost(tuple(sorted(assigned[e] for e in es)))
++                                for es in incident.values())
++            if 2*energy+local_min_sum>2*max_four_energy:
++                return
++        if not left:
++            answers.append(tuple(assigned))
++            return
++        best = None
++        for e in left:
++            vals = candidates(e)
++            if not vals:
++                return
++            known = sum(assigned[k] >= 0 for v in edge_vertices[e] for k in incident[v] if k != e)
++            score = (len(vals),-known,e)
++            if best is None or score < best[0]:
++                best = score,e,vals
++        _,e,vals = best
++        remaining = [k for k in left if k != e]
++        for value in vals:
++            assigned[e] = value
++            recurse(remaining,energy+costs[value])
++        assigned[e] = -1
++    recurse(list(range(len(edges))))
++    return sorted(answers)
++
++
++def cube_basis(max_twice: int):
++    return graph_basis(max_twice)
++
++
++def cube_energy_basis(energy_cutoff: Fraction):
++    """All physical states with sum j(j+1)<=energy_cutoff, without a spin cutoff.
++
++    Arithmetic pruning uses integer four-times-electric-energy. Positivity
++    implies q(q+2)<=4*Ecut for each doubled spin q, hence the sufficient
++    per-link bound q<=isqrt(floor(4*Ecut)+1)-1. The returned list is complete
++    for this energy cutoff; it is not a subset of a separately fixed J basis.
++    """
++    cap = Fraction(energy_cutoff)
++    if cap<0:
++        return []
++    max_four_energy = (4*cap).numerator//(4*cap).denominator
++    max_twice = math.isqrt(max_four_energy+1)-1
++    return graph_basis(max_twice,max_four_energy=max_four_energy)
++
++
++def cube_electric_diagonal(states,kappa=1.0):
++    return np.array([kappa*sum(j*(j+2) for j in s)/4 for s in states],dtype=float)
++
++
++def face_amplitude_exact(initial,final,face_data):
++    """Return (sign, Fraction squared magnitude) of normalized Wilson trace."""
++    cycle_edges,vertices = face_data
++    active = set(cycle_edges)
++    if any(initial[k] != final[k] for k in range(len(initial)) if k not in active):
++        return 0,Fraction(0)
++    if any(abs(initial[k]-final[k]) != 1 for k in active):
++        return 0,Fraction(0)
++    sign,square = 1,Fraction(1,4)
++    for spectator,f,b in vertices:
++        x = initial[spectator] if spectator is not None else 0
++        phase,factor = local_vertex_factor(x,initial[f],initial[b],final[f],final[b])
++        if not factor:
++            return 0,Fraction(0)
++        sign *= phase
++        square *= factor
++    return sign,square
++
++
++def amplitude_float(exact):
++    sign,square = exact
++    return sign*math.sqrt(float(square))
++
++
++def cube_state_face_transitions(initial,face_data,max_twice=None):
++    """Yield final spin tuple, sign, exact squared magnitude, with no basis lookup."""
++    cycle_edges,_ = face_data
++    for shifts in itertools.product((-1,1),repeat=len(cycle_edges)):
++        target = list(initial)
++        for e,delta in zip(cycle_edges,shifts):
++            target[e] += delta
++        if min(target)<0 or (max_twice is not None and max(target)>max_twice):
++            continue
++        target = tuple(target)
++        sign,square = face_amplitude_exact(initial,target,face_data)
++        if square:
++            yield target,sign,square
++
++
++def graph_wilson_transitions(states,edges=EDGES,vertices=VERTICES,faces=FACES):
++    """Return per-face sparse lists (row,col,sign,Fraction squared magnitude)."""
++    lookup = {s:i for i,s in enumerate(states)}
++    out = []
++    for face in faces:
++        data = graph_face_data(edges,vertices,face)
++        entries = []
++        for col,state in enumerate(states):
++            for target,sign,square in cube_state_face_transitions(state,data):
++                row = lookup.get(target)
++                if row is not None:
++                    entries.append((row,col,sign,square))
++        out.append(entries)
++    return out
++
++
++def cube_wilson_transitions(max_twice: int):
++    states = cube_basis(max_twice)
++    return states,graph_wilson_transitions(states)
++
++
++def dense_wilson_matrices(states,transition_lists):
++    matrices = []
++    for entries in transition_lists:
++        w = np.zeros((len(states),len(states)))
++        for row,col,sign,square in entries:
++            w[row,col] = sign*math.sqrt(float(square))
++        matrices.append(w)
++    return matrices
++
++
++def cube_wilson_matrices(max_twice: int):
++    states,entries = cube_wilson_transitions(max_twice)
++    return states,dense_wilson_matrices(states,entries)
++
++
++@lru_cache(maxsize=None)
++def minimum_vertex_completion_cost(values):
++    """Exact minimum unassigned physical cost sum q(q+2), without a spin cap.
++
++    With fixed labels of sum S and maximum M, missing labels need total
++    Q>=max(0,2M-S), with Q+S even. The least such Q is optimal. Convexity
++    distributes it as evenly as possible among missing labels. This satisfies
++    the remaining polygon inequalities; any finite spin cap can only raise
++    the minimum, so it is always a safe pruning lower bound.
++    """
++    known=[q for q in values if q>=0]
++    missing=len(values)-len(known)
++    if not missing:return 0 if singlet_exists(known) else math.inf
++    total=sum(known)
++    required=max(0,2*max(known,default=0)-total)
++    if (required+total)%2:required+=1
++    base,remainder=divmod(required,missing)
++    return (missing-remainder)*base*(base+2)+remainder*(base+1)*(base+3)
++
++
++def _basis(model,max_physical_twice,max_four_energy=None):
++    """Enumerate physical labels, then expand every independent intertwiner."""
++    p=model.physical_edge_count
++    assigned=[-1]*p
++    answers=[]
++    costs=[q*(q+2) for q in range(max_physical_twice+1)]
++    def candidates(e):
++        low,high,parity=0,max_physical_twice,None
++        for v in model.physical_edges[e]:
++            other=[assigned[k] for k in model.physical_incident[v] if k!=e]
++            if min(other)>=0:
++                total=sum(other)
++                low=max(low,2*max(other)-total)
++                high=min(high,total)
++                wanted=total%2
++                if parity is not None and parity!=wanted:return ()
++                parity=wanted
++        if parity is None:return range(low,high+1)
++        if low%2!=parity:low+=1
++        return range(low,high+1,2)
++    def append_states():
++        channels=[]
++        for split in model.splits:
++            a,b=(assigned[e] for e in split.first_pair)
++            c,d=(assigned[e] for e in split.second_pair)
++            allowed=coupling_channels(a,b,c,d)
++            assert allowed
++            channels.append(allowed)
++        physical=tuple(assigned)
++        for aux in itertools.product(*channels):answers.append(physical+aux)
++    def recurse(left,cost):
++        if max_four_energy is not None:
++            if cost>max_four_energy:return
++            bound=sum(minimum_vertex_completion_cost(tuple(sorted(assigned[e] for e in es)))
++                      for es in model.physical_incident)
++            # Unassigned physical links appear at exactly two real endpoints.
++            if 2*cost+bound>2*max_four_energy:return
++        if not left:
++            append_states()
++            return
++        chosen=None
++        for e in left:
++            values=candidates(e)
++            if not values:return
++            known=sum(assigned[k]>=0 for v in model.physical_edges[e]
++                      for k in model.physical_incident[v] if k!=e)
++            score=(len(values),-known,e)
++            if chosen is None or score<chosen[0]:chosen=(score,e,values)
++        _,e,values=chosen
++        remaining=[i for i in left if i!=e]
++        for q in values:
++            assigned[e]=q
++            recurse(remaining,cost+costs[q])
++        assigned[e]=-1
++    recurse(list(range(p)),0)
++    return sorted(answers)
++
++
++def spin_basis(model,max_physical_twice: int):
++    if int(max_physical_twice)!=max_physical_twice or max_physical_twice<0:
++        raise ValueError('physical cutoff must be a nonnegative doubled-spin integer')
++    return _basis(model,int(max_physical_twice))
++
++
++def energy_basis(model,energy_cutoff: Fraction):
++    cap=4*Fraction(energy_cutoff)
++    if cap<0:return []
++    max_four_energy=cap.numerator//cap.denominator
++    max_physical_twice=math.isqrt(max_four_energy+1)-1
++    return _basis(model,max_physical_twice,max_four_energy)
++
++
++def electric_exact(model,state):
++    return Fraction(sum(q*(q+2) for q in state[:model.physical_edge_count]),4)
++
++
++def electric_diagonal(model,states,kappa=1.0):
++    return np.array([float(kappa)*sum(q*(q+2) for q in s[:model.physical_edge_count])/4 for s in states])
++
++
++@lru_cache(maxsize=16384)
++def _cycle_transitions(old,spectators,order_parities):
++    """Local transfer enumeration avoids blindly trying all 2^length flips."""
++    size=len(old)
++    choices=[tuple(q for q in (a-1,a+1) if q>=0) for a in old]
++    answers=[]
++    new=[0]*size
++    def recurse(k,sign,square):
++        if k==size:
++            phase,factor=joined_local_vertex_factor(spectators[0],old[0],old[-1],new[0],new[-1])
++            if order_parities[0]:phase*=(-1)**((new[0]+new[-1]-old[0]-old[-1])//2)
++            if factor:answers.append((tuple(new),sign*phase,square*factor))
++            return
++        for q in choices[k]:
++            phase,factor=joined_local_vertex_factor(spectators[k],old[k],old[k-1],q,new[k-1])
++            if order_parities[k]:phase*=(-1)**((q+new[k-1]-old[k]-old[k-1])//2)
++            if factor:
++                new[k]=q
++                recurse(k+1,sign*phase,square*factor)
++    for q in choices[0]:
++        new[0]=q
++        recurse(1,1,Fraction(1,4))
++    return tuple(answers)
++
++
++def state_face_transitions(model,initial,face_index,max_physical_twice=None):
++    cycle,vertices=model.face_data[face_index]
++    old=tuple(initial[e] for e in cycle)
++    spectators=tuple(initial[x] if x is not None else 0 for x,_,_ in vertices)
++    for new,sign,square in _cycle_transitions(old,spectators,model.face_order_parities[face_index]):
++        if max_physical_twice is not None and any(q>max_physical_twice
++                for e,q in zip(cycle,new) if e<model.physical_edge_count):continue
++        target=list(initial)
++        for e,q in zip(cycle,new):target[e]=q
++        yield tuple(target),sign*model.face_orientation_signs[face_index],square
++
++
++def wilson_transitions(model,states):
++    """Per-face sparse entries (row,col,sign,Fraction squared magnitude)."""
++    index={s:i for i,s in enumerate(states)}
++    output=[]
++    for face in range(model.face_count):
++        entries=[]
++        for col,state in enumerate(states):
++            for target,sign,square in state_face_transitions(model,state,face):
++                row=index.get(target)
++                if row is not None:entries.append((row,col,sign,square))
++        output.append(entries)
++    return output
++
++
++def build_sparse(model, states):
++    index={state:i for i,state in enumerate(states)}
++    rr,cc,dd=array('q'),array('q'),array('d')
++    for face in range(model.face_count):
++        for col,state in enumerate(states):
++            for target,sign,square in state_face_transitions(model,state,face):
++                row=index.get(target)
++                if row is not None:
++                    rr.append(row);cc.append(col);dd.append(sign*math.sqrt(float(square)))
++    return np.array(rr),np.array(cc),np.array(dd)
++
++
++def numerical_hermiticity(rows,cols,data,n):
++    # Entries on different faces are retained separately; compare their sum.
++    keys=rows*n+cols
++    unique,inverse=np.unique(keys,return_inverse=True)
++    summed=np.bincount(inverse,weights=data)
++    transposed=(unique%n)*n+unique//n
++    order=np.argsort(transposed)
++    assert np.array_equal(unique,transposed[order])
++    error=float(np.max(np.abs(summed-summed[order]))) if len(data) else 0.
++    assert error<1e-12,error
++    return error
++
++
++
++def _integer(value, name, minimum=1):
++    if isinstance(value, (bool, np.bool_)):
++        raise ValueError(f"{name} must be an integer >= {minimum}")
++    try:
++        converted = int(value)
++        valid = converted == value and converted >= minimum
++    except (ValueError, TypeError, OverflowError):
++        valid = False
++    if not valid:
++        raise ValueError(f"{name} must be an integer >= {minimum}")
++    return converted
++
++
++def _finite_float(value, name, strictly_positive=False):
++    try:
++        number = float(value)
++    except (ValueError, TypeError, OverflowError) as exc:
++        raise ValueError(f"{name} must be a finite real number") from exc
++    if not math.isfinite(number) or (number <= 0 if strictly_positive else number < 0):
++        bound = "positive" if strictly_positive else "nonnegative"
++        raise ValueError(f"{name} must be finite and {bound}")
++    return number
++
++
++def validate_electric_cutoff(value):
++    """Return the exact, dimensionless cutoff on physical sum j(j+1)."""
++    try:
++        # Decimal strings avoid an unintended binary-rational cutoff.
++        cap = value if isinstance(value, Fraction) else Fraction(str(value))
++    except (ValueError, TypeError, ZeroDivisionError, OverflowError) as exc:
++        raise ValueError("electric_cutoff must be finite and nonnegative") from exc
++    if cap < 0:
++        raise ValueError("electric_cutoff must be finite and nonnegative")
++    return cap
++
++
++@dataclass(frozen=True)
++class JoinedCubesModel:
++    """Open N-by-1-by-1 SU(2) cube chain, with no external charges.
++
++    H = kappa * sum_physical j(j+1) + nu * sum_faces (1 - Tr(U_face)/2).
++    The auxiliary channels resolve Gauss-law invariant tensors and carry
++    zero electric energy. Geometry and basis indexing match the source model.
++    """
++
++    num_cubes: int = 1
++    kappa: float = 1.0
++    nu: float = 1.0
++    pairing: str = "longitudinal"
++
++    def __post_init__(self):
++        object.__setattr__(self, "num_cubes", _integer(self.num_cubes, "num_cubes"))
++        object.__setattr__(self, "kappa", _finite_float(self.kappa, "kappa", True))
++        object.__setattr__(self, "nu", _finite_float(self.nu, "nu"))
++        if self.pairing not in ("longitudinal", "crossed", "mixed"):
++            raise ValueError("pairing must be longitudinal, crossed, or mixed")
++
++    @cached_property
++    def graph(self):
++        return joined_graph(self.num_cubes, pairing=self.pairing)
++
++
++@dataclass(frozen=True)
++class HamiltonianData:
++    """Sparse entries for a projected Hamiltonian, in the original basis order."""
++
++    states: tuple
++    diagonal: np.ndarray
++    rows: np.ndarray
++    columns: np.ndarray
++    entries: np.ndarray
++    hermiticity_error: float
++
++    @property
++    def dimension(self):
++        return len(self.states)
++
++    def to_scipy(self):
++        """Return CSR, summing duplicate entries contributed by different faces."""
++        from scipy.sparse import coo_matrix, diags
++
++        magnetic = coo_matrix(
++            (self.entries, (self.rows, self.columns)),
++            shape=(self.dimension, self.dimension),
++        ).tocsr()
++        return magnetic + diags(self.diagonal, format="csr")
++
++
++def build_hamiltonian(model, electric_cutoff=16):
++    """Build the complete physical-electric-cutoff compression P H P.
++
++    The cutoff is independent of kappa and applies only to physical links.
++    No spin cutoff is imposed on auxiliary intertwiner channels.
++    """
++    if not isinstance(model, JoinedCubesModel):
++        raise TypeError("model must be a JoinedCubesModel")
++    cap = validate_electric_cutoff(electric_cutoff)
++    graph = model.graph
++    states = tuple(energy_basis(graph, cap))
++    electric = electric_diagonal(graph, states, model.kappa)
++    if model.nu == 0:
++        rows = columns = np.empty(0, dtype=np.int64)
++        entries = np.empty(0, dtype=float)
++        error = 0.0
++    else:
++        rows, columns, wilson = build_sparse(graph, states)
++        error = numerical_hermiticity(rows, columns, wilson, len(states))
++        entries = -model.nu * wilson
++    diagonal = electric + graph.face_count * model.nu
++    if not np.all(np.isfinite(diagonal)) or not np.all(np.isfinite(entries)):
++        raise ValueError("Hamiltonian entries exceed floating-point range; rescale kappa and nu")
++    return HamiltonianData(
++        states=states,
++        diagonal=diagonal,
++        rows=rows,
++        columns=columns,
++        entries=entries,
++        hermiticity_error=error,
++    )
+diff --git a/terry_cubes/recoupling.py b/terry_cubes/recoupling.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..ef3bf012bfa7f5a297cbf52dbc1dd2c606e5bc34
+--- /dev/null
++++ b/terry_cubes/recoupling.py
+@@ -0,0 +1,453 @@
++"""Exact recoupling coefficients for the open two-square SU(2) ladder.
++
++Public state labels are DOUBLED spins (integers), ordered (2*jL,2*jR,2*jM).
++The physical basis consists of triangle-admissible triples, one state each.
++
++Basis derivation:
++  f_(L,R,M)(A,B) = sqrt(dL*dR/dM) Tr[P_M (D^L(A) tensor D^R(B))].
++Schur orthogonality makes these functions orthonormal. P_M is the orthogonal
++projector onto total spin M in V_L tensor V_R; d_j=2j+1. For L=R=1/2,M=0,
++the basis function is Tr(AB^{-1}). The orientation change B -> B^{-1}
++turns this into Tr(AB), preserving Tr B and product Haar measure.
++
++Multiply f by Tr(D^{1/2}(A))/2. In V_{1/2} tensor V_L tensor V_R,
++recouple ((1/2,L)->L', R)->M' versus (1/2,(L,R)->M)->M'. The squared
++recoupling overlap is dM*dL' * {L R M; M' 1/2 L'}^2. Dividing by the
++normalizations of f and f' gives
++  <L',R,M'|W_A|L,R,M> =
++  (1/2) sqrt(dL*dM*dL'*dM') * {L R M; M' 1/2 L'}^2.
++All coefficients are nonnegative in this coupled-projector phase convention.
++W_B follows by swapping L and R. Selection rules require L',M'=L,M +/-1/2.
++
++Squared 6j symbols are computed with exact Fraction arithmetic using the
++finite Racah sum. Only the final dimension square root uses floating point.
++This module generates the orthogonal compression P_J H P_J of the original
++gauge-invariant Hamiltonian, not a modified cyclic cutoff or quantum group.
++
++Primary context: Burgio et al., hep-lat/9906036 and hep-lat/9911019 describe
++orthonormal physical spin-network bases and plaquette recoupling. The compact
++theta-graph specialization and projector derivation above are our derivation.
++"""
++
++
++from __future__ import annotations
++
++
++from functools import lru_cache
++
++
++from fractions import Fraction
++
++
++import itertools
++
++
++import json
++
++
++import math
++
++
++import numpy as np
++
++
++SOURCES = [
++    'https://arxiv.org/abs/hep-lat/9906036',
++    'https://arxiv.org/abs/hep-lat/9911019',
++    'https://arxiv.org/abs/2307.11829',
++]
++
++
++def admissible(a: int, b: int, c: int) -> bool:
++    """SU(2) triangle rule for doubled nonnegative integer spins."""
++    return min(a, b, c) >= 0 and abs(a-b) <= c <= a+b and (a+b+c) % 2 == 0
++
++
++def basis_twice(max_twice: int) -> list[tuple[int, int, int]]:
++    if int(max_twice) != max_twice or max_twice < 0:
++        raise ValueError('max_twice must be a nonnegative integer')
++    return [s for s in itertools.product(range(int(max_twice)+1), repeat=3)
++            if admissible(*s)]
++
++
++def electric_diagonal(states, kappa: float = 1.0) -> np.ndarray:
++    """Three links in each outer path and one link in the shared middle."""
++    return kappa*np.array([(3*a*(a+2)+3*b*(b+2)+c*(c+2))/4
++                           for a, b, c in states], dtype=float)
++
++
++@lru_cache(maxsize=None)
++def triangle_delta_squared(a: int, b: int, c: int) -> Fraction:
++    if not admissible(a, b, c):
++        return Fraction(0)
++    f = math.factorial
++    return Fraction(f((a+b-c)//2)*f((a-b+c)//2)*f((-a+b+c)//2),
++                    f((a+b+c)//2+1))
++
++
++@lru_cache(maxsize=None)
++def wigner_6j_squared(a: int, b: int, c: int,
++                      d: int, e: int, f: int) -> Fraction:
++    """Return {a/2 b/2 c/2; d/2 e/2 f/2} squared, exactly."""
++    deltas = [triangle_delta_squared(*t)
++              for t in [(a,b,c), (a,e,f), (d,b,f), (d,e,c)]]
++    if not all(deltas):
++        return Fraction(0)
++    lower = [(a+b+c)//2, (a+e+f)//2, (d+b+f)//2, (d+e+c)//2]
++    upper = [(a+b+d+e)//2, (a+c+d+f)//2, (b+c+e+f)//2]
++    racah_sum = Fraction(0)
++    for z in range(max(lower), min(upper)+1):
++        denominator = math.prod(math.factorial(z-x) for x in lower)
++        denominator *= math.prod(math.factorial(x-z) for x in upper)
++        racah_sum += Fraction((-1)**z*math.factorial(z+1), denominator)
++    return math.prod(deltas)*racah_sum*racah_sum
++
++
++def wilson_element(initial, final, which: str = 'A') -> float:
++    """Normalized fundamental trace W=Tr(U)/2 on the chosen plaquette."""
++    a, b, c = initial
++    ap, bp, cp = final
++    if which.upper() == 'B':
++        a, b, ap, bp = b, a, bp, ap
++    elif which.upper() != 'A':
++        raise ValueError('which must be A or B')
++    if b != bp or abs(ap-a) != 1 or abs(cp-c) != 1:
++        return 0.0
++    if not admissible(a,b,c) or not admissible(ap,bp,cp):
++        return 0.0
++    square = wigner_6j_squared(a,b,c,cp,1,ap)
++    return 0.5*math.sqrt((a+1)*(c+1)*(ap+1)*(cp+1))*float(square)
++
++
++def wilson_matrices(max_twice: int):
++    """Return (lexicographic doubled-spin states, W_A, W_B)."""
++    states = basis_twice(max_twice)
++    lookup = {s: i for i, s in enumerate(states)}
++    matrices = []
++    for which in ('A', 'B'):
++        w = np.zeros((len(states), len(states)))
++        for i, s in enumerate(states):
++            active = 0 if which == 'A' else 1
++            for delta, delta_middle in itertools.product((-1,1), repeat=2):
++                target = list(s)
++                target[active] += delta
++                target[2] += delta_middle
++                target = tuple(target)
++                j = lookup.get(target)
++                if j is not None:
++                    w[j, i] = wilson_element(s, target, which)
++        matrices.append(w)
++    return states, *matrices
++
++
++def hamiltonian(max_twice: int, kappa: float = 1.0, nu: float = 1.0):
++    """Return states,H for H=kappa sum E^2+nu(2-W_A-W_B)."""
++    states, wa, wb = wilson_matrices(max_twice)
++    h = np.diag(electric_diagonal(states, kappa)+2*nu)-nu*(wa+wb)
++    return states, h
++
++
++def exact_congruence(max_twice: int, kappa=Fraction(1),
++                     nu=Fraction(1), shift=Fraction(0)):
++    """Return states and exact rational D^-1 (H-shift*I) D^-1.
++
++    D_ii=sqrt(K_i), K_i=dL*dR*dM. Congruence preserves inertia, not
++    eigenvalues. For unchanged R, WA_ij/(sqrt(K_i*K_j)) equals
++    (6j)^2/(2*dR), and similarly with L for WB. Integer, string or Fraction
++    parameters avoid accidentally specifying a binary floating-point rational.
++    """
++    kappa, nu, shift = map(Fraction, (kappa,nu,shift))
++    states = basis_twice(max_twice)
++    lookup = {s:i for i,s in enumerate(states)}
++    n = len(states)
++    out = [[Fraction(0) for _ in range(n)] for _ in range(n)]
++    for i,(a,b,c) in enumerate(states):
++        kinetic = kappa*Fraction(3*a*(a+2)+3*b*(b+2)+c*(c+2),4)
++        out[i][i] = (kinetic+2*nu-shift)/((a+1)*(b+1)*(c+1))
++        for da,dc in itertools.product((-1,1),repeat=2):
++            target = (a+da,b,c+dc)
++            j = lookup.get(target)
++            if j is not None:
++                out[j][i] -= nu*wigner_6j_squared(a,b,c,c+dc,1,a+da)/(2*(b+1))
++        for db,dc in itertools.product((-1,1),repeat=2):
++            target = (a,b+db,c+dc)
++            j = lookup.get(target)
++            if j is not None:
++                out[j][i] -= nu*wigner_6j_squared(b,a,c,c+dc,1,b+db)/(2*(a+1))
++    return states,out
++
++
++@lru_cache(maxsize=None)
++def spin_operators(twice_j: int):
++    j = twice_j/2
++    m = np.arange(-j, j+1)
++    raising = np.zeros((twice_j+1, twice_j+1), dtype=complex)
++    for k, mk in enumerate(m[:-1]):
++        raising[k+1,k] = math.sqrt((j-mk)*(j+mk+1))
++    return ((raising+raising.T)/2, (raising-raising.T)/(2j), np.diag(m))
++
++
++def projector(casimir: np.ndarray, twice_j: int):
++    values, vectors = np.linalg.eigh(casimir)
++    j = twice_j/2
++    chosen = vectors[:, abs(values-j*(j+1)) < 1e-8]
++    return chosen @ chosen.conj().T
++
++
++@lru_cache(maxsize=None)
++def triple_projectors(a: int, b: int):
++    """Independent angular momentum matrices on V_half tensor V_a tensor V_b."""
++    dims = [2, a+1, b+1]
++    site_j = []
++    for site, twice in enumerate([1,a,b]):
++        ops = []
++        for op in spin_operators(twice):
++            mats = [np.eye(d) for d in dims]
++            mats[site] = op
++            ops.append(np.kron(np.kron(mats[0],mats[1]),mats[2]))
++        site_j.append(ops)
++    def casimir(sites):
++        out = np.zeros((math.prod(dims),)*2, dtype=complex)
++        for k in range(3):
++            total = sum(site_j[site][k] for site in sites)
++            out += total @ total
++        return out
++    hl = casimir([0,1])
++    lr = casimir([1,2])
++    all_spins = casimir([0,1,2])
++    p_hl = {ap: projector(hl,ap) for ap in range(abs(a-1),a+2,2)}
++    p_lr = {c: projector(lr,c) for c in range(abs(a-b),a+b+1,2)}
++    p_total = {cp: projector(all_spins,cp) for cp in range((1+a+b)%2,1+a+b+1,2)}
++    return p_hl,p_lr,p_total
++
++
++def independent_projector_element(initial, final):
++    """No 6j symbols: trace of three angular-momentum spectral projectors."""
++    a,b,c = initial
++    ap,bp,cp = final
++    if b != bp or abs(ap-a) != 1 or abs(cp-c) != 1:
++        return 0.0
++    p_hl,p_lr,p_total = triple_projectors(a,b)
++    overlap = float(np.trace(p_hl[ap] @ p_lr[c] @ p_total[cp]).real)/(cp+1)
++    norm_ratio = math.sqrt((a+1)*(cp+1)/((c+1)*(ap+1)))
++    return 0.5*norm_ratio*overlap
++
++
++def self_checks() -> dict:
++    assert wigner_6j_squared(0,0,0,1,1,1) == Fraction(1,2)
++    assert wigner_6j_squared(0,1,1,0,1,1) == Fraction(1,4)
++    states,wa,wb = wilson_matrices(1)
++    four_order = [(0,0,0),(1,0,1),(0,1,1),(1,1,0)]
++    ids = [states.index(s) for s in four_order]
++    expected_a = np.array([[0,.5,0,0],[.5,0,0,0],[0,0,0,.25],[0,0,.25,0]])
++    expected_b = np.array([[0,0,.5,0],[0,0,0,.25],[.5,0,0,0],[0,.25,0,0]])
++    four_error = max(float(np.max(abs(wa[np.ix_(ids,ids)]-expected_a))),
++                     float(np.max(abs(wb[np.ix_(ids,ids)]-expected_b))))
++    assert four_error < 1e-15
++    states,wa,wb = wilson_matrices(3)
++    projector_errors = []
++    for i,s in enumerate(states):
++        for j,t in enumerate(states):
++            if s[1] == t[1] and abs(s[0]-t[0]) == 1 and abs(s[2]-t[2]) == 1:
++                projector_errors.append(abs(wa[j,i]-independent_projector_element(s,t)))
++    assert max(projector_errors) < 1e-12
++    rational_states,rational_matrix = exact_congruence(3,nu=Fraction(3,2),shift=Fraction(1,7))
++    hs,h = hamiltonian(3,nu=1.5)
++    assert hs == rational_states
++    d = np.sqrt([math.prod(x+1 for x in s) for s in hs])
++    expected_congruence = (h-np.eye(len(h))/7)/np.outer(d,d)
++    actual_congruence = np.array(rational_matrix,dtype=float)
++    congruence_error = float(np.max(abs(expected_congruence-actual_congruence)))
++    assert congruence_error < 1e-14
++    summaries = []
++    for max_twice in [1,2,3,4,6,8,10,12]:
++        states,wa,wb = wilson_matrices(max_twice)
++        symmetry = max(float(np.max(abs(wa-wa.T))),float(np.max(abs(wb-wb.T))))
++        assert symmetry < 1e-14
++        swap = [states.index((b,a,c)) for a,b,c in states]
++        swap_error = float(np.max(abs(wa[np.ix_(swap,swap)]-wb)))
++        assert swap_error < 1e-14
++        r_zero = [i for i,(a,b,c) in enumerate(states) if b == 0]
++        a_zero = [i for i,(a,b,c) in enumerate(states) if a == 0]
++        character_expected = (np.diag(np.full(max_twice,.5),1)+
++                              np.diag(np.full(max_twice,.5),-1))
++        assert np.max(abs(wa[np.ix_(r_zero,r_zero)]-character_expected)) < 1e-14
++        assert np.max(abs(wb[np.ix_(a_zero,a_zero)]-character_expected)) < 1e-14
++        row = {'jmax':max_twice/2,'dimension':len(states),'WA_nonzero':int(np.count_nonzero(wa)),
++               'WB_nonzero':int(np.count_nonzero(wb)),'Hermiticity_residual':symmetry,
++               'A_B_exchange_residual':swap_error}
++        if max_twice <= 6:
++            norms = [float(np.max(abs(np.linalg.eigvalsh(w)))) for w in (wa,wb)]
++            assert max(norms) <= 1+1e-12
++            row['Wilson_operator_norms'] = norms
++        summaries.append(row)
++    return {'sources':SOURCES,'four_state_matrix_residual':four_error,
++            'independent_projector_entries_checked':len(projector_errors),
++            'independent_projector_max_residual':max(projector_errors),
++            'rational_congruence_vs_float_residual':congruence_error,
++            'cutoff_matrix_checks':summaries}
++
++
++# Original signed trivalent recoupling convention from su2_cube_model.py.
++
++
++@lru_cache(maxsize=None)
++def sixj_sign(a,b,c,d,e,f):
++    if not all(triangle_delta_squared(*t) for t in [(a,b,c),(a,e,f),(d,b,f),(d,e,c)]):
++        return 0
++    lower = [(a+b+c)//2,(a+e+f)//2,(d+b+f)//2,(d+e+c)//2]
++    upper = [(a+b+d+e)//2,(a+c+d+f)//2,(b+c+e+f)//2]
++    total = Fraction(0)
++    for z in range(max(lower),min(upper)+1):
++        den = math.prod(math.factorial(z-x) for x in lower)*math.prod(math.factorial(x-z) for x in upper)
++        total += Fraction((-1)**z*math.factorial(z+1),den)
++    return (total>0)-(total<0)
++
++
++@lru_cache(maxsize=None)
++def local_vertex_factor(spectator,forward,backward,new_forward,new_backward):
++    """Return sign and exact square of one normalized-vertex recoupling factor."""
++    args = (spectator,forward,backward,1,new_backward,new_forward)
++    square = wigner_6j_squared(*args)*(new_forward+1)*(backward+1)
++    if not square:
++        return 0,Fraction(0)
++    exponent_twice = spectator+forward+new_backward+1
++    if exponent_twice % 2:
++        raise AssertionError('nonintegral recoupling phase')
++    sign = (-1)**(exponent_twice//2)*sixj_sign(*args)
++    return sign,square
++
++
++# Original orientation-aware invariant contractions from su2_oriented_vertex.py.
++
++
++def parity(exponent):
++    return -1 if exponent % 2 else 1
++
++
++@lru_cache(maxsize=None)
++def three_j_signed_square(a,b,c,ma,mb,mc):
++    """All six arguments are doubled angular momenta / magnetic labels."""
++    if not admissible(a,b,c) or ma+mb+mc:
++        return 0,Fraction(0)
++    if any(abs(m)>q or (q-m)%2 for q,m in ((a,ma),(b,mb),(c,mc))):
++        return 0,Fraction(0)
++    fact=math.factorial
++    prefactor=triangle_delta_squared(a,b,c)
++    for q,m in ((a,ma),(b,mb),(c,mc)):
++        prefactor*=fact((q+m)//2)*fact((q-m)//2)
++    upper=((a+b-c)//2,(a-ma)//2,(b+mb)//2)
++    offset=((c-b+ma)//2,(c-a-mb)//2)
++    total=Fraction(0)
++    for z in range(max(0,-min(offset)),min(upper)+1):
++        denominator=fact(z)
++        denominator*=math.prod(fact(u-z) for u in upper)
++        denominator*=math.prod(fact(v+z) for v in offset)
++        total+=Fraction(parity(z),denominator)
++    if not total:return 0,Fraction(0)
++    sign=parity((a-b-mc)//2)*(1 if total>0 else -1)
++    return sign,prefactor*total*total
++
++
++@lru_cache(maxsize=None)
++def half_cg_signed_square(q,m,h,r):
++    """C(q/2,m/2; 1/2,h/2 | r/2,(m+h)/2), h=+/-1."""
++    if h not in (-1,1) or abs(m)>q or (q-m)%2:
++        return 0,Fraction(0)
++    if abs(m+h)>r or r<0:return 0,Fraction(0)
++    if r==q+1:
++        numerator=q+h*m+2
++        return 1,Fraction(numerator,2*(q+1))
++    if r==q-1:
++        numerator=q-h*m
++        if not numerator:return 0,Fraction(0)
++        return (-1 if h==1 else 1),Fraction(numerator,2*(q+1))
++    return 0,Fraction(0)
++
++
++def rational_sqrt(value):
++    """Return the exact nonnegative rational root, or reject other radicals."""
++    n=math.isqrt(value.numerator);d=math.isqrt(value.denominator)
++    if n*n!=value.numerator or d*d!=value.denominator:
++        raise ArithmeticError('Local invariant sum contains non-proportional radicals')
++    return Fraction(n,d)
++
++
++@lru_cache(maxsize=None)
++def invariant_loop_contraction(spectator,forward,backward,new_forward,new_backward):
++    """Exact tensor contraction in invariant order (spectator,forward,backward).
++
++    Its squared magnitude is (2J_f+1)(2J_b+1) times the relevant 6j square.
++    The explicit finite tensor sum fixes the sign for all edge orientations;
++    it does not assume that the resolved graph is bipartite.
++    """
++    e,f,b,F,B=spectator,forward,backward,new_forward,new_backward
++    six_square=wigner_6j_squared(e,f,b,1,B,F)
++    if not six_square:return 0,Fraction(0)
++    common=None;total=Fraction(0)
++    for me in range(e,-e-1,-2):
++        for mf in range(f,-f-1,-2):
++            mb=-me-mf
++            so,qo=three_j_signed_square(e,f,b,me,mf,mb)
++            if not qo:continue
++            for h in (1,-1):
++                sn,qn=three_j_signed_square(e,F,B,me,mf+h,mb-h)
++                sf,qf=half_cg_signed_square(f,mf,h,F)
++                sb,qb=half_cg_signed_square(b,mb,-h,B)
++                square=qo*qn*qf*qb
++                if not square:continue
++                # epsilon_(+,-)=+1; epsilon_(-,+)=-1.
++                sign=so*sn*sf*sb*h
++                if common is None:common=square
++                total+=sign*rational_sqrt(square/common)
++    result=(1 if total>0 else -1 if total<0 else 0),total*total*(common or 0)
++    assert result[1]==(F+1)*(B+1)*six_square
++    return result
++
++
++@lru_cache(maxsize=None)
++def oriented_local_vertex_factor(spectator,forward,backward,new_forward,new_backward):
++    """Assign each forward edge's dimension ratio once to its initial vertex."""
++    sign,square=invariant_loop_contraction(spectator,forward,backward,new_forward,new_backward)
++    return sign,square*Fraction(forward+1,new_forward+1)
++
++
++def oriented_self_checks(max_twice=6):
++    from .recoupling import local_vertex_factor as reference_vertex
++    cases=0
++    for e in range(max_twice+1):
++        for f in range(max_twice+1):
++            for b in range(max_twice+1):
++                if not admissible(e,f,b):continue
++                # The normalized 3j invariant has exactly unit norm.
++                norm=sum((three_j_signed_square(e,f,b,me,mf,-me-mf)[1]
++                          for me in range(e,-e-1,-2)
++                          for mf in range(f,-f-1,-2)),Fraction(0))
++                assert norm==1
++                for F in (f-1,f+1):
++                    for B in (b-1,b+1):
++                        if min(F,B)<0 or not admissible(e,F,B):continue
++                        sign,square=invariant_loop_contraction(e,f,b,F,B)
++                        old_sign,old_square=reference_vertex(e,f,b,F,B)
++                        assert sign==old_sign*(F-f)*(B-b)
++                        assert square*Fraction(f+1,F+1)==old_square*Fraction((f+1)*(B+1),(F+1)*(b+1))
++                        cases+=1
++    return {'maximum_doubled_old_spin':max_twice,'exact_vertex_contractions':cases,
++            'unit_3j_norms':True,'squared_6j_identity':True,
++            'all_radical_ratios_exact_rational_squares':True,
++            'exact_local_sign_relation_to_reference_6j_formula':True,
++            'exact_local_dimension_ratio_to_reference_6j_formula':True}
++
++
++def singlet_exists(spins):
++    """SU(2) tensor product contains spin zero iff parity/polygon tests pass."""
++    total=sum(spins)
++    return total%2==0 and 2*max(spins,default=0)<=total
++
++
++def coupling_channels(a,b,c,d):
++    """Doubled k values common to a⊗b and c⊗d; no extra truncation."""
++    if (a+b-c-d)%2:return ()
++    low=max(abs(a-b),abs(c-d));high=min(a+b,c+d)
++    if (low-a-b)%2:low+=1
++    return tuple(range(low,high+1,2))
+diff --git a/terry_cubes/solver.py b/terry_cubes/solver.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..606488f61084adcec66e392c3d200b1b8797f95f
+--- /dev/null
++++ b/terry_cubes/solver.py
+@@ -0,0 +1,309 @@
++"""NumPy-only sparse symmetric spectra with explicit Ritz residual checks.
++
++These are numerical approximations, not certified eigenvalue enclosures.
++The COO arrays contain both directions of every off-diagonal entry.
++"""
++import numpy as np
++
++
++class SymmetricOperator:
++    def __init__(self, diagonal, rows, columns, entries):
++        self.diagonal = np.asarray(diagonal, dtype=float)
++        self.rows = np.asarray(rows, dtype=np.int64)
++        self.columns = np.asarray(columns, dtype=np.int64)
++        self.entries = np.asarray(entries, dtype=float)
++        self.size = len(self.diagonal)
++        assert self.rows.shape == self.columns.shape == self.entries.shape
++        assert not len(self.rows) or (min(self.rows.min(), self.columns.min()) >= 0
++                                    and max(self.rows.max(), self.columns.max()) < self.size)
++
++    def matvec(self, vector):
++        return self.diagonal*vector + np.bincount(
++            self.rows, weights=self.entries*vector[self.columns], minlength=self.size)
++
++    def dense(self):
++        result = np.diag(self.diagonal)
++        np.add.at(result, (self.rows, self.columns), self.entries)
++        return result
++
++
++def smallest_ritz(operator, levels=3, max_iterations=240, tolerance=1e-10, seed=1097):
++    """Fully reorthogonalized symmetric Lanczos; report direct residual norms.
++
++    A small residual does not prove that no unobserved eigenvalue lies below
++    a computed Ritz value. Exact enclosure verification is a separate step.
++    """
++    n = operator.size
++    if n <= 150:
++        values, vectors = np.linalg.eigh(operator.dense())
++        residuals = [float(np.linalg.norm(operator.matvec(vectors[:,i])-values[i]*vectors[:,i]))
++                     for i in range(levels)]
++        return values[:levels], vectors[:,:levels], {
++            'method':'dense NumPy eigh', 'iterations':n,
++            'residual_norms':residuals, 'converged':max(residuals) <= tolerance,
++        }
++    count = min(n, max_iterations)
++    basis = np.empty((n, count+1), dtype=float)
++    rng = np.random.default_rng(seed)
++    basis[:,0] = rng.standard_normal(n)
++    basis[:,0] /= np.linalg.norm(basis[:,0])
++    alpha, beta = [], []
++    converged = False
++    for k in range(count):
++        w = operator.matvec(basis[:,k])
++        alpha.append(float(basis[:,k] @ w))
++        w -= alpha[-1]*basis[:,k]
++        if k:
++            w -= beta[-1]*basis[:,k-1]
++        for _ in range(2):
++            q = basis[:,:k+1]
++            w -= q @ (q.T @ w)
++        norm = float(np.linalg.norm(w))
++        should_check = k+1 >= levels and ((k+1)%12 == 0 or k+1 == count or norm < 1e-13)
++        if should_check:
++            tridiagonal = np.diag(alpha)
++            if k:
++                tridiagonal += np.diag(beta,1)+np.diag(beta,-1)
++            values, small_vectors = np.linalg.eigh(tridiagonal)
++            vectors = basis[:,:k+1] @ small_vectors[:,:levels]
++            # Rayleigh-Ritz on the actual Krylov basis removes accumulated
++            # recurrence roundoff from the returned low subspace.
++            images = np.column_stack([operator.matvec(vectors[:,i]) for i in range(levels)])
++            reduced = vectors.T @ images
++            values, rotation = np.linalg.eigh((reduced+reduced.T)/2)
++            vectors = vectors @ rotation
++            images = images @ rotation
++            residuals = np.linalg.norm(images-vectors*values, axis=0)
++            converged = bool(np.max(residuals) <= tolerance)
++            if converged or norm < 1e-13:
++                break
++        if k+1 < count:
++            beta.append(norm)
++            basis[:,k+1] = w/norm
++    return values[:levels], vectors[:,:levels], {
++        'method':'fully reorthogonalized Lanczos with direct Ritz residuals',
++        'iterations':k+1, 'residual_norms':residuals.tolist(),
++        'converged':converged, 'seed':seed,
++        'scope':'Numerical Ritz values; a residual check does not certify spectral ordering',
++    }
++
++
++def self_test():
++    # A connected tridiagonal with known analytic spectrum checks the sparse
++    # path against eigenvalues independent of our Lanczos implementation.
++    n = 240
++    rows = np.concatenate([np.arange(n-1),np.arange(1,n)])
++    cols = np.concatenate([np.arange(1,n),np.arange(n-1)])
++    op = SymmetricOperator(np.full(n,2.),rows,cols,np.full(len(rows),-1.))
++    values, _, check = smallest_ritz(op,max_iterations=n,tolerance=1e-10)
++    expected = 2-2*np.cos(np.arange(1,4)*np.pi/(n+1))
++    assert np.max(abs(values-expected)) < 1e-11
++    assert check['converged']
++    print('Sparse Lanczos analytic-spectrum check passed.',flush=True)
++
++
++
++# The routines above are preserved from su2_sparse_spectrum.py.
++# The high-level interface below validates inputs and surfaces convergence.
++from dataclasses import dataclass
++
++from .hamiltonian import (
++    JoinedCubesModel, _integer, _finite_float,
++    validate_electric_cutoff, build_hamiltonian,
++)
++
++
++@dataclass(frozen=True)
++class SpectrumResult:
++    """Numerical Ritz spectrum in a specified finite basis, not a certificate."""
++
++    e0: float
++    e1: float
++    gap: float
++    eigenvalues: tuple
++    residual_norms: tuple
++    converged: bool
++    dimension: int
++    num_cubes: int
++    kappa: float
++    nu: float
++    electric_cutoff: str
++    pairing: str
++    backend: str
++    method: str
++    iterations: int
++    seed: int
++    tolerance: float
++    max_iterations: int
++    hermiticity_error: float
++
++    def to_dict(self):
++        """Return JSON-safe values and explicit numerical scope."""
++        from dataclasses import asdict
++
++        result = asdict(self)
++        result["eigenvalues"] = list(self.eigenvalues)
++        result["residual_norms"] = list(self.residual_norms)
++        result["schema_version"] = 1
++        result["package_version"] = "0.1.0"
++        ratio = self.nu / self.kappa
++        normalized_gap = self.gap / self.kappa
++        result["nu_over_kappa"] = ratio if np.isfinite(ratio) else None
++        result["gap_over_kappa"] = normalized_gap if np.isfinite(normalized_gap) else None
++        if not np.isfinite(ratio) or not np.isfinite(normalized_gap):
++            result["normalization_note"] = (
++                "A normalized ratio exceeds floating-point range and is null; "
++                "unnormalized energy values are retained."
++            )
++        result["certified"] = False
++        result["scope"] = (
++            "Numerical finite-basis spectrum. Residuals do not certify spectral "
++            "ordering, omitted states, infinite volume, or the continuum limit. "
++            "Single-vector Lanczos may omit copies of degenerate eigenvalues."
++        )
++        result["cutoff_definition"] = "sum_physical_links j(j+1) <= electric_cutoff"
++        return result
++
++
++class SpectrumConvergenceError(RuntimeError):
++    """Raised when the direct retained-matrix residual check fails."""
++
++    def __init__(self, message, result=None):
++        super().__init__(message)
++        self.result = result
++
++
++class SpectrumSolver:
++    """Compute low eigenvalues using the original Lanczos or SciPy ARPACK.
++
++    Parameters
++    ----------
++    model : JoinedCubesModel
++        Geometry and physical coefficients.
++    electric_cutoff : int, float, str, or Fraction
++        Complete cutoff on sum_physical j(j+1), independent of kappa.
++    backend : {"lanczos", "arpack"}
++        The default preserves the original fully reorthogonalized routine.
++    tolerance : float
++        Absolute direct-residual tolerance in the energy units of H.
++    max_iterations : int
++        Original Lanczos basis limit or ARPACK iteration limit.
++    levels : int
++        Requested low Ritz values, at least two. Single-vector Lanczos
++        can omit repeated copies of degenerate eigenvalues.
++    seed : int
++        Nonnegative seed for the starting vector.
++    """
++
++    def __init__(self, model, electric_cutoff=16, *, backend="lanczos",
++                 tolerance=1e-10, max_iterations=240, levels=3, seed=1097):
++        if not isinstance(model, JoinedCubesModel):
++            raise TypeError("model must be a JoinedCubesModel")
++        if backend not in ("lanczos", "arpack"):
++            raise ValueError("backend must be lanczos or arpack")
++        self.model = model
++        self.electric_cutoff = validate_electric_cutoff(electric_cutoff)
++        self.backend = backend
++        self.tolerance = _finite_float(tolerance, "tolerance", True)
++        self.levels = _integer(levels, "levels", 2)
++        self.max_iterations = _integer(max_iterations, "max_iterations")
++        if self.max_iterations < self.levels:
++            raise ValueError("max_iterations must be at least levels")
++        self.seed = _integer(seed, "seed", 0)
++        self._hamiltonian = None
++        self._hamiltonian_key = None
++
++    def build_hamiltonian(self):
++        """Build once and retain the exact ordering used for eigenvectors."""
++        if not isinstance(self.model, JoinedCubesModel):
++            raise TypeError("model must be a JoinedCubesModel")
++        cap = validate_electric_cutoff(self.electric_cutoff)
++        key = (self.model, cap)
++        if self._hamiltonian is None or key != self._hamiltonian_key:
++            self._hamiltonian = build_hamiltonian(self.model, cap)
++            self._hamiltonian_key = key
++        return self._hamiltonian
++
++    def compute_mass_gap(self):
++        """Return E0, E1 and E1-E0; raise on insufficient states or nonconvergence."""
++        # Revalidate public settings so notebook parameter changes are safe.
++        if self.backend not in ("lanczos", "arpack"):
++            raise ValueError("backend must be lanczos or arpack")
++        self.tolerance = _finite_float(self.tolerance, "tolerance", True)
++        self.levels = _integer(self.levels, "levels", 2)
++        self.max_iterations = _integer(self.max_iterations, "max_iterations")
++        self.seed = _integer(self.seed, "seed", 0)
++        if self.max_iterations < self.levels:
++            raise ValueError("max_iterations must be at least levels")
++        self.electric_cutoff = validate_electric_cutoff(self.electric_cutoff)
++        data = self.build_hamiltonian()
++        if data.dimension < 2:
++            raise ValueError(
++                "electric_cutoff retains only the vacuum; increase it to at "
++                "least 3 to include an excited gauge-invariant state"
++            )
++        levels = min(self.levels, data.dimension)
++        operator = SymmetricOperator(data.diagonal, data.rows, data.columns, data.entries)
++        if self.model.nu == 0:
++            # Single-vector Lanczos can omit exact multiplicities. A diagonal
++            # electric Hamiltonian has its full spectrum available directly.
++            values = np.sort(data.diagonal)[:levels]
++            info = {
++                "method": "exact diagonal electric spectrum",
++                "iterations": 0,
++                "residual_norms": [0.0] * levels,
++                "converged": True,
++            }
++        elif self.backend == "lanczos":
++            values, _, info = smallest_ritz(
++                operator, levels=levels, max_iterations=self.max_iterations,
++                tolerance=self.tolerance, seed=self.seed,
++            )
++        else:
++            from scipy.sparse.linalg import eigsh, ArpackNoConvergence
++
++            matrix = data.to_scipy()
++            try:
++                if data.dimension <= 150 or levels >= data.dimension:
++                    values, vectors = np.linalg.eigh(operator.dense())
++                    values, vectors = values[:levels], vectors[:, :levels]
++                    method = "dense NumPy eigh (small ARPACK input)"
++                else:
++                    start = np.random.default_rng(self.seed).standard_normal(data.dimension)
++                    values, vectors = eigsh(
++                        matrix, k=levels, which="SA", v0=start, tol=0.0,
++                        maxiter=self.max_iterations,
++                    )
++                    order = np.argsort(values)
++                    values, vectors = values[order], vectors[:, order]
++                    method = "SciPy ARPACK eigsh"
++            except ArpackNoConvergence as exc:
++                raise SpectrumConvergenceError(
++                    "ARPACK did not converge; increase max_iterations"
++                ) from exc
++            residuals = np.linalg.norm(matrix @ vectors - vectors * values, axis=0)
++            info = {
++                "method": method,
++                # SciPy does not expose the number of iterations used.
++                "iterations": -1,
++                "residual_norms": residuals.tolist(),
++                "converged": bool(np.max(residuals) <= self.tolerance),
++            }
++        result = SpectrumResult(
++            e0=float(values[0]), e1=float(values[1]), gap=float(values[1] - values[0]),
++            eigenvalues=tuple(float(v) for v in values),
++            residual_norms=tuple(float(r) for r in info["residual_norms"]),
++            converged=bool(info["converged"]), dimension=data.dimension,
++            num_cubes=self.model.num_cubes, kappa=self.model.kappa, nu=self.model.nu,
++            electric_cutoff=str(self.electric_cutoff), pairing=self.model.pairing,
++            backend=self.backend, method=info["method"], iterations=info["iterations"],
++            seed=self.seed, tolerance=self.tolerance, max_iterations=self.max_iterations,
++            hermiticity_error=data.hermiticity_error,
++        )
++        if not result.converged or not all(np.isfinite(result.eigenvalues)):
++            raise SpectrumConvergenceError(
++                "The retained-matrix residual did not meet tolerance; "
++                "increase max_iterations or inspect the requested tolerance.",
++                result=result,
++            )
++        return result
+diff --git a/tests/conftest.py b/tests/conftest.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..50f4b96012fe954389b333b05004b3da8885eeef
+--- /dev/null
++++ b/tests/conftest.py
+@@ -0,0 +1,27 @@
++"""Pytest options for the optional large-basis reproduction tests."""
++import pytest
++
++
++def pytest_addoption(parser):
++    parser.addoption(
++        "--run-slow",
++        action="store_true",
++        default=False,
++        help="Recompute every published spectrum, including the 771,425-state case.",
++    )
++
++
++def pytest_configure(config):
++    config.addinivalue_line(
++        "markers",
++        "slow: full spectrum reproduction; may use several GB of memory",
++    )
++
++
++def pytest_collection_modifyitems(config, items):
++    if config.getoption("--run-slow"):
++        return
++    skip_slow = pytest.mark.skip(reason="Full reproduction requires --run-slow.")
++    for item in items:
++        if "slow" in item.keywords:
++            item.add_marker(skip_slow)
+diff --git a/su2_cube_model.py b/tests/reference/su2_cube_model.py
+similarity index 100%
+rename from su2_cube_model.py
+rename to tests/reference/su2_cube_model.py
+diff --git a/su2_joined_cubes_model.py b/tests/reference/su2_joined_cubes_model.py
+similarity index 100%
+rename from su2_joined_cubes_model.py
+rename to tests/reference/su2_joined_cubes_model.py
+diff --git a/su2_oriented_vertex.py b/tests/reference/su2_oriented_vertex.py
+similarity index 100%
+rename from su2_oriented_vertex.py
+rename to tests/reference/su2_oriented_vertex.py
+diff --git a/su2_recoupling.py b/tests/reference/su2_recoupling.py
+similarity index 100%
+rename from su2_recoupling.py
+rename to tests/reference/su2_recoupling.py
+diff --git a/su2_sparse_spectrum.py b/tests/reference/su2_sparse_spectrum.py
+similarity index 100%
+rename from su2_sparse_spectrum.py
+rename to tests/reference/su2_sparse_spectrum.py
+diff --git a/tests/test_cli.py b/tests/test_cli.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..c9dcec5a457572e7aa39194ab68226f35a569f09
+--- /dev/null
++++ b/tests/test_cli.py
+@@ -0,0 +1,117 @@
++"""CLI and solver failure paths, in addition to physics regression tests."""
++import json
++import subprocess
++import sys
++
++import numpy as np
++import pytest
++
++from terry_cubes import JoinedCubesModel, SpectrumSolver, SpectrumConvergenceError
++from terry_cubes.cli import main
++from terry_cubes.data import load_spectra
++from terry_cubes.solver import SymmetricOperator, smallest_ritz
++
++
++def test_cli_json_file_matches_api(tmp_path, capsys):
++    path = tmp_path / "nested" / "results.json"
++    assert main(["run", "--cubes", "2", "--nu", ".25", "--cutoff", "6",
++                 "--output", str(path)]) == 0
++    saved = json.loads(path.read_text(encoding="utf-8"))
++    baseline = next(row for row in load_spectra(2)["spectra"]
++                    if row["energy_cap"] == 6 and row["nu_over_kappa"] == .25)
++    assert saved["e0"] == pytest.approx(baseline["E0"], abs=1e-9, rel=0)
++    assert saved["e1"] == pytest.approx(baseline["E1"], abs=1e-9, rel=0)
++    assert saved["certified"] is False
++    assert saved["converged"]
++    assert saved["num_cubes"] == 2
++
++
++def test_cli_stdout_and_module_entrypoint():
++    process = subprocess.run(
++        [sys.executable, "-m", "terry_cubes", "run", "--cubes", "1",
++         "--nu", "0", "--cutoff", "3"],
++        text=True, capture_output=True, check=True,
++    )
++    result = json.loads(process.stdout)
++    assert result["gap"] == 3.0
++
++
++def test_invalid_cli_keeps_existing_output(tmp_path, capsys):
++    path = tmp_path / "results.json"
++    path.write_text("previous result", encoding="utf-8")
++    assert main(["run", "--cubes", "0", "--output", str(path)]) == 2
++    assert path.read_text(encoding="utf-8") == "previous result"
++    assert "num_cubes" in capsys.readouterr().err
++
++
++def test_unconverged_solver_raises_and_cli_writes_no_result(tmp_path, capsys):
++    model = JoinedCubesModel(2)
++    with pytest.raises(SpectrumConvergenceError) as caught:
++        SpectrumSolver(model, 6, max_iterations=3).compute_mass_gap()
++    assert caught.value.result is not None
++    assert not caught.value.result.converged
++    path = tmp_path / "failed.json"
++    assert main(["run", "--cubes", "2", "--cutoff", "6",
++                 "--max-iterations", "3", "--output", str(path)]) == 2
++    assert not path.exists()
++
++
++def test_arpack_reproduces_the_same_retained_hamiltonian():
++    model = JoinedCubesModel(2, nu=.25)
++    original = SpectrumSolver(model, 8).compute_mass_gap()
++    arpack = SpectrumSolver(model, 8, backend="arpack").compute_mass_gap()
++    np.testing.assert_allclose(
++        [arpack.e0, arpack.e1, arpack.gap],
++        [original.e0, original.e1, original.gap], atol=1e-9, rtol=0,
++    )
++    assert max(arpack.residual_norms) <= 1e-10
++
++
++def test_original_sparse_lanczos_against_analytic_spectrum():
++    n = 180
++    rows = np.concatenate([np.arange(n - 1), np.arange(1, n)])
++    columns = np.concatenate([np.arange(1, n), np.arange(n - 1)])
++    operator = SymmetricOperator(np.full(n, 2.), rows, columns, np.full(len(rows), -1.))
++    values, _, info = smallest_ritz(operator, max_iterations=n)
++    expected = 2 - 2 * np.cos(np.arange(1, 4) * np.pi / (n + 1))
++    np.testing.assert_allclose(values, expected, atol=1e-11, rtol=0)
++    assert info["converged"]
++
++
++@pytest.mark.parametrize("cubes", [1, 2, 3])
++def test_installed_dataset_loader(cubes):
++    data = load_spectra(cubes)
++    assert data["spectra"][0]["num_cubes"] == cubes
++    assert "Numerical finite-basis" in data["status"]
++
++
++
++def test_changing_notebook_parameters_rebuilds_the_hamiltonian():
++    solver = SpectrumSolver(JoinedCubesModel(1), 6)
++    small = solver.compute_mass_gap()
++    solver.electric_cutoff = 8
++    larger = solver.compute_mass_gap()
++    assert small.dimension == 32
++    assert larger.dimension == 86
++    assert larger.gap != pytest.approx(small.gap, abs=1e-9, rel=0)
++    assert larger.electric_cutoff == "8"
++    solver.model = JoinedCubesModel(1, kappa=2, nu=2)
++    scaled = solver.compute_mass_gap()
++    assert scaled.dimension == larger.dimension
++    assert scaled.gap == pytest.approx(2 * larger.gap, abs=1e-9, rel=0)
++
++
++def test_mutated_solver_settings_are_revalidated():
++    solver = SpectrumSolver(JoinedCubesModel(1), 6)
++    solver.backend = "unknown"
++    with pytest.raises(ValueError, match="backend"):
++        solver.compute_mass_gap()
++
++
++def test_result_json_handles_unrepresentable_normalized_ratios():
++    result = SpectrumSolver(JoinedCubesModel(1, kappa=5e-324, nu=1), 3).compute_mass_gap()
++    saved = result.to_dict()
++    json.dumps(saved, allow_nan=False)
++    assert saved["nu_over_kappa"] is None
++    assert np.isfinite(saved["e0"])
++    assert np.isfinite(saved["e1"])
+diff --git a/tests/test_preservation.py b/tests/test_preservation.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..dfc0a7bb4fce0f9d5ef8b0bf40d82d4c806d3547
+--- /dev/null
++++ b/tests/test_preservation.py
+@@ -0,0 +1,168 @@
++"""Protect original SU(2) indexing, exact amplitudes, and intertwiner channels."""
++from __future__ import annotations
++
++from dataclasses import asdict
++from fractions import Fraction
++import importlib
++import math
++from pathlib import Path
++import sys
++
++import numpy as np
++import pytest
++from sympy import Rational, sign
++from sympy.physics.wigner import wigner_6j
++
++from terry_cubes import geometry, hamiltonian, recoupling
++
++
++@pytest.fixture(scope="module")
++def original_modules():
++    """Load the unmodified research scripts with their original import names."""
++    reference = Path(__file__).parent / "reference"
++    names = (
++        "su2_recoupling",
++        "su2_cube_model",
++        "su2_oriented_vertex",
++        "su2_joined_cubes_model",
++        "su2_sparse_spectrum",
++    )
++    missing = [name for name in names if not (reference / (name + ".py")).is_file()]
++    assert not missing, f"Missing original reference scripts: {missing}"
++    previous = {name: sys.modules.get(name) for name in names}
++    with pytest.MonkeyPatch.context() as patch:
++        patch.syspath_prepend(str(reference))
++        for name in names:
++            sys.modules.pop(name, None)
++        try:
++            yield {name: importlib.import_module(name) for name in names}
++        finally:
++            for name, module in previous.items():
++                if module is None:
++                    sys.modules.pop(name, None)
++                else:
++                    sys.modules[name] = module
++
++
++@pytest.mark.parametrize("num_cubes", [1, 2, 3])
++@pytest.mark.parametrize("pairing", ["longitudinal", "crossed", "mixed"])
++def test_joined_geometry_preserves_exact_order_and_phases(original_modules, num_cubes, pairing):
++    original = original_modules["su2_joined_cubes_model"]
++    actual = geometry.joined_graph(num_cubes, pairing)
++    expected = original.joined_graph(num_cubes, pairing)
++    assert asdict(actual) == asdict(expected)
++    assert geometry.graph_metadata(actual) == original.graph_metadata(expected)
++    assert actual.physical_edge_count == 8 * num_cubes + 4
++    assert actual.face_count == 5 * num_cubes + 1
++    assert len(actual.splits) == 4 * (num_cubes - 1)
++
++
++def test_cube_constants_preserve_indexing(original_modules):
++    original = original_modules["su2_cube_model"]
++    for name in ("VERTICES", "EDGES", "FACES", "EDGE_INDEX", "INCIDENT", "FACE_EDGES", "FACE_DATA"):
++        assert getattr(geometry, name) == getattr(original, name), name
++
++
++def _exact_entry_dictionary(entries):
++    result = {(row, col): (phase, square) for row, col, phase, square in entries}
++    assert len(result) == len(entries), "A single face should not repeat a matrix entry"
++    assert all(isinstance(square, Fraction) for phase, square in result.values())
++    return result
++
++
++@pytest.mark.parametrize("pairing", ["longitudinal", "crossed", "mixed"])
++def test_joined_basis_and_exact_transitions_match_original(original_modules, pairing):
++    original = original_modules["su2_joined_cubes_model"]
++    graph = geometry.joined_graph(2, pairing)
++    original_graph = original.joined_graph(2, pairing)
++    states = hamiltonian.energy_basis(graph, Fraction(6))
++    expected_states = original.energy_basis(original_graph, Fraction(6))
++    assert states == expected_states  # Tuple order fixes every matrix index.
++    actual = hamiltonian.wilson_transitions(graph, states)
++    expected = original.wilson_transitions(original_graph, expected_states)
++    assert len(actual) == len(expected) == graph.face_count
++    for entries, reference_entries in zip(actual, expected):
++        lookup = _exact_entry_dictionary(entries)
++        assert lookup == _exact_entry_dictionary(reference_entries)
++        assert entries == reference_entries  # Preserve traversal order as well.
++        for (row, col), amplitude in lookup.items():
++            assert lookup[(col, row)] == amplitude
++    if pairing == "mixed":
++        assert any(len(face) % 2 for face in graph.faces)
++
++
++@pytest.mark.parametrize("pairing", ["longitudinal", "crossed", "mixed"])
++def test_virtual_intertwiner_channels_exceed_physical_spin_cutoff(original_modules, pairing):
++    original = original_modules["su2_joined_cubes_model"]
++    graph = geometry.joined_graph(2, pairing)
++    expected_graph = original.joined_graph(2, pairing)
++    states = hamiltonian.spin_basis(graph, 1)
++    assert states == original.spin_basis(expected_graph, 1)
++    physical_count = graph.physical_edge_count
++    assert all(max(state[:physical_count]) <= 1 for state in states)
++    higher_channels = [state for state in states if max(state[physical_count:]) == 2]
++    assert higher_channels, "Four spin-half links must retain the spin-one coupling channel"
++    for state in higher_channels:
++        physical_energy = Fraction(sum(q * (q + 2) for q in state[:physical_count]), 4)
++        assert hamiltonian.electric_exact(graph, state) == physical_energy
++        assert hamiltonian.electric_exact(graph, state) == original.electric_exact(expected_graph, state)
++
++
++@pytest.mark.parametrize("max_twice", [1, 2])
++def test_single_cube_basis_and_exact_wilson_entries_match_original(original_modules, max_twice):
++    original = original_modules["su2_cube_model"]
++    states, entries = hamiltonian.cube_wilson_transitions(max_twice)
++    expected_states, expected_entries = original.cube_wilson_transitions(max_twice)
++    assert states == expected_states
++    assert entries == expected_entries
++    for face_entries in entries:
++        lookup = _exact_entry_dictionary(face_entries)
++        for (row, col), amplitude in lookup.items():
++            assert lookup[(col, row)] == amplitude
++    np.testing.assert_array_equal(
++        hamiltonian.cube_electric_diagonal(states), original.electric_diagonal(expected_states)
++    )
++
++
++def test_single_cube_complete_electric_cutoff_matches_original(original_modules):
++    original = original_modules["su2_cube_model"]
++    assert hamiltonian.cube_energy_basis(Fraction(12)) == original.energy_basis(Fraction(12))
++
++
++def test_sparse_entries_preserve_face_order_and_repeated_entries(original_modules):
++    original = original_modules["su2_joined_cubes_model"]
++    graph = geometry.joined_graph(2, "mixed")
++    states = hamiltonian.energy_basis(graph, Fraction(6))
++    expected_graph = original.joined_graph(2, "mixed")
++    per_face = original.wilson_transitions(expected_graph, states)
++    flattened = [entry for face in per_face for entry in face]
++    rows, cols, values = hamiltonian.build_sparse(graph, states)
++    np.testing.assert_array_equal(rows, [row for row, col, phase, square in flattened])
++    np.testing.assert_array_equal(cols, [col for row, col, phase, square in flattened])
++    np.testing.assert_array_equal(
++        values, [phase * math.sqrt(float(square)) for row, col, phase, square in flattened]
++    )
++
++
++@pytest.mark.parametrize("arguments", [
++    (0, 0, 0, 1, 1, 1),
++    (0, 1, 1, 0, 1, 1),
++    (2, 2, 2, 2, 2, 2),
++    (1, 2, 3, 2, 1, 2),
++    (4, 4, 4, 4, 4, 4),
++])
++def test_exact_six_j_symbols_against_independent_sympy(arguments):
++    reference = wigner_6j(*(Rational(q, 2) for q in arguments))
++    numerator, denominator = (reference ** 2).as_numer_denom()
++    assert recoupling.wigner_6j_squared(*arguments) == Fraction(int(numerator), int(denominator))
++    assert recoupling.sixj_sign(*arguments) == int(sign(reference))
++
++
++def test_oriented_invariant_norms_signs_and_exact_radicals():
++    result = recoupling.oriented_self_checks(max_twice=3)
++    assert result["exact_vertex_contractions"] == 62
++    assert result["unit_3j_norms"]
++    assert result["squared_6j_identity"]
++    assert result["all_radical_ratios_exact_rational_squares"]
++    assert result["exact_local_sign_relation_to_reference_6j_formula"]
++    assert result["exact_local_dimension_ratio_to_reference_6j_formula"]
+diff --git a/tests/test_spectrum.py b/tests/test_spectrum.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..d3bcc14e2346cd8a71b8c9ad06d069060cb8a904
+--- /dev/null
++++ b/tests/test_spectrum.py
+@@ -0,0 +1,191 @@
++"""Numerical regressions against the unchanged joined-cube reference spectra.
++
++The single-cube interval check tests agreement with a separately established
++certificate. It does not rerun that certificate's exact-arithmetic verifier.
++"""
++from functools import lru_cache
++import json
++from pathlib import Path
++
++import numpy as np
++import pytest
++
++from terry_cubes import JoinedCubesModel, SpectrumSolver
++
++
++DATA_DIR = Path(__file__).resolve().parents[1] / "data"
++ENERGY_ATOL = 1e-9
++CERTIFIED_SINGLE_CUBE_INTERVAL = (2.941733, 2.958693)
++
++
++@lru_cache(maxsize=3)
++def _reference_records(num_cubes):
++    path = DATA_DIR / f"SU2_Joined_Cubes_N{num_cubes}_Spectra.json"
++    with path.open(encoding="utf-8") as stream:
++        document = json.load(stream)
++    assert document["model"]["num_cubes"] == num_cubes
++    assert document["units"] == "kappa=1"
++    return tuple(document["spectra"])
++
++
++def _reference(num_cubes, cutoff, ratio):
++    matches = [
++        row
++        for row in _reference_records(num_cubes)
++        if (
++            row["num_cubes"],
++            row["energy_cap"],
++            row["nu_over_kappa"],
++        ) == (num_cubes, cutoff, ratio)
++    ]
++    assert len(matches) == 1, "A baseline must be identified by its model and cutoff."
++    return matches[0]
++
++
++@lru_cache(maxsize=None)
++def _compute(num_cubes, cutoff, ratio):
++    model = JoinedCubesModel(num_cubes=num_cubes, kappa=1.0, nu=ratio)
++    return SpectrumSolver(model, electric_cutoff=cutoff).compute_mass_gap()
++
++
++def _assert_matches_reference(result, reference):
++    assert result.dimension == reference["dimension"]
++    assert result.converged
++    np.testing.assert_allclose(
++        [result.e0, result.e1, result.gap],
++        [reference["E0"], reference["E1"], reference["gap"]],
++        atol=ENERGY_ATOL,
++        rtol=0,
++    )
++    assert result.e1 >= result.e0
++    assert result.gap == pytest.approx(result.e1 - result.e0, abs=1e-12)
++    np.testing.assert_allclose(
++        result.eigenvalues[:2], [result.e0, result.e1], atol=1e-12, rtol=0
++    )
++    residuals = np.asarray(result.residual_norms)
++    assert residuals.size >= 2
++    assert np.all(np.isfinite(residuals))
++    assert np.all(residuals <= ENERGY_ATOL)
++
++
++FAST_CASES = [
++    pytest.param(cubes, cutoff, ratio, id=f"N{cubes}-cap{cutoff}-nu{ratio}")
++    for cubes, cutoff in ((1, 12), (2, 8), (3, 6))
++    for ratio in (0.25, 1.0)
++]
++
++
++@pytest.mark.parametrize("num_cubes,cutoff,ratio", FAST_CASES)
++def test_reference_spectrum(num_cubes, cutoff, ratio):
++    """Exercise higher-spin links and the two shared planes of three cubes."""
++    result = _compute(num_cubes, cutoff, ratio)
++    _assert_matches_reference(result, _reference(num_cubes, cutoff, ratio))
++
++
++def test_single_cube_agrees_with_previously_certified_interval():
++    """A finite-basis estimate agrees with the prior full-cube enclosure.
++
++    At kappa=nu=1 the separate single-cube certificate bounds the untruncated
++    gap. The retained cap-12 estimate lies inside that interval. This numerical
++    containment assertion is a regression check, not a new certificate.
++    """
++    result = _compute(1, 12, 1.0)
++    lower, upper = CERTIFIED_SINGLE_CUBE_INTERVAL
++    assert lower <= result.gap <= upper
++
++
++@pytest.mark.parametrize("num_cubes", (1, 2, 3))
++def test_common_coupling_scale_changes_energies_not_basis(num_cubes):
++    cutoff = 6
++    ratio = 0.25
++    scale = 2.5
++    base = _compute(num_cubes, cutoff, ratio)
++    model = JoinedCubesModel(
++        num_cubes=num_cubes, kappa=scale, nu=scale * ratio
++    )
++    scaled = SpectrumSolver(model, electric_cutoff=cutoff).compute_mass_gap()
++    assert scaled.dimension == base.dimension
++    assert scaled.converged
++    np.testing.assert_allclose(
++        [scaled.e0, scaled.e1, scaled.gap],
++        scale * np.array([base.e0, base.e1, base.gap]),
++        atol=ENERGY_ATOL,
++        rtol=0,
++    )
++
++
++@pytest.mark.parametrize("num_cubes", (1, 2, 3))
++def test_pure_electric_gap_includes_degenerate_first_excitation(num_cubes):
++    """The shortest fundamental loop costs four times j(j+1) = 3."""
++    kappa = 2.0
++    model = JoinedCubesModel(num_cubes=num_cubes, kappa=kappa, nu=0.0)
++    result = SpectrumSolver(model, electric_cutoff=6).compute_mass_gap()
++    assert result.converged
++    assert result.e0 == pytest.approx(0.0, abs=1e-12)
++    assert result.e1 == pytest.approx(3.0 * kappa, abs=1e-12)
++    assert result.gap == pytest.approx(3.0 * kappa, abs=1e-12)
++    np.testing.assert_allclose(
++        result.eigenvalues[:3], [0.0, 3.0 * kappa, 3.0 * kappa],
++        atol=1e-12, rtol=0,
++    )
++
++
++@pytest.mark.parametrize(
++    "kwargs",
++    [
++        {"num_cubes": 0},
++        {"num_cubes": -1},
++        {"num_cubes": 1.5},
++        {"num_cubes": 1, "kappa": 0},
++        {"num_cubes": 1, "kappa": -1},
++        {"num_cubes": 1, "kappa": float("inf")},
++        {"num_cubes": 1, "nu": -0.25},
++        {"num_cubes": 1, "nu": float("nan")},
++        {"num_cubes": 1, "pairing": "unknown"},
++    ],
++)
++def test_invalid_model_parameters_raise_value_error(kwargs):
++    with pytest.raises(ValueError):
++        JoinedCubesModel(**kwargs)
++
++
++@pytest.mark.parametrize(
++    "kwargs",
++    [
++        {"electric_cutoff": -1},
++        {"electric_cutoff": float("inf")},
++        {"electric_cutoff": float("nan")},
++        {"electric_cutoff": 6, "tolerance": 0},
++        {"electric_cutoff": 6, "max_iterations": 0},
++        {"electric_cutoff": 6, "levels": 1},
++        {"electric_cutoff": 6, "backend": "unknown"},
++    ],
++)
++def test_invalid_solver_parameters_raise_value_error(kwargs):
++    with pytest.raises(ValueError):
++        SpectrumSolver(JoinedCubesModel(num_cubes=1), **kwargs).compute_mass_gap()
++
++
++def test_cutoff_with_only_vacuum_cannot_define_gap():
++    with pytest.raises(ValueError):
++        SpectrumSolver(
++            JoinedCubesModel(num_cubes=1), electric_cutoff=0
++        ).compute_mass_gap()
++
++
++FULL_CASES = [
++    pytest.param(
++        num_cubes, row["energy_cap"], row["nu_over_kappa"],
++        id=f"N{num_cubes}-cap{row['energy_cap']}-nu{row['nu_over_kappa']}",
++    )
++    for num_cubes in (1, 2, 3)
++    for row in _reference_records(num_cubes)
++]
++
++
++@pytest.mark.slow
++@pytest.mark.parametrize("num_cubes,cutoff,ratio", FULL_CASES)
++def test_all_published_spectra(num_cubes, cutoff, ratio):
++    """Opt in with pytest --run-slow; largest case has 771,425 states."""
++    result = _compute(num_cubes, cutoff, ratio)
++    _assert_matches_reference(result, _reference(num_cubes, cutoff, ratio))
+diff --git a/validation/two_cubes_cutoff16.json b/validation/two_cubes_cutoff16.json
+new file mode 100644
+index 0000000000000000000000000000000000000000..ad99fd8c775899c30d673a17ade931db0467bf80
+--- /dev/null
++++ b/validation/two_cubes_cutoff16.json
+@@ -0,0 +1,36 @@
++{
++  "e0": 2.6927571061973903,
++  "e1": 5.69136685244009,
++  "gap": 2.9986097462427,
++  "eigenvalues": [
++    2.6927571061973903,
++    5.69136685244009,
++    5.694346173876504
++  ],
++  "residual_norms": [
++    3.2729435354361897e-13,
++    1.1718362530473314e-12,
++    2.1299567938626067e-12
++  ],
++  "converged": true,
++  "dimension": 76326,
++  "num_cubes": 2,
++  "kappa": 1.0,
++  "nu": 0.25,
++  "electric_cutoff": "16",
++  "pairing": "longitudinal",
++  "backend": "lanczos",
++  "method": "fully reorthogonalized Lanczos with direct Ritz residuals",
++  "iterations": 132,
++  "seed": 1097,
++  "tolerance": 1e-10,
++  "max_iterations": 240,
++  "hermiticity_error": 0.0,
++  "schema_version": 1,
++  "package_version": "0.1.0",
++  "nu_over_kappa": 0.25,
++  "gap_over_kappa": 2.9986097462427,
++  "certified": false,
++  "scope": "Numerical finite-basis spectrum. Residuals do not certify spectral ordering, omitted states, infinite volume, or the continuum limit.",
++  "cutoff_definition": "sum_physical_links j(j+1) <= electric_cutoff"
++}

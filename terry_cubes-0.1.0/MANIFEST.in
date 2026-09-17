@@ -1,0 +1,12 @@
+include LICENSE
+include README.md
+include requirements.txt
+include pyproject.toml
+include setup.py
+include SOURCE_PROVENANCE.json
+recursive-include terry_cubes *.py
+recursive-include data *.py *.json
+recursive-include tests *.py
+include VALIDATION.md
+include .gitattributes
+include .github/workflows/tests.yml

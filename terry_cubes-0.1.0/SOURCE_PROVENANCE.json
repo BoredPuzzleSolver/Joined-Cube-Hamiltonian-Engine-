@@ -1,0 +1,27 @@
+{
+  "repository": "https://github.com/BoredPuzzleSolver/Joined-Cube-Hamiltonian-Engine-",
+  "commit": "71c3190363791c0f4464ee5e24606876e9131636",
+  "source_sha256": {
+    "su2_cube_model.py": "2d362a432352e687ccbf2d90fd386de723f4a2d12662dca7858ca9eb4c7c28b3",
+    "su2_joined_cubes_model.py": "9dc3a81a452654edbcd363e0153905b22a200d8f79499a6067fdc8b134448125",
+    "su2_oriented_vertex.py": "34884319960496a63842766f754d2b3baa9386a46b323730b2dd1d6c27a52bfc",
+    "su2_recoupling.py": "bdc2e7ba502bb59ea61962ef391be24effd7539a46f2bef5820ae4fe58fc6b6b",
+    "su2_sparse_spectrum.py": "a05169132d9c59ac6d6e915a2ec2c94ad66c7c77ba9f8fdedaf4ed747ebc232f",
+    "SU2_Joined_Cubes_N1_Spectra.json": "101c6e2a62c24ffbf72e25993927601ea3e11e37ebd445f6996440db63ac988a",
+    "SU2_Joined_Cubes_N2_Spectra.json": "620cb29591ce31ac89b35184c4fed3309e486c302a180c4cb7beb3ef6ffdfb34",
+    "SU2_Joined_Cubes_N3_Spectra.json": "59ae2856273f1bf4353d839ebd08550f6b9096c11f2db4d43fb4a2fc3cb6c941"
+  },
+  "notes": "Original scripts in tests/reference are byte-preserved from the cloned checkout. JSON data are unchanged. Core function bodies are relocated; conflicting cube/joined names and imports are explicitly qualified.",
+  "sparse_builder_source": "The build_sparse and numerical_hermiticity functions are preserved from the adjacent original SU2_Joined_Cubes_Reproduction/su2_joined_cubes_study.py.",
+  "source_lf_normalized_sha256": {
+    "su2_cube_model.py": "259e239a2eae7917729c6503b10909ac3bc6ce3b3ffb4458639f3e699f70c72b",
+    "su2_joined_cubes_model.py": "2e16c924b0e207a849d81873fbe2c992014c8726a4e40c33136de092f70e737f",
+    "su2_oriented_vertex.py": "d9b3c7196d467034126b3f7c34693654446d843695e43b3dfe14859a6d06f33d",
+    "su2_recoupling.py": "b10db8af9844d071ff614baa6c0276a49c92262a14ce1e84c15ee0a8ebbe11b3",
+    "su2_sparse_spectrum.py": "14630d32ef29bc421fe854eb8d6b6c5e61fdf6eb909221594f05b5081b9765ad",
+    "SU2_Joined_Cubes_N1_Spectra.json": "f8543a3d8edfa83e3e6f0104c3d4eb1bc513d3c8fd72e4aea37f55521d7b5167",
+    "SU2_Joined_Cubes_N2_Spectra.json": "e4a95390b20a6ce9bae072eb3fef23b4983f83f1dd5fbcc71e0a79e0c4fc6a00",
+    "SU2_Joined_Cubes_N3_Spectra.json": "9c05a7e4d49071b2000636035d9fe568f9bab558ee55d5acefec0a03b729d092"
+  },
+  "line_ending_note": "source_sha256 records original Windows checkout bytes retained in this release; source_lf_normalized_sha256 permits cross-platform comparisons after CRLF/LF conversion by Git."
+}
